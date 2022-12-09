@@ -1,0 +1,123 @@
+$offWhite: rgb(236, 236, 236) 
+    
+@font-face 
+	font-family: HelveticaNeue 
+	src: url('HelveticaNeueBold.ttf') 
+@font-face 
+	font-family: IBMPlexMono 
+	src: url('IBMPlexMono.ttf') 
+body 
+	background-color: rgb(8, 8, 8) 
+	color: $offWhite
+	font-size: 95% 
+	font-family: HelveticaNeue 
+	text-align: left 
+	letter-spacing: -2px 
+#main 
+	position: relative 
+	display: flex 
+	flex-direction: column 
+	margin-top: -3%
+	height: 100%
+#bgimage 
+	position: absolute 
+	left: 0 
+	width: 100% 
+	max-height: 99% 
+	opacity: 10% 
+	z-index: 0 
+	object-fit: cover 
+	filter: blur(15px) 
+	overflow: hidden 
+	pointer-events: none 
+#topDiv 
+	display: flex 
+	flex-direction: row 
+	margin-top: 1% 
+	margin-bottom: -2% 
+	margin-left: 1% 
+#name 
+	font-size: 500% 
+	border-right: 8px solid $offWhite
+	padding-right: 71px 
+	padding-left: 25px 
+	letter-spacing: -3px 
+#introBox 
+	width: 62% 
+	padding-left: 50px 
+	margin-top: 1.9% 
+#intro 
+	font-size: 200% 
+#main3Columns 
+	display: flex 
+	flex-direction: row 
+.main3Children 
+	flex: 1 
+	display: flex 
+	flex-direction: column 
+#column1box1 
+	flex: 1 
+	background: linear-gradient(rgba(195, 79, 179, 0.7), rgba(175, 59, 159, 0.8)) 
+	margin: 10px 
+#resumeText 
+	color: rgb(236, 236, 236) 
+	font-size: 400% 
+	text-align: left 
+	transform: translateY(28%) 
+	margin: 0 
+	margin-left: 20px 
+	margin-top: -20px 
+.resumeText2 
+	color: white 
+	font-family: IBMPlexMono 
+	font-size: 170% 
+	margin-left: 20px 
+	margin-top: 44px 
+a 
+	color: $offWhite
+	text-decoration: none 
+	&:link 
+		border-bottom: 2px solid $offWhite
+	&:hover 
+		color: #ffffff 
+		border-bottom: 2px solid #ffffff 
+	&.L2 
+		&:link 
+			border-bottom: 2px solid $offWhite
+		&:hover 
+			color: #ffffff 
+			border-bottom: 2px solid #ffffff 
+#column1box2 
+	flex: 2 
+	background: linear-gradient(rgba(147, 75, 165, 0.7), rgba(127, 55, 145, 0.8)) 
+	margin: 10px 
+#column2box1 
+	flex: 1
+	background: linear-gradient(rgba(98, 72, 152, 0.7), rgba(78, 52, 132, 0.8)) 
+	margin: 10px 
+#column3box1 
+	flex: 8 
+	background: linear-gradient(rgba(50, 68, 138, 0.7), rgba(30, 48, 118, 0.8)) 
+	margin: 10px 
+#column3box2 
+	flex: 1 
+	background: linear-gradient(rgba(2, 64, 125, 0.7), rgba(30, 48, 118, 0.8)) 
+	margin: 10px 
+.titleText 
+	color: $offWhite
+	font-size: 350% 
+	margin: 0 
+	margin-top: 1% 
+	margin-left: 20px 
+.underline 
+	text-decoration: underline 
+	font-size: 110% 
+.listText2 
+	color: white 
+	font-family: IBMPlexMono 
+	font-size: 175% 
+	margin-left: 15px 
+.adjustIcon 
+	font-size: 90% 
+.adjustOtherIcon 
+	font-size: 90% 
