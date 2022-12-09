@@ -9,7 +9,6 @@
 body {
   background-color: rgb(8, 8, 8);
   color: rgb(236, 236, 236);
-  font-size: 95%;
   font-family: HelveticaNeue;
   text-align: left;
   letter-spacing: -2px;
@@ -40,13 +39,11 @@ body {
 #topDiv {
   display: flex;
   flex-direction: row;
-  margin-top: 1%;
-  margin-bottom: -2%;
-  margin-left: 1%;
+  height: 17vh;
 }
 
 #name {
-  font-size: 500%;
+  font-size: calc(100% + 6.8vh);
   border-right: 8px solid rgb(236, 236, 236);
   padding-right: 71px;
   padding-left: 25px;
@@ -60,12 +57,13 @@ body {
 }
 
 #intro {
-  font-size: 200%;
+  font-size: calc(100% + 1.6vh);
 }
 
 #main3Columns {
   display: flex;
   flex-direction: row;
+  height: 83vh;
 }
 
 .main3Children {
@@ -82,20 +80,13 @@ body {
 
 #resumeText {
   color: rgb(236, 236, 236);
-  font-size: 400%;
+  font-size: calc(100% + 4vh);
   text-align: left;
   transform: translateY(28%);
   margin: 0;
   margin-left: 20px;
   margin-top: -20px;
-}
-
-.resumeText2 {
-  color: white;
-  font-family: IBMPlexMono;
-  font-size: 170%;
-  margin-left: 20px;
-  margin-top: 44px;
+  padding-bottom: 15px;
 }
 
 a {
@@ -143,7 +134,7 @@ a.L2:hover {
 
 .titleText {
   color: rgb(236, 236, 236);
-  font-size: 350%;
+  font-size: calc(100% + 4vh);
   margin: 0;
   margin-top: 1%;
   margin-left: 20px;
@@ -154,11 +145,20 @@ a.L2:hover {
   font-size: 110%;
 }
 
-.listText2 {
+.resumeText {
   color: white;
   font-family: IBMPlexMono;
-  font-size: 175%;
+  font-size: calc(100% + 1vh);
   margin-left: 15px;
+  padding-right: 15px;
+}
+
+.listText {
+  color: white;
+  font-family: IBMPlexMono;
+  font-size: calc(100% + 0.8vh);
+  margin-left: 15px;
+  padding-right: 15px;
 }
 
 .adjustIcon {
