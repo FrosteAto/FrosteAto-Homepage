@@ -43,7 +43,7 @@ body {
 }
 
 #name {
-  font-size: calc(100% + 6.8vh);
+  font-size: 8.5vh;
   border-right: 8px solid rgb(236, 236, 236);
   padding-right: 71px;
   padding-left: 25px;
@@ -57,7 +57,7 @@ body {
 }
 
 #intro {
-  font-size: calc(100% + 1.6vh);
+  font-size: 3.5vh;
 }
 
 #main3Columns {
@@ -80,7 +80,7 @@ body {
 
 #resumeText {
   color: rgb(236, 236, 236);
-  font-size: calc(100% + 4vh);
+  font-size: 6vh;
   text-align: left;
   transform: translateY(28%);
   margin: 0;
@@ -134,7 +134,7 @@ a.L2:hover {
 
 .titleText {
   color: rgb(236, 236, 236);
-  font-size: calc(100% + 4vh);
+  font-size: 6vh;
   margin: 0;
   margin-top: 1%;
   margin-left: 20px;
@@ -148,7 +148,7 @@ a.L2:hover {
 .resumeText {
   color: white;
   font-family: IBMPlexMono;
-  font-size: calc(100% + 1vh);
+  font-size: 2.8vh;
   margin-left: 15px;
   padding-right: 15px;
 }
@@ -156,7 +156,7 @@ a.L2:hover {
 .listText {
   color: white;
   font-family: IBMPlexMono;
-  font-size: calc(100% + 0.8vh);
+  font-size: 2.5vh;
   margin-left: 15px;
   padding-right: 15px;
 }
