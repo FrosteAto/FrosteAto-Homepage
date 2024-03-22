@@ -3,168 +3,165 @@
   src: url("HelveticaNeueBold.ttf");
 }
 @font-face {
-  font-family: IBMPlexMono;
-  src: url("IBMPlexMono.ttf");
+  font-family: CommitMono;
+  src: url("CommitMono.ttf");
+}
+@font-face {
+  font-family: Satisfy;
+  src: url("Satisfy.ttf");
 }
 body {
-  background-color: rgb(8, 8, 8);
-  color: rgb(236, 236, 236);
-  font-family: HelveticaNeue;
+  background-color: rgb(240, 241, 235);
+  font-weight: 500;
+  color: rgb(240, 241, 235);
+  font-family: CommitMono;
   text-align: left;
-  letter-spacing: -2px;
+  margin: 0;
+}
+
+a.text-link {
+  color: rgb(10, 10, 10);
+  background: linear-gradient(transparent 60%, rgb(164, 216, 194) 40%);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+a.text-link:hover {
+  color: rgb(10, 10, 10);
+  background: linear-gradient(transparent 60%, rgb(137, 181, 162) 40%);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+a.image-link {
+  color: rgb(139, 139, 139);
+}
+
+a.image-link:hover {
+  color: rgb(10, 10, 10);
+}
+
+a.image-link2 {
+  color: rgb(137, 181, 162);
+}
+
+a.image-link2:hover {
+  color: rgb(10, 10, 10);
 }
 
 #main {
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-top: -2.3%;
   height: 100%;
 }
 
 #bgimage {
-  position: absolute;
+  position: fixed;
   left: 0;
   width: 100%;
-  max-height: 99%;
-  opacity: 10%;
+  opacity: 5%;
   z-index: 0;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   filter: blur(15px);
   overflow: hidden;
   pointer-events: none;
 }
 
-#topDiv {
-  display: flex;
-  flex-direction: row;
-  height: 17vh;
+#navigation {
+  background: linear-gradient(rgb(153, 202, 181) 90%, rgb(137, 181, 162) 10%);
+  display: block;
+  width: 100%;
+  height: 105px;
+  position: relative;
 }
 
-#name {
-  font-size: 8.5vh;
-  border-right: 8px solid rgb(236, 236, 236);
-  padding-right: 71px;
-  padding-left: 25px;
-  letter-spacing: -3px;
+#bigName {
+  font-family: HelveticaNeue;
+  font-size: 60px;
+  margin-left: 15px;
+  margin-top: 8px;
 }
 
-#introBox {
-  width: 62%;
-  padding-left: 50px;
-  margin-top: 1.9%;
+#body {
+  display: block;
+  max-width: 960px;
+  margin: 0px auto;
+  color: rgb(10, 10, 10);
+  word-wrap: break-word;
+  padding: 15px;
 }
 
-#intro {
-  font-size: 3.5vh;
+#midName {
+  font-size: 40px;
+  font-weight: 900;
+  text-decoration-thickness: 60px;
 }
 
-#main3Columns {
-  display: flex;
-  flex-direction: row;
-  height: 83vh;
+#subTitle {
+  font-size: 30px;
+  font-weight: 900;
+  color: rgb(139, 139, 139);
 }
 
-.main3Children {
-  flex: 1;
+.paragraph1 {
+  font-size: 20px;
+}
+
+#lineBreak {
+  border: 2px dashed rgb(188, 173, 163);
+}
+
+.tableTitle {
+  font-size: 23px;
+}
+
+.icons {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+#footer {
+  background: rgb(153, 202, 181);
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 400px;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-#column1box1 {
-  flex: 1;
-  background: linear-gradient(rgba(195, 79, 179, 0.7), rgba(175, 59, 159, 0.8));
-  margin: 10px;
+#footerText0 {
+  font-family: Satisfy;
+  font-size: 40px;
+  color: rgb(240, 241, 235);
+  margin-bottom: -45px;
 }
 
-#resumeText {
-  color: rgb(236, 236, 236);
-  font-size: 6vh;
-  text-align: left;
-  transform: translateY(28%);
-  margin: 0;
-  margin-left: 20px;
-  margin-top: -20px;
-  padding-bottom: 15px;
+#footerText1 {
+  font-family: Satisfy;
+  font-size: 40px;
+  color: rgb(240, 241, 235);
+  margin-bottom: -10px;
 }
 
-a {
-  color: rgb(236, 236, 236);
-  text-decoration: none;
-}
-a:link {
-  border-bottom: 2px solid rgb(236, 236, 236);
-}
-a:hover {
-  color: #ffffff;
-  border-bottom: 2px solid #ffffff;
-}
-a.L2:link {
-  border-bottom: 2px solid rgb(236, 236, 236);
-}
-a.L2:hover {
-  color: #ffffff;
-  border-bottom: 2px solid #ffffff;
+#footerText2 {
+  font-size: 15px;
+  color: rgb(240, 241, 235);
+  margin-bottom: 120px;
 }
 
-#column1box2 {
-  flex: 2;
-  background: linear-gradient(rgba(147, 75, 165, 0.7), rgba(127, 55, 145, 0.8));
-  margin: 10px;
+#footerText3 {
+  font-size: 15px;
+  color: rgb(240, 241, 235);
 }
 
-#column2box1 {
-  flex: 1;
-  background: linear-gradient(rgba(98, 72, 152, 0.7), rgba(78, 52, 132, 0.8));
-  margin: 10px;
+#footerText4 {
+  font-size: 15px;
+  color: rgb(240, 241, 235);
+  margin-top: -10px;
 }
 
-#column3box1 {
-  flex: 8;
-  background: linear-gradient(rgba(50, 68, 138, 0.7), rgba(30, 48, 118, 0.8));
-  margin: 10px;
-}
-
-#column3box2 {
-  flex: 1;
-  background: linear-gradient(rgba(2, 64, 125, 0.7), rgba(30, 48, 118, 0.8));
-  margin: 10px;
-}
-
-.titleText {
-  color: rgb(236, 236, 236);
-  font-size: 6vh;
-  margin: 0;
-  margin-top: 1%;
-  margin-left: 20px;
-}
-
-.underline {
-  text-decoration: underline;
-  font-size: 110%;
-}
-
-.resumeText {
-  color: white;
-  font-family: IBMPlexMono;
-  font-size: 2.8vh;
-  margin-left: 15px;
-  padding-right: 15px;
-}
-
-.listText {
-  color: white;
-  font-family: IBMPlexMono;
-  font-size: 2.3vh;
-  margin-left: 15px;
-  padding-right: 15px;
-}
-
-.adjustIcon {
-  font-size: 90%;
-}
-
-.adjustOtherIcon {
-  font-size: 90%;
-}/*# sourceMappingURL=Style.css.map */
+/*# sourceMappingURL=Style.css.map */

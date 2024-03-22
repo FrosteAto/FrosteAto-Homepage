@@ -1,123 +1,127 @@
-$offWhite: rgb(236, 236, 236) 
+$white: rgba(240,241,235, 1)
+$lightGreen:rgba(164, 216, 194, 1)
+$green: rgba(153, 202, 181, 1)
+$darkGreen: rgba(137, 181, 162, 1)
+$lightBrown: rgba(188,173,163, 1)
+$darkBrown: rgba(166,125,99, 1)
+$blue: rgba(171,200,215, 1)
+$black: rgba(10, 10, 10, 1)
+$grey: rgba(139, 139, 139, 1)
+
     
 @font-face 
 	font-family: HelveticaNeue 
 	src: url('HelveticaNeueBold.ttf') 
 @font-face 
-	font-family: IBMPlexMono 
-	src: url('IBMPlexMono.ttf') 
+	font-family: CommitMono
+	src: url('CommitMono.ttf') 
+@font-face 
+	font-family: Satisfy
+	src: url('Satisfy.ttf') 
 body 
-	background-color: rgb(8, 8, 8) 
-	color: $offWhite
-	font-family: HelveticaNeue 
+	background-color: $white
+	font-weight: 500
+	color: $white
+	font-family: CommitMono
 	text-align: left 
-	letter-spacing: -2px 
+	margin: 0
+a.text-link
+	color: $black
+	background: linear-gradient(transparent 60%, $lightGreen 40%)
+	font-weight: 900
+	text-decoration: none
+a.text-link:hover
+	color: $black
+	background: linear-gradient(transparent 60%, $darkGreen 40%)
+	font-weight: 900
+	text-decoration: none
+a.image-link
+	color: $grey
+a.image-link:hover
+	color: $black
+a.image-link2
+	color: $darkGreen
+a.image-link2:hover
+	color: $black
 #main 
 	position: relative 
 	display: flex 
 	flex-direction: column 
-	margin-top: -2.3%
 	height: 100%
 #bgimage 
-	position: absolute 
+	position: fixed
 	left: 0 
 	width: 100% 
-	max-height: 99% 
-	opacity: 10% 
+	opacity: 5% 
 	z-index: 0 
 	object-fit: cover 
 	filter: blur(15px) 
 	overflow: hidden 
 	pointer-events: none 
-#topDiv 
-	display: flex 
-	flex-direction: row 
-	height: 17vh
-#name 
-	font-size: 8.5vh
-	border-right: 8px solid $offWhite
-	padding-right: 71px 
-	padding-left: 25px 
-	letter-spacing: -3px 
-#introBox 
-	width: 62% 
-	padding-left: 50px 
-	margin-top: 1.9% 
-#intro 
-	font-size: 3.5vh
-#main3Columns 
-	display: flex 
-	flex-direction: row 
-	height: 83vh
-.main3Children 
-	flex: 1 
-	display: flex 
-	flex-direction: column 
-#column1box1 
-	flex: 1 
-	background: linear-gradient(rgba(195, 79, 179, 0.7), rgba(175, 59, 159, 0.8)) 
-	margin: 10px 
-#resumeText 
-	color: $offWhite
-	font-size: 6vh
-	text-align: left 
-	transform: translateY(28%) 
-	margin: 0 
-	margin-left: 20px 
-	margin-top: -20px 
-	padding-bottom: 15px
-a 
-	color: $offWhite
-	text-decoration: none 
-	&:link 
-		border-bottom: 2px solid $offWhite
-	&:hover 
-		color: #ffffff 
-		border-bottom: 2px solid #ffffff 
-	&.L2 
-		&:link 
-			border-bottom: 2px solid $offWhite
-		&:hover 
-			color: #ffffff 
-			border-bottom: 2px solid #ffffff 
-#column1box2 
-	flex: 2 
-	background: linear-gradient(rgba(147, 75, 165, 0.7), rgba(127, 55, 145, 0.8)) 
-	margin: 10px 
-#column2box1 
-	flex: 1
-	background: linear-gradient(rgba(98, 72, 152, 0.7), rgba(78, 52, 132, 0.8)) 
-	margin: 10px 
-#column3box1 
-	flex: 8 
-	background: linear-gradient(rgba(50, 68, 138, 0.7), rgba(30, 48, 118, 0.8)) 
-	margin: 10px 
-#column3box2 
-	flex: 1 
-	background: linear-gradient(rgba(2, 64, 125, 0.7), rgba(30, 48, 118, 0.8)) 
-	margin: 10px 
-.titleText 
-	color: $offWhite
-	font-size: 6vh
-	margin: 0 
-	margin-top: 1% 
-	margin-left: 20px 
-.underline 
-	text-decoration: underline 
-	font-size: 110% 
-.resumeText
-	color: white 
-	font-family: IBMPlexMono 
-	font-size: 2.8vh
-	margin-left: 15px 
-	padding-right: 15px
-.listText
-	color: white 
-	font-family: IBMPlexMono 
-	font-size: 2.3vh
-	margin-left: 15px 
-	padding-right: 15px
-.adjustIcon 
-	font-size: 90% 
-.adjustOtherIcon 
-	font-size: 90% 
+#navigation
+	background: linear-gradient($green 90%, $darkGreen 10%)
+	display: block
+	width: 100%
+	height: 105px
+	position: relative
+#bigName
+	font-family: HelveticaNeue
+	font-size: 60px
+	margin-left: 15px
+	margin-top: 8px
+#body
+	display: block
+	max-width: 960px
+	margin: 0px auto
+	color: $black
+	word-wrap: break-word
+	padding: 15px
+#midName
+	font-size: 40px
+	font-weight: 900
+	text-decoration-thickness: 60px
+#subTitle
+	font-size: 30px
+	font-weight: 900
+	color: $grey
+.paragraph1
+	font-size: 20px
+#lineBreak
+	border: 2px dashed $lightBrown
+.tableTitle
+	font-size: 23px
+.icons
+	width: 25px
+	height: 25px
+	vertical-align: middle
+#footer
+	background: $green
+	display: flex
+	flex-direction: column
+	width: 100%
+	height: 400px
+	position: relative
+	align-items: center
+	justify-content: flex-end
+
+#footerText0
+	font-family: Satisfy
+	font-size: 40px
+	color: $white
+	margin-bottom: -45px
+#footerText1
+	font-family: Satisfy
+	font-size: 40px
+	color: $white
+	margin-bottom: -10px
+#footerText2
+	font-size: 15px
+	color: $white
+	margin-bottom: 120px
+#footerText3
+	font-size: 15px
+	color: $white
+#footerText4
+	font-size: 15px
+	color: $white
+	margin-top: -10px
