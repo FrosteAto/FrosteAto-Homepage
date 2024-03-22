@@ -131,7 +131,7 @@ a.image-link2:hover {
   position: relative;
   align-items: center;
   justify-content: flex-end;
-  margin-bottom: -5px;
+  margin-top: -20px;
 }
 
 #footerText0 {
@@ -151,7 +151,7 @@ a.image-link2:hover {
 #footerText2 {
   font-size: 15px;
   color: rgb(240, 241, 235);
-  margin-bottom: 120px;
+  margin-bottom: 100px;
 }
 
 #footerText3 {
