@@ -131,6 +131,7 @@ a.image-link2:hover {
   position: relative;
   align-items: center;
   justify-content: flex-end;
+  margin-bottom: -5px;
 }
 
 #footerText0 {
