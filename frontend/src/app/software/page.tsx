@@ -51,6 +51,9 @@ const competencies: { label: string; items: CompetencyItem[] }[] = [
       { label: "Figma", icon: { kind: "fa", icon: "fa-brands fa-figma", color: "#7c1cb4" } },
       { label: "Photoshop", icon: { kind: "img", src: "/images/cc.png" } },
       { label: "Clip Studio Paint", icon: { kind: "img", src: "/images/csp.png" } },
+      { label: "GIMP", icon: { kind: "img", src: "/images/gimp.svg" } },
+      { label: "Krita", icon: { kind: "img", src: "/images/krita.svg" } },
+      { label: "Lightroom", icon: { kind: "img", src: "/images/lightroom.svg" } },
     ],
   },
 ];
