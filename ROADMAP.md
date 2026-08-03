@@ -18,80 +18,32 @@ piece of content, or a decision. Front-loading these means I can keep
 working through the phases below without stopping. Grouped by how soon
 they're actually needed.
 
-**Blocking right now (Phase 2):**
+**Resolved:**
 
-- [ ] **Install the Postgres server.** Only the client library (`psql`) is
-      on this machine - the server isn't. I asked for this once already and
-      it doesn't look like it landed yet (`pacman -Q postgresql` still comes
-      back not-found). Run:
-      ```
-      sudo pacman -S postgresql
-      sudo -iu postgres initdb --locale=C.UTF-8 -D /var/lib/postgres/data
-      sudo systemctl enable --now postgresql
-      ```
+- [x] Postgres server installed and running.
+- [x] Admin login for `/admin` created (credentials given in chat, not
+      repeated here since this file is public - worth rotating the password
+      away from the placeholder one before this ever goes near production).
+- [x] Photo organization: **albums primarily, tags as a secondary
+      filter/cross-cut.**
+- [x] DigitalOcean Spaces: deferred, use placeholders for now - the local
+      disk Flysystem adapter already works for dev, so this doesn't block
+      building the Photography page. Only matters for Phase 6 (production).
+- [x] Bandcamp: no albums exist yet, use placeholders for the Music page.
+- [x] FrosteArch content: source is
+      [github.com/FrosteAto/FrosteArch](https://github.com/FrosteAto/FrosteArch) -
+      base the page on its README. Layout idea: three logos up top for the
+      three flavours, scroll down for each one's features, derived from the
+      repo/README rather than invented.
+- [x] DNS cutover and content pass: explicitly deferred to later - not
+      blocking anything right now.
 
-      Done now
+**Still open, no rush:**
 
-
-- [ ] **Admin login for `/admin`.** Tell me an email + password to create
-      (or say "generate one" and I'll make a random one and hand it to you
-      once via chat - rotate it after).
-
-      email should be dan.exparrot@protonmail.com and password for now can just be admin123
-
-**Needed before Phase 2 (Photos) can fully finish:**
-
-- [ ] A DigitalOcean account, if you don't already have one.
-- [ ] A DigitalOcean **Space** (object storage bucket) for photos, plus a
-      **Spaces access key + secret key** (DO dashboard -> API -> Spaces
-      Keys). Hand me the keys and I'll put them straight into `.env.local`
-      (gitignored, never committed) - don't paste them anywhere that gets
-      committed.
-- [ ] Decision: organize photos by **albums**, **tags**, or **both**? Affects
-      the Photography page layout.
-
-      Organise by album and tags ideally, but album primarily. For the DO stuff, use placeholders for now.
-
-**Needed for Phase 4 (Music):**
-
-- [ ] Bandcamp URLs for whatever albums exist/are planned - just links, no
-      credentials.
-
-      None exist, use placeholders
-
-**Needed for Phase 5 (FrosteArch):**
-
-- [ ] Real content: what FrosteArch actually is, screenshots, download
-      links/repo, changelog. I don't know anything about it beyond "custom
-      Linux ISO" and won't invent details.
-
-      FrosteArch is https://github.com/FrosteAto/FrosteArch
-      Base it off the README for now.
-      My general idea if for the page to have three logos at the top with the three flavours, and when you scroll down it tells you about each one's main features and whatnot. Derive from the repo and readme.
-
-**Needed for Phase 6 (Deployment):**
-
-- [ ] **Create the droplet yourself** in the DigitalOcean dashboard - I
-      won't spend your money without you taking that step directly. Cheapest
-      plan that supports Docker is fine to start (1 vCPU / 1GB is enough for
-      Next.js + Symfony + Postgres at this scale). Give me the droplet's IP
-      once it exists.
-- [ ] SSH access to that droplet - either add a key of mine/yours and tell
-      me, or you run the deploy commands I hand you yourself each time.
-      Given your "I push, not you" preference on git, you may want the same
-      rule for deploys - your call, just tell me which.
-- [ ] Where `0brien.dev` DNS is currently managed (which registrar), so I
-      can give you the exact record to change when we cut over from GitHub
-      Pages.
-
-      We'll do this another time.
-
-**Content pass (Phase 1 follow-up, no rush):**
-
-- [ ] Review/rewrite: Home intro copy, whether "Competencies" is current,
-      any Software Development projects to add or drop.
-
-      We'll do this another time
+- [ ] DigitalOcean account + Spaces bucket + access keys, whenever Phase 6
+      gets close.
+- [ ] Droplet creation (you create it, I won't spend your money), SSH access
+      model, and DNS registrar info - all Phase 6, deferred per above.
 
 ## System dependencies
 
@@ -118,11 +70,7 @@ enabled without touching system config via `backend`'s
 `composer`/`php bin/console` command in this session) - `pgsql`/`gd` needed
 actual package installs since their `.so` files didn't exist at all.
 
-**Still needed (see "Needs from you" above):**
-
-| Dependency | Why | Install command |
-|---|---|---|
-| `postgresql` (server) | Local dev database | `sudo pacman -S postgresql` + `initdb` + `systemctl enable --now postgresql` (full commands above) |
+| `postgresql` (server) | Local dev database | `sudo pacman -S postgresql` + `initdb --locale=C.UTF-8 -D /var/lib/postgres/data` + `systemctl enable --now postgresql` |
 
 **Will be needed later, but remotely (on the droplet, not this machine):**
 
@@ -176,13 +124,19 @@ actual package installs since their `.so` files didn't exist at all.
       `bin/console app:create-admin-user` command creates/resets the one
       admin account (no public registration form, intentionally)
 - [x] Container lints clean (`bin/console lint:container`)
-- [ ] **Blocked:** create the actual database + run migrations, verify
-      `/api` and `/admin` come up in a browser, log in - needs Postgres
-      server (see "Needs from you")
+- [x] Database created, initial migration generated + run, admin user
+      created, `/api` and `/admin` verified end-to-end (login, then the
+      Photos CRUD index renders with no errors). One gotcha worth knowing:
+      Symfony 8.1's admin login uses a new "same-origin" CSRF strategy that
+      validates via `Origin`/`Referer`/`Sec-Fetch-Site` headers instead of a
+      classic session token - real browsers send these automatically, but
+      testing with `curl` requires adding `-H "Origin: ..."` and
+      `-H "Referer: ..."` manually or the login POST gets silently rejected.
 - [ ] Provision DigitalOcean Spaces bucket, swap the Flysystem adapter from
-      `local` to `aws` once the bucket + keys exist
-- [ ] Build the real Photography page in Next.js: gallery grid + lightbox, fetching from the API
-- [ ] Implement the album/tag organization scheme once you've picked one
+      `local` to `aws` once the bucket + keys exist (deferred - not blocking)
+- [ ] Build the real Photography page in Next.js: gallery grid + lightbox,
+      organized by album (primary) with tags as a secondary filter, fetching
+      from the API - can start now, local disk storage already works
 
 ## Phase 3 - Backend: Blog
 
@@ -194,13 +148,15 @@ actual package installs since their `.so` files didn't exist at all.
 
 ## Phase 4 - Music
 
-- [ ] Decide data source: hardcoded list vs simple entity in the Symfony backend
-- [ ] Build Music page: album list with cover art, links/embeds to Bandcamp
+- [ ] No albums exist yet - build the Music page with placeholder content,
+      static (no backend needed), ready to swap in real Bandcamp links later
 
 ## Phase 5 - FrosteArch
 
-- [ ] Gather real content: what FrosteArch is, screenshots, download links, changelog
-- [ ] Build static FrosteArch page with that content
+- [ ] Pull content from [github.com/FrosteAto/FrosteArch](https://github.com/FrosteAto/FrosteArch)'s
+      README rather than inventing anything
+- [ ] Build the page: three logos up top for the three flavours, scroll down
+      for each flavour's features, derived from the repo/README
 - [ ] (Later, optional) dynamic download counters / release info pulled from GitHub releases or a build pipeline
 
 ## Phase 6 - Deployment & Hosting
