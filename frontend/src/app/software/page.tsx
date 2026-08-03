@@ -53,7 +53,7 @@ const competencies: { label: string; items: CompetencyItem[] }[] = [
       { label: "Clip Studio Paint", icon: { kind: "img", src: "/images/csp.png" } },
       { label: "GIMP", icon: { kind: "img", src: "/images/gimp.svg" } },
       { label: "Krita", icon: { kind: "img", src: "/images/krita.svg" } },
-      { label: "Lightroom", icon: { kind: "img", src: "/images/lightroom.svg" } },
+      { label: "darktable", icon: { kind: "img", src: "/images/darktable.svg" } },
     ],
   },
 ];
