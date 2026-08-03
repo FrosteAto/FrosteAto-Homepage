@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --color-cream: #f0f1eb;
+  --color-light-green: #a4d8c2;
+  --color-green: #99cab5;
+  --color-dark-green: #89b5a2;
+  --color-light-brown: #bcada3;
+  --color-dark-brown: #a67d63;
+  --color-blue: #abc8d7;
+  --color-ink: #0a0a0a;
+  --color-grey: #8b8b8b;
+}
+
+@theme inline {
+  --color-cream: var(--color-cream);
+  --color-light-green: var(--color-light-green);
+  --color-green: var(--color-green);
+  --color-dark-green: var(--color-dark-green);
+  --color-light-brown: var(--color-light-brown);
+  --color-dark-brown: var(--color-dark-brown);
+  --color-blue: var(--color-blue);
+  --color-ink: var(--color-ink);
+  --color-grey: var(--color-grey);
+
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-accent: var(--font-accent);
+  --font-plex-mono: var(--font-plex-mono);
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body), monospace;
+}
+
+a.text-link {
+  color: var(--color-ink);
+  background: linear-gradient(transparent 60%, var(--color-light-green) 40%);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+a.text-link:hover {
+  background: linear-gradient(transparent 60%, var(--color-dark-green) 40%);
+}
