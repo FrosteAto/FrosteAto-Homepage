@@ -6,22 +6,52 @@ export const metadata: Metadata = {
   title: "Software Development | FrosteAto",
 };
 
-const competencies = [
+type CompetencyIcon =
+  | { kind: "fa"; icon: string; color: string }
+  | { kind: "img"; src: string };
+
+type CompetencyItem = { label: string; icon: CompetencyIcon };
+
+const competencies: { label: string; items: CompetencyItem[] }[] = [
   {
     label: "Game Dev",
-    items: ["Unity", "Ren'py", "C#", "C++", "Win32", "DirectX"],
+    items: [
+      { label: "Unity", icon: { kind: "fa", icon: "fa-brands fa-unity", color: "#1f1f1f" } },
+      { label: "Ren'py", icon: { kind: "img", src: "/images/rp.png" } },
+      { label: "C#", icon: { kind: "img", src: "/images/cs.png" } },
+      { label: "C++", icon: { kind: "img", src: "/images/c++.png" } },
+      { label: "Win32", icon: { kind: "img", src: "/images/windows.png" } },
+      { label: "DirectX", icon: { kind: "img", src: "/images/dx.png" } },
+    ],
   },
   {
     label: "Front-End",
-    items: ["HTML", "CSS", "SASS", "Javascript", "React"],
+    items: [
+      { label: "HTML", icon: { kind: "fa", icon: "fa-solid fa-code", color: "#24b953" } },
+      { label: "CSS", icon: { kind: "fa", icon: "fa-brands fa-css3", color: "#243ab9" } },
+      { label: "SASS", icon: { kind: "fa", icon: "fa-brands fa-sass", color: "#b92480" } },
+      { label: "Javascript", icon: { kind: "fa", icon: "fa-brands fa-js", color: "#cf631a" } },
+      { label: "React", icon: { kind: "fa", icon: "fa-brands fa-react", color: "#24d4d4" } },
+    ],
   },
   {
     label: "Back-End",
-    items: ["Python", "MS Access", "SQL", "PHP", "Java", "C"],
+    items: [
+      { label: "Python", icon: { kind: "fa", icon: "fa-brands fa-python", color: "#918700" } },
+      { label: "MS Access", icon: { kind: "fa", icon: "fa-solid fa-database", color: "#a12e1f" } },
+      { label: "SQL", icon: { kind: "fa", icon: "fa-solid fa-server", color: "#6e93d8" } },
+      { label: "PHP", icon: { kind: "fa", icon: "fa-brands fa-php", color: "#9c9fbd" } },
+      { label: "Java", icon: { kind: "fa", icon: "fa-brands fa-java", color: "#cf1a1a" } },
+      { label: "C", icon: { kind: "img", src: "/images/c.png" } },
+    ],
   },
   {
     label: "Other",
-    items: ["Figma", "Photoshop", "Clip Studio Paint"],
+    items: [
+      { label: "Figma", icon: { kind: "fa", icon: "fa-brands fa-figma", color: "#7c1cb4" } },
+      { label: "Photoshop", icon: { kind: "img", src: "/images/cc.png" } },
+      { label: "Clip Studio Paint", icon: { kind: "img", src: "/images/csp.png" } },
+    ],
   },
 ];
 
@@ -86,14 +116,34 @@ export default function SoftwarePage() {
 
       <section>
         <h2 className="text-2xl font-black text-grey">Competencies</h2>
-        <dl className="mt-4 space-y-2">
+        <div className="mt-4 space-y-2">
           {competencies.map((c) => (
-            <div key={c.label} className="text-lg">
-              <dt className="inline font-bold">{c.label}: </dt>
-              <dd className="inline">{c.items.join(", ")}</dd>
-            </div>
+            <p key={c.label} className="text-lg leading-loose">
+              <span className="font-bold">{c.label}: </span>
+              {c.items.map((item, i) => (
+                <span key={item.label}>
+                  {i > 0 && ", "}
+                  {item.icon.kind === "fa" ? (
+                    <i
+                      className={`${item.icon.icon} align-middle`}
+                      style={{ color: item.icon.color }}
+                      aria-hidden
+                    />
+                  ) : (
+                    <Image
+                      src={item.icon.src}
+                      alt=""
+                      width={22}
+                      height={22}
+                      className="inline-block h-[22px] w-[22px] align-middle object-contain"
+                    />
+                  )}{" "}
+                  {item.label}
+                </span>
+              ))}
+            </p>
           ))}
-        </dl>
+        </div>
       </section>
 
       <hr className="border-2 border-dashed border-light-brown" />
