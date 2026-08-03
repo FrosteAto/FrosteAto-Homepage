@@ -1,6 +1,6 @@
 # 0brien.dev
 
-Personal site and portfolio, live at [0brien.dev](https://0brien.dev).
+Personal site and portfolio is being remade, please bear with me!
 
 ## Structure
 
