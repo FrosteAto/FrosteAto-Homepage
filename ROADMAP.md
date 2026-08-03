@@ -11,6 +11,12 @@ ship as static/near-static content first.
 
 Status legend: `[x]` done, `[ ]` not started, `[~]` in progress / partial.
 
+**Local dev DB has seed data** - one album ("Sample Album"), one photo
+(placeholder cat image), one tag ("landscape"), one published post
+("Hello, World"), and one draft post, all inserted directly via a
+throwaway script to verify the Photography/Blog pipelines end-to-end.
+Safe to delete from `/admin` any time - it's local-only, not in git.
+
 ## Needs from you
 
 Everything below is something only you can do - an account, a payment, a
@@ -61,6 +67,8 @@ doesn't rediscover these one at a time via failed builds.
 | `php-gd` | Image handling (EasyAdmin image field, thumbnailing later) | `sudo pacman -S php-gd` |
 | `iconv`, `intl` PHP extensions | Required by Symfony itself | `.so` files ship with `php`, just needed enabling - done via a project-local `.dev/php-extra.ini`, no sudo required for this part |
 
+| `postgresql` (server) | Local dev database | `sudo pacman -S postgresql` + `initdb --locale=C.UTF-8 -D /var/lib/postgres/data` + `systemctl enable --now postgresql` |
+
 Note: this machine's PHP builds several extensions as loadable `.so`
 modules rather than compiling them in, and Arch splits some into separate
 packages (`php-pgsql`, `php-gd`, etc.) that `composer create-project`
@@ -69,8 +77,6 @@ enabled without touching system config via `backend`'s
 `PHP_INI_SCAN_DIR=/etc/php/conf.d:<repo>/.dev` env var (see any backend
 `composer`/`php bin/console` command in this session) - `pgsql`/`gd` needed
 actual package installs since their `.so` files didn't exist at all.
-
-| `postgresql` (server) | Local dev database | `sudo pacman -S postgresql` + `initdb --locale=C.UTF-8 -D /var/lib/postgres/data` + `systemctl enable --now postgresql` |
 
 **Will be needed later, but remotely (on the droplet, not this machine):**
 
@@ -132,31 +138,55 @@ actual package installs since their `.so` files didn't exist at all.
       classic session token - real browsers send these automatically, but
       testing with `curl` requires adding `-H "Origin: ..."` and
       `-H "Referer: ..."` manually or the login POST gets silently rejected.
+- [x] API filters added (album/album.slug/tags/tags.slug on Photo, slug on
+      Album) plus a computed `imageUrl` field, so the frontend can browse by
+      album or tag without extra backend work
+- [x] Real Photography page: `/photography` lists albums by cover photo,
+      `/photography/[slug]` shows an album's photos in a grid that opens a
+      keyboard-navigable lightbox, tag chips link to `/photography/tag/[slug]`
+      as the secondary cross-album view. Verified end-to-end with seeded
+      sample data (album, photo, tag) - screenshots and console-error check
+      all clean.
 - [ ] Provision DigitalOcean Spaces bucket, swap the Flysystem adapter from
-      `local` to `aws` once the bucket + keys exist (deferred - not blocking)
-- [ ] Build the real Photography page in Next.js: gallery grid + lightbox,
-      organized by album (primary) with tags as a secondary filter, fetching
-      from the API - can start now, local disk storage already works
+      `local` to `aws` once the bucket + keys exist (deferred - not blocking,
+      local disk works fine for dev and even a small-scale launch)
 
 ## Phase 3 - Backend: Blog
 
-- [ ] `Post` entity (title, slug, body, tags, publishedAt, draft flag) via API Platform
-- [ ] Write/edit posts from the EasyAdmin panel
-- [ ] Build the real Blog page: post list + individual post view in Next.js
-- [ ] RSS feed
+- [x] `Post` entity (title, slug, body, publishedAt) via API Platform -
+      null `publishedAt` means draft
+- [x] `PublishedPostExtension` (Doctrine query extension) hides drafts and
+      future-dated posts from anyone who isn't `ROLE_ADMIN`, for both the
+      collection and single-item queries - a guessed slug can't leak a draft
+- [x] Write/edit posts from the EasyAdmin panel, added to the dashboard menu
+- [x] Real Blog page: list with excerpts + dates, individual post view,
+      verified end-to-end (seeded a published post and a draft, confirmed
+      only the published one appears via the API and the page)
+- [ ] RSS feed (not done - nice-to-have, not blocking)
 - [ ] (Later, optional) comments, search across blog + photos
 
 ## Phase 4 - Music
 
-- [ ] No albums exist yet - build the Music page with placeholder content,
-      static (no backend needed), ready to swap in real Bandcamp links later
+- [x] No albums exist yet - built the page with an honest empty state
+      rather than fake data, typed `Release[]` array ready to fill in real
+      Bandcamp entries. Mentions the real Drop By Drop score credit.
 
 ## Phase 5 - FrosteArch
 
-- [ ] Pull content from [github.com/FrosteAto/FrosteArch](https://github.com/FrosteAto/FrosteArch)'s
-      README rather than inventing anything
-- [ ] Build the page: three logos up top for the three flavours, scroll down
-      for each flavour's features, derived from the repo/README
+- [x] Pulled real content from
+      [github.com/FrosteAto/FrosteArch](https://github.com/FrosteAto/FrosteArch)'s
+      README: tagline, the three editions (Desktop/Server/Node) and their
+      actual descriptions, the FL Studio + Hatsune Miku music production
+      feature
+- [x] Built the page: logo + tagline hero, then each edition scroll-reveals
+      (Framer Motion `whileInView`) with a real screenshot from the repo.
+      Note: the repo only has one main logo (not three per-flavour logos as
+      originally pictured) - used a representative screenshot per edition
+      instead, flagging the substitution rather than inventing logos that
+      don't exist
+- [x] Images downloaded from the repo and resized/recompressed (~14MB of
+      source screenshots down to ~1.9MB via a throwaway `sharp` script - no
+      image tooling was on this machine and installing any needs sudo)
 - [ ] (Later, optional) dynamic download counters / release info pulled from GitHub releases or a build pipeline
 
 ## Phase 6 - Deployment & Hosting
