@@ -4,6 +4,9 @@ import { getPosts, type Post } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Blog | Daniel O'Brien",
+  alternates: {
+    types: { "application/rss+xml": "/blog/rss.xml" },
+  },
 };
 
 function formatDate(iso: string | null) {
@@ -32,7 +35,12 @@ export default async function BlogPage() {
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-4 py-10 sm:px-6">
-      <h1 className="font-[family-name:var(--font-heading)] text-4xl">Blog</h1>
+      <div className="flex items-baseline justify-between">
+        <h1 className="font-[family-name:var(--font-heading)] text-4xl">Blog</h1>
+        <Link href="/blog/rss.xml" className="text-sm text-link">
+          RSS
+        </Link>
+      </div>
 
       {unavailable && (
         <p className="text-ink/60">
