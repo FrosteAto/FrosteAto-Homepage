@@ -172,30 +172,34 @@ export default function FrosteArchPage() {
         </Link>
       </div>
 
-      <div className="mx-auto grid w-full max-w-4xl grid-cols-1 gap-4 px-4 sm:grid-cols-3 sm:px-6">
-        {overview.map((edition) => (
-          <a
-            key={edition.id}
-            href={`#${edition.id}`}
-            className="group block overflow-hidden rounded-lg border border-light-brown/40 bg-white/40"
-          >
-            <div className="relative aspect-video w-full overflow-hidden">
-              <Image
-                src={edition.image}
-                alt={edition.name}
-                fill
-                sizes="(max-width: 640px) 100vw, 33vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-            <p className="p-3 text-center font-[family-name:var(--font-heading)] text-lg">
-              {edition.name}
-            </p>
-          </a>
-        ))}
+      <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8 lg:gap-10">
+          {overview.map((edition) => (
+            <a
+              key={edition.id}
+              href={`#${edition.id}`}
+              aria-label={`${edition.name} edition`}
+              className="group relative block overflow-hidden rounded-2xl border border-light-brown/40 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-dark-green/50 hover:shadow-xl"
+            >
+              <div className="relative aspect-square w-full overflow-hidden sm:aspect-[4/5]">
+                <Image
+                  src={edition.image}
+                  alt={`${edition.name} edition`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0" />
+                <p className="absolute bottom-5 left-5 font-[family-name:var(--font-heading)] text-3xl text-white drop-shadow-md">
+                  {edition.name}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
 
-      <div className="mt-4 flex flex-col divide-y divide-light-brown/30">
+      <div className="mt-6 flex flex-col divide-y divide-light-brown/30">
         <FlavourSection
           id="desktop"
           name="Desktop Edition"
