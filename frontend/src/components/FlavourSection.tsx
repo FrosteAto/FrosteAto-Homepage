@@ -24,7 +24,7 @@ export default function FlavourSection({
       className="mx-auto w-full max-w-6xl scroll-mt-24 px-4 py-12 sm:px-8 lg:px-12"
     >
       <p className="font-[family-name:var(--font-heading)] text-3xl">{name}</p>
-      <div className="mt-4 flex max-w-3xl flex-col gap-4 text-lg leading-relaxed text-ink/80">
+      <div className="mt-4 flex flex-col gap-4 text-lg leading-relaxed text-ink/80">
         {paragraphs.map((p, i) => (
           <p key={i}>{p}</p>
         ))}
