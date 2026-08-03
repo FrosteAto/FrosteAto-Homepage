@@ -188,6 +188,12 @@ actual package installs since their `.so` files didn't exist at all.
 - [x] Images downloaded from the repo and resized/recompressed (~14MB of
       source screenshots down to ~1.9MB via a throwaway `sharp` script - no
       image tooling was on this machine and installing any needs sudo)
+- [x] Deepened per-edition content beyond the README: real feature
+      write-ups (Desktop's coding/gaming/creative/music-production/everyday
+      breakdown, Server's firewall/Plex/Cockpit-NAS/Home Assistant/Glance
+      dashboard, Node's minimal-appliance framing) and a collapsible full
+      package list per edition, sourced from each edition's `mode.sh` and
+      `first-boot.md` in the repo plus commit history for context
 - [ ] (Later, optional) dynamic download counters / release info pulled from GitHub releases or a build pipeline
 
 ## Phase 6 - Deployment & Hosting
