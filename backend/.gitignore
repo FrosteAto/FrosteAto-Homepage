@@ -1,0 +1,22 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+# Symfony has been observed auto-generating a real APP_SECRET into
+# .env.<env> files (e.g. .env.dev) on first run, which the recipe above
+# does NOT gitignore since .env.$APP_ENV is normally meant to hold committed
+# non-secret defaults. Treat that as untrusted here and never commit it.
+/.env.dev
+/.env.prod
+/.env.test
+
+# Uploaded photo files (local Flysystem storage stand-in for DO Spaces -
+# see ROADMAP.md Phase 2). User content, not source - never committed.
+/public/media/
