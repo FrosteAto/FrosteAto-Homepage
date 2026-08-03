@@ -162,7 +162,8 @@ actual package installs since their `.so` files didn't exist at all.
 - [x] Real Blog page: list with excerpts + dates, individual post view,
       verified end-to-end (seeded a published post and a draft, confirmed
       only the published one appears via the API and the page)
-- [ ] RSS feed (not done - nice-to-have, not blocking)
+- [x] RSS feed at `/blog/rss.xml`, valid RSS 2.0, published posts only,
+      linked from the blog page and declared for feed-reader autodiscovery
 - [ ] (Later, optional) comments, search across blog + photos
 
 ## Phase 4 - Music
