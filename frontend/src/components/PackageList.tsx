@@ -2,20 +2,17 @@
 
 import { useState } from "react";
 
-export default function PackageList({
-  official,
-  aur,
-  flatpak,
-}: {
-  official: string[];
-  aur?: string[];
-  flatpak?: string[];
-}) {
+export type PackageGroup = {
+  category: string;
+  items: string[];
+};
+
+export default function PackageList({ groups }: { groups: PackageGroup[] }) {
   const [open, setOpen] = useState(false);
-  const total = official.length + (aur?.length ?? 0) + (flatpak?.length ?? 0);
+  const total = groups.reduce((sum, g) => sum + g.items.length, 0);
 
   return (
-    <div className="mt-4">
+    <div className="mt-6">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -26,32 +23,24 @@ export default function PackageList({
       </button>
 
       {open && (
-        <div className="mt-3 flex flex-col gap-3 text-sm">
-          <PackageGroup label="Official repos" items={official} />
-          {aur && aur.length > 0 && <PackageGroup label="AUR" items={aur} />}
-          {flatpak && flatpak.length > 0 && (
-            <PackageGroup label="Flatpak" items={flatpak} />
-          )}
+        <div className="mt-3 flex flex-col gap-4 text-sm">
+          {groups.map((group) => (
+            <div key={group.category}>
+              <p className="font-bold text-ink/70">{group.category}</p>
+              <div className="mt-1 flex flex-wrap gap-1.5">
+                {group.items.map((pkg) => (
+                  <code
+                    key={pkg}
+                    className="rounded bg-light-brown/20 px-1.5 py-0.5 font-[family-name:var(--font-plex-mono)] text-xs"
+                  >
+                    {pkg}
+                  </code>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       )}
-    </div>
-  );
-}
-
-function PackageGroup({ label, items }: { label: string; items: string[] }) {
-  return (
-    <div>
-      <p className="font-bold text-ink/70">{label}</p>
-      <div className="mt-1 flex flex-wrap gap-1.5">
-        {items.map((pkg) => (
-          <code
-            key={pkg}
-            className="rounded bg-light-brown/20 px-1.5 py-0.5 font-[family-name:var(--font-plex-mono)] text-xs"
-          >
-            {pkg}
-          </code>
-        ))}
-      </div>
     </div>
   );
 }
