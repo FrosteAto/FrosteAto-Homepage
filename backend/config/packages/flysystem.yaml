@@ -1,0 +1,14 @@
+# Read the documentation at https://github.com/thephpleague/flysystem-bundle/blob/master/docs/1-getting-started.md
+#
+# Local disk storage for now, written straight into public/ so the dev
+# webserver can serve files directly at the vich_uploader uri_prefix below
+# with no custom streaming controller needed. Once a DigitalOcean Spaces
+# bucket exists (ROADMAP.md Phase 2), swap the adapter to 'aws' with an
+# S3Client service pointed at the Spaces endpoint (its CDN serves the files
+# instead) - league/flysystem-aws-s3-v3 is already installed for that.
+flysystem:
+    storages:
+        photos.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/public/media/photos'
