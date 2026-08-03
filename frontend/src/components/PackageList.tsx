@@ -23,7 +23,7 @@ export default function PackageList({ groups }: { groups: PackageGroup[] }) {
       </button>
 
       {open && (
-        <div className="mt-3 flex flex-col gap-4 text-sm">
+        <div className="mt-3 grid grid-cols-1 gap-x-10 gap-y-4 text-sm sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {groups.map((group) => (
             <div key={group.category}>
               <p className="font-bold text-ink/70">{group.category}</p>
