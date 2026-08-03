@@ -1,15 +1,68 @@
 import type { Metadata } from "next";
-import ComingSoon from "@/components/ComingSoon";
+import Link from "next/link";
+import { getPosts, type Post } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Blog | Daniel O'Brien",
 };
 
-export default function BlogPage() {
+function formatDate(iso: string | null) {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function excerpt(body: string, length = 200) {
+  const flat = body.replace(/\s+/g, " ").trim();
+  return flat.length > length ? `${flat.slice(0, length).trim()}…` : flat;
+}
+
+export default async function BlogPage() {
+  let posts: Post[] = [];
+  let unavailable = false;
+
+  try {
+    posts = await getPosts();
+  } catch {
+    unavailable = true;
+  }
+
   return (
-    <ComingSoon
-      title="Blog"
-      description="Posts about whatever I feel like writing about, coming once the blog backend is in place."
-    />
+    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-4 py-10 sm:px-6">
+      <h1 className="font-[family-name:var(--font-heading)] text-4xl">Blog</h1>
+
+      {unavailable && (
+        <p className="text-ink/60">
+          Couldn&apos;t reach the blog backend right now - check back soon.
+        </p>
+      )}
+
+      {!unavailable && posts.length === 0 && (
+        <p className="text-ink/60">Nothing posted yet - check back soon.</p>
+      )}
+
+      <div className="flex flex-col gap-8">
+        {posts.map((post) => (
+          <article key={post.id} className="border-b border-light-brown/40 pb-8">
+            <Link href={`/blog/${post.slug}`}>
+              <h2 className="font-[family-name:var(--font-heading)] text-2xl hover:text-dark-green">
+                {post.title}
+              </h2>
+            </Link>
+            <p className="mt-1 text-sm text-grey">{formatDate(post.publishedAt)}</p>
+            <p className="mt-3 leading-relaxed text-ink/80">{excerpt(post.body)}</p>
+            <Link
+              href={`/blog/${post.slug}`}
+              className="mt-2 inline-block text-link"
+            >
+              Read more
+            </Link>
+          </article>
+        ))}
+      </div>
+    </main>
   );
 }
