@@ -31,5 +31,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(PhotoCrudController::class, 'Photos', 'fa fa-image');
         yield MenuItem::linkTo(AlbumCrudController::class, 'Albums', 'fa fa-folder');
         yield MenuItem::linkTo(TagCrudController::class, 'Tags', 'fa fa-tag');
+        yield MenuItem::linkTo(PostCrudController::class, 'Blog Posts', 'fa fa-pen');
     }
 }
