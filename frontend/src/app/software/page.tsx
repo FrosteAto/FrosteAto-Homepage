@@ -19,9 +19,7 @@ const competencies: { label: string; items: CompetencyItem[] }[] = [
       { label: "Unity", icon: { kind: "fa", icon: "fa-brands fa-unity", color: "#1f1f1f" } },
       { label: "Ren'py", icon: { kind: "img", src: "/images/rp.png" } },
       { label: "C#", icon: { kind: "img", src: "/images/cs.png" } },
-      { label: "C++", icon: { kind: "img", src: "/images/c++.png" } },
-      { label: "Win32", icon: { kind: "img", src: "/images/windows.png" } },
-      { label: "DirectX", icon: { kind: "img", src: "/images/dx.png" } },
+      { label: "Godot", icon: { kind: "img", src: "/images/godot.svg" } },
     ],
   },
   {
@@ -32,17 +30,17 @@ const competencies: { label: string; items: CompetencyItem[] }[] = [
       { label: "SASS", icon: { kind: "fa", icon: "fa-brands fa-sass", color: "#b92480" } },
       { label: "Javascript", icon: { kind: "fa", icon: "fa-brands fa-js", color: "#cf631a" } },
       { label: "React", icon: { kind: "fa", icon: "fa-brands fa-react", color: "#24d4d4" } },
+      { label: "Tailwind", icon: { kind: "img", src: "/images/tailwind.svg" } },
     ],
   },
   {
     label: "Back-End",
     items: [
-      { label: "Python", icon: { kind: "fa", icon: "fa-brands fa-python", color: "#918700" } },
-      { label: "MS Access", icon: { kind: "fa", icon: "fa-solid fa-database", color: "#a12e1f" } },
-      { label: "SQL", icon: { kind: "fa", icon: "fa-solid fa-server", color: "#6e93d8" } },
       { label: "PHP", icon: { kind: "fa", icon: "fa-brands fa-php", color: "#9c9fbd" } },
-      { label: "Java", icon: { kind: "fa", icon: "fa-brands fa-java", color: "#cf1a1a" } },
-      { label: "C", icon: { kind: "img", src: "/images/c.png" } },
+      { label: "Symfony", icon: { kind: "img", src: "/images/symfony.svg" } },
+      { label: "Doctrine", icon: { kind: "img", src: "/images/doctrine.svg" } },
+      { label: "SQL", icon: { kind: "fa", icon: "fa-solid fa-server", color: "#6e93d8" } },
+      { label: "Python", icon: { kind: "fa", icon: "fa-brands fa-python", color: "#918700" } },
     ],
   },
   {
