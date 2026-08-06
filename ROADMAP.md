@@ -58,15 +58,13 @@ they're actually needed.
 
 **Still open, no rush:**
 
+- [ ] Everything left to actually go live is now tracked under Phase 6
+      below (GitHub secrets, GHCR package visibility, the droplet's
+      `.env`, and DNS) - this section stays as the historical decision
+      log for the earlier open questions.
 - [ ] DigitalOcean Spaces bucket + access keys, if/when photo storage needs
       to survive a droplet rebuild - starting with a persistent Docker
       volume on the droplet instead (free, simpler, fine at this scale).
-- [ ] DNS registrar info - which registrar is `0brien.dev` on? Needed to
-      point the A/AAAA records at 209.97.187.99 and retire the GitHub Pages
-      `CNAME` setup.
-- [ ] GitHub repo secrets (droplet host/IP, the deploy private key, prod
-      `APP_SECRET`/DB password) - added by you via repo Settings once the
-      GitHub Actions workflow exists, exact values to be handed over then.
 
 ## System dependencies
 
@@ -223,16 +221,41 @@ pull + restart. The droplet never runs a build itself.
 
 - [x] Provision DigitalOcean droplet (209.97.187.99) - firewall, swap,
       Docker, deploy directory all set up (see "System dependencies")
-- [ ] Dockerfiles for `frontend/` and `backend/` (production builds)
-- [ ] `infra/docker-compose.yml`: Next.js, Symfony (PHP-FPM), Postgres, Caddy
-- [ ] `infra/Caddyfile`: reverse proxy `/` -> Next.js, `/api/*` -> Symfony, auto-HTTPS
-- [ ] `.github/workflows/deploy.yml`: build + push images to GHCR on push to
+- [x] Dockerfiles for `frontend/` and `backend/` (production builds).
+      Backend bundles a small nginx alongside PHP-FPM in the same
+      container (talks to FPM over 127.0.0.1, not a shared filesystem
+      path with Caddy) - simpler than Caddy doing FastCGI directly.
+      Frontend uses `output: standalone`. Both built and smoke-tested for
+      real on the droplet itself (no local Docker daemon on this dev
+      machine): migrations ran, nginx/php-fpm served `/api` and
+      `/admin/login`, frontend served every route incl. a graceful
+      degrade on `/blog` with the backend unreachable. One real bug
+      caught this way: `backend/.dockerignore` was excluding the
+      committed (secret-free) `.env` Symfony needs at boot - fixed.
+- [x] `infra/docker-compose.yml`: Next.js, Symfony, Postgres, Caddy
+- [x] `infra/Caddyfile`: `/api`, `/admin`, `/media` -> backend, everything
+      else -> frontend
+- [x] `.github/workflows/deploy.yml`: build + push images to GHCR on push to
       `main`, then SSH deploy (`docker compose pull && up -d`) on the droplet
-- [ ] GitHub repo secrets added by you (droplet host, deploy SSH key, prod
-      secrets) once the workflow exists and needs them
-- [ ] Point `0brien.dev` DNS at the droplet, retire the GitHub Pages `CNAME` setup
-- [ ] Real secrets (DB password, etc.) created directly on the droplet as
-      Docker env files - never in git
+- [ ] GitHub repo secrets - add these in repo Settings -> Secrets and
+      variables -> Actions once you're ready to let the workflow run:
+  - [ ] `DEPLOY_HOST` = `209.97.187.99`
+  - [ ] `DEPLOY_SSH_KEY` = contents of `~/.ssh/0brien_deploy` (the deploy
+        private key generated earlier - ask me to print it when you're
+        ready to paste it in)
+- [ ] GHCR package visibility - the first push makes the images private
+      by default; the droplet needs read access to pull them. Simplest
+      fix once the first workflow run has created the packages: go to
+      your GitHub profile -> Packages -> each `0brien-frontend` /
+      `0brien-backend` package -> Package settings -> Change visibility
+      -> Public (repo's already public, so this doesn't add any real
+      exposure)
+- [ ] `infra/.env` created directly on the droplet at `/opt/0brien/.env`
+      (real `POSTGRES_PASSWORD`/`APP_SECRET`, see `infra/.env.example`
+      for the shape) - not committed, I can generate strong values and
+      write it via SSH once you say go
+- [ ] Point `0brien.dev` DNS at 209.97.187.99 (A record), retire the GitHub
+      Pages `CNAME` setup - which registrar is `0brien.dev` on?
 
 ## Backlog / ideas (not scheduled)
 
