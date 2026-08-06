@@ -44,12 +44,29 @@ they're actually needed.
 - [x] DNS cutover and content pass: explicitly deferred to later - not
       blocking anything right now.
 
+- [x] Droplet created (209.97.187.99, Ubuntu 24.04, 1GB RAM tier) and SSH
+      access set up: a dedicated deploy keypair (`~/.ssh/0brien_deploy` on
+      the dev machine, not in the repo) was generated and its public half
+      added to the droplet. Baseline provisioning done: `ufw` enabled
+      (22/80/443 only), a 2GB swapfile (headroom for Postgres + PHP-FPM +
+      Next.js + Caddy all running on a 1GB droplet), and Docker Engine +
+      Compose plugin installed. Deploy directory at `/opt/0brien`.
+- [x] Decided: build Docker images in GitHub Actions (push to GHCR), not on
+      the droplet itself - the 1GB RAM tier is fine for *running* the stack
+      but tight for building Next.js/Symfony images. The droplet's job on
+      deploy is just `docker compose pull && up -d`.
+
 **Still open, no rush:**
 
-- [ ] DigitalOcean account + Spaces bucket + access keys, whenever Phase 6
-      gets close.
-- [ ] Droplet creation (you create it, I won't spend your money), SSH access
-      model, and DNS registrar info - all Phase 6, deferred per above.
+- [ ] DigitalOcean Spaces bucket + access keys, if/when photo storage needs
+      to survive a droplet rebuild - starting with a persistent Docker
+      volume on the droplet instead (free, simpler, fine at this scale).
+- [ ] DNS registrar info - which registrar is `0brien.dev` on? Needed to
+      point the A/AAAA records at 209.97.187.99 and retire the GitHub Pages
+      `CNAME` setup.
+- [ ] GitHub repo secrets (droplet host/IP, the deploy private key, prod
+      `APP_SECRET`/DB password) - added by you via repo Settings once the
+      GitHub Actions workflow exists, exact values to be handed over then.
 
 ## System dependencies
 
@@ -78,12 +95,14 @@ enabled without touching system config via `backend`'s
 `composer`/`php bin/console` command in this session) - `pgsql`/`gd` needed
 actual package installs since their `.so` files didn't exist at all.
 
-**Will be needed later, but remotely (on the droplet, not this machine):**
+**On the droplet (209.97.187.99), not this machine:**
 
-| Dependency | Why | Phase |
+| Dependency | Why | Status |
 |---|---|---|
-| Docker + Docker Compose | Runs the whole stack in prod | Phase 6 |
-| Caddy | Reverse proxy + auto-HTTPS | Phase 6 (via Docker Compose, not installed on host) |
+| Docker Engine + Compose plugin | Runs the whole stack in prod | [x] installed (v29.7.2 / Compose v5.4.0) |
+| `ufw` | Firewall - only 22/80/443 open | [x] enabled |
+| 2GB swapfile | Headroom on the 1GB RAM droplet | [x] created |
+| Caddy | Reverse proxy + auto-HTTPS | [ ] runs via Docker Compose, not installed on host directly |
 
 ## Phase 0 - Environment & Foundations
 
@@ -198,13 +217,22 @@ actual package installs since their `.so` files didn't exist at all.
 
 ## Phase 6 - Deployment & Hosting
 
-- [ ] Provision DigitalOcean droplet (you create it - see "Needs from you")
+Decided: auto-deploy on push from the start (not manual-first) - GitHub
+Actions builds images and pushes to GHCR, then SSHes into the droplet to
+pull + restart. The droplet never runs a build itself.
+
+- [x] Provision DigitalOcean droplet (209.97.187.99) - firewall, swap,
+      Docker, deploy directory all set up (see "System dependencies")
+- [ ] Dockerfiles for `frontend/` and `backend/` (production builds)
 - [ ] `infra/docker-compose.yml`: Next.js, Symfony (PHP-FPM), Postgres, Caddy
 - [ ] `infra/Caddyfile`: reverse proxy `/` -> Next.js, `/api/*` -> Symfony, auto-HTTPS
+- [ ] `.github/workflows/deploy.yml`: build + push images to GHCR on push to
+      `main`, then SSH deploy (`docker compose pull && up -d`) on the droplet
+- [ ] GitHub repo secrets added by you (droplet host, deploy SSH key, prod
+      secrets) once the workflow exists and needs them
 - [ ] Point `0brien.dev` DNS at the droplet, retire the GitHub Pages `CNAME` setup
-- [ ] Real secrets (DB password, Spaces keys, etc.) created directly on the droplet as `.env.local` / Docker env files - never in git
-- [ ] Manual deploy flow first (`git pull` + `docker compose up --build` on the droplet)
-- [ ] (Later, optional) CI/CD via GitHub Actions
+- [ ] Real secrets (DB password, etc.) created directly on the droplet as
+      Docker env files - never in git
 
 ## Backlog / ideas (not scheduled)
 
