@@ -205,17 +205,27 @@ export default function FrosteArchPage() {
           name="Desktop Edition"
           packages={desktopPackages}
           paragraphs={[
-            `FrosteArch Desktop is built to be a genuine daily driver, not a base install with a few extras bolted on.
-            Coding is ready from first boot: Python, PHP with Composer, Node.js with npm, Docker and Docker Compose,
-            Git, and VS Code, backed by build tooling like make and cmake. For gaming, Steam ships with Proton
-            pre-configured, alongside Gamescope, a Proton VPN client, and AMD Vulkan drivers already installed - no
-            fighting with drivers before a single game launches.`,
+            `FrosteArch Desktop is where it all began. When I first started using Linux, I did a bit of distro hopping.
+            Eventually, I got sick of the whole 'reinstalling everything' malarkey, so I began making a script to install 
+            the packages I want. Eventually, it became a distro that has EVERYTHING I could use my PC for. 
+            This is no 'hyper lightweight, bloat is the enemy' system (Though it *is* light and efficient.)`,
+            
+            `For gaming, it comes with Steam pre-installed, along with wine and proton. AMD drivers are pre-installed, 
+            so don't even think about worrying. Nowadays, what more do you need?`,
+            
+            `Coding is ready from first boot: Python, PHP with Composer, Node.js with npm, Docker and Docker Compose,
+            Git, and VS Code, backed by build tooling like make and cmake.`,
+            
             `On the creative side, Krita, Blender, Kdenlive, OBS Studio, Audacity, and Darktable cover illustration,
-            3D, video editing, streaming, and photo work. Music production gets special treatment too: a dedicated
-            setup script configures a Wine prefix specifically for FL Studio and the Hatsune Miku Piapro Studio
-            voicebank suite, sidestepping what is historically one of the most painful things to get working on
-            Linux. Underneath all of that sits ordinary desktop polish - KDE Plasma, printing and scanning support
-            via CUPS and SANE, and Wacom tablet drivers configured out of the box.`,
+            3D, video editing, streaming, and photo work.`,
+            
+            `Music production gets special treatment too: a dedicated setup script configures a Wine prefix specifically
+            for FL Studio and the Hatsune Miku V4X & Piapro Studio, sidestepping what is historically one of the 
+            most painful things to get working on Linux.`,
+             
+            `Underneath all of that sits ordinary desktop polish - KDE Plasma that is highly customised with multiple
+            themes and preset widgets, printing and scanning supportvia CUPS and SANE, and Wacom tablet drivers configured 
+            out of the box.`,
           ]}
         />
         <FlavourSection
@@ -223,20 +233,25 @@ export default function FrosteArchPage() {
           name="Server Edition"
           packages={serverPackages}
           paragraphs={[
-            `FrosteArch Server trades desktop software for a tuned set of long-running services, but keeps enough
-            local tooling - a terminal, a file manager, a text editor - to debug directly on the machine rather than
-            needing to SSH in for every little thing. Security starts with an automatic firewall: ufw is enabled by
-            default with only the ports each running service actually needs left open, rather than everything wide
-            open until someone remembers to lock it down. Plex Media Server is installed and enabled out of the box,
-            ready to point at a media library.`,
-            `For network storage, Samba handles file sharing - with wsdd making the server show up properly in
-            Windows' Network browser - and Cockpit provides a web GUI for managing shares, disks, and RAID arrays,
-            backed by smartmontools for ongoing disk health monitoring. Home Assistant runs containerized with
-            support for a Zigbee coordinator dongle, and its data survives reinstalls. Tying it together is Glance, a
-            self-hosted dashboard on port 8080 showing weather, news, and server stats - plus, going well beyond the
-            usual dashboard fare, a genuinely custom-built finances page with bank sync, budget tracking, and
-            recurring-payment detection, and meal-planning widgets, all driven by small systemd-timer helper scripts
-            running quietly in the background.`,
+            `FrosteArch Server, as the name implies, is a server-focused edition. I am aware using Arch Linux as a
+             server is somewhat unconventional, but if you know what you're doing, it works just fine.`,
+            `It keeps enough local tooling to allow localised debugging: a terminal, a file manager, a text editor, but also
+            keeps SSH open for standard remote access.`,
+            `Security's handled automatically too - ufw is enabled out of the box with only the ports each running
+            service actually needs left open, rather than everything wide open until someone remembers to lock it
+            down.`,
+            `Plex Media Server is installed and enabled from first boot, so once you point it at a library it's
+            straight into transcoding and streaming - no extra setup required.`,
+            `For network storage, Samba handles file sharing, with wsdd making the server show up properly in Windows'
+            Network browser. Cockpit sits alongside it as a proper web GUI for managing shares, disks, and RAID
+            arrays, backed by smartmontools keeping an eye on disk health in the background.`,
+            `Glance ties it all together as a self-hosted dashboard on port 8080 - weather, news, and server stats,
+            sure, but also a genuinely custom-built finances page with bank sync, budget tracking, and
+            recurring-payment detection, plus meal-planning widgets with their own recipe rotation. All of it's
+            driven by small systemd-timer helper scripts running quietly in the background.`,
+            `Home Assistant runs containerised on port 8123 for smart-home control, with support for a Zigbee
+            coordinator dongle if you plug one in. Its data lives outside the container, so it survives reinstalls,
+            and updating it is just a docker pull and a restart.`,
           ]}
         />
         <FlavourSection
