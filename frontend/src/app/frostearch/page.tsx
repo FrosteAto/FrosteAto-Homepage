@@ -205,8 +205,17 @@ export default function FrosteArchPage() {
           name="Desktop Edition"
           packages={desktopPackages}
           paragraphs={[
-            "FrosteArch Desktop is built to be a genuine daily driver, not a base install with a few extras bolted on. Coding is ready from first boot: Python, PHP with Composer, Node.js with npm, Docker and Docker Compose, Git, and VS Code, backed by build tooling like make and cmake. For gaming, Steam ships with Proton pre-configured, alongside Gamescope, a Proton VPN client, and AMD Vulkan drivers already installed - no fighting with drivers before a single game launches.",
-            "On the creative side, Krita, Blender, Kdenlive, OBS Studio, Audacity, and Darktable cover illustration, 3D, video editing, streaming, and photo work. Music production gets special treatment too: a dedicated setup script configures a Wine prefix specifically for FL Studio and the Hatsune Miku Piapro Studio voicebank suite, sidestepping what is historically one of the most painful things to get working on Linux. Underneath all of that sits ordinary desktop polish - KDE Plasma, printing and scanning support via CUPS and SANE, and Wacom tablet drivers configured out of the box.",
+            `FrosteArch Desktop is built to be a genuine daily driver, not a base install with a few extras bolted on.
+            Coding is ready from first boot: Python, PHP with Composer, Node.js with npm, Docker and Docker Compose,
+            Git, and VS Code, backed by build tooling like make and cmake. For gaming, Steam ships with Proton
+            pre-configured, alongside Gamescope, a Proton VPN client, and AMD Vulkan drivers already installed - no
+            fighting with drivers before a single game launches.`,
+            `On the creative side, Krita, Blender, Kdenlive, OBS Studio, Audacity, and Darktable cover illustration,
+            3D, video editing, streaming, and photo work. Music production gets special treatment too: a dedicated
+            setup script configures a Wine prefix specifically for FL Studio and the Hatsune Miku Piapro Studio
+            voicebank suite, sidestepping what is historically one of the most painful things to get working on
+            Linux. Underneath all of that sits ordinary desktop polish - KDE Plasma, printing and scanning support
+            via CUPS and SANE, and Wacom tablet drivers configured out of the box.`,
           ]}
         />
         <FlavourSection
@@ -214,8 +223,20 @@ export default function FrosteArchPage() {
           name="Server Edition"
           packages={serverPackages}
           paragraphs={[
-            "FrosteArch Server trades desktop software for a tuned set of long-running services, but keeps enough local tooling - a terminal, a file manager, a text editor - to debug directly on the machine rather than needing to SSH in for every little thing. Security starts with an automatic firewall: ufw is enabled by default with only the ports each running service actually needs left open, rather than everything wide open until someone remembers to lock it down. Plex Media Server is installed and enabled out of the box, ready to point at a media library.",
-            "For network storage, Samba handles file sharing - with wsdd making the server show up properly in Windows' Network browser - and Cockpit provides a web GUI for managing shares, disks, and RAID arrays, backed by smartmontools for ongoing disk health monitoring. Home Assistant runs containerized with support for a Zigbee coordinator dongle, and its data survives reinstalls. Tying it together is Glance, a self-hosted dashboard on port 8080 showing weather, news, and server stats - plus, going well beyond the usual dashboard fare, a genuinely custom-built finances page with bank sync, budget tracking, and recurring-payment detection, and meal-planning widgets, all driven by small systemd-timer helper scripts running quietly in the background.",
+            `FrosteArch Server trades desktop software for a tuned set of long-running services, but keeps enough
+            local tooling - a terminal, a file manager, a text editor - to debug directly on the machine rather than
+            needing to SSH in for every little thing. Security starts with an automatic firewall: ufw is enabled by
+            default with only the ports each running service actually needs left open, rather than everything wide
+            open until someone remembers to lock it down. Plex Media Server is installed and enabled out of the box,
+            ready to point at a media library.`,
+            `For network storage, Samba handles file sharing - with wsdd making the server show up properly in
+            Windows' Network browser - and Cockpit provides a web GUI for managing shares, disks, and RAID arrays,
+            backed by smartmontools for ongoing disk health monitoring. Home Assistant runs containerized with
+            support for a Zigbee coordinator dongle, and its data survives reinstalls. Tying it together is Glance, a
+            self-hosted dashboard on port 8080 showing weather, news, and server stats - plus, going well beyond the
+            usual dashboard fare, a genuinely custom-built finances page with bank sync, budget tracking, and
+            recurring-payment detection, and meal-planning widgets, all driven by small systemd-timer helper scripts
+            running quietly in the background.`,
           ]}
         />
         <FlavourSection
@@ -223,8 +244,12 @@ export default function FrosteArchPage() {
           name="Node Edition"
           packages={nodePackages}
           paragraphs={[
-            "FrosteArch Node is the deliberately boring one. Its entire job is to boot, log into a minimal KDE Plasma session, and open Firefox to a dashboard - nothing more. Sleep, suspend, and hibernate are disabled so it stays reachable as an always-on appliance, and it shares the same ufw firewall baseline as the other editions.",
-            "There's no AUR or Flatpak software layered on top, and the package list is honestly small - Node is meant to disappear into the background, not to be tinkered with.",
+            `FrosteArch Node is the deliberately boring one. Its entire job is to boot, log into a minimal KDE Plasma
+            session, and open Firefox to a dashboard - nothing more. Sleep, suspend, and hibernate are disabled so it
+            stays reachable as an always-on appliance, and it shares the same ufw firewall baseline as the other
+            editions.`,
+            `There's no AUR or Flatpak software layered on top, and the package list is honestly small - Node is meant
+            to disappear into the background, not to be tinkered with.`,
           ]}
         />
       </div>
