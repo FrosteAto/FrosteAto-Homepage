@@ -1,0 +1,34 @@
+# Local development only. `infra/docker-compose.yml` is the production
+# stack (prebuilt GHCR images, Caddy, its own Postgres) - this one builds
+# from source and bind-mounts backend/ and frontend/ so edits show up
+# without a rebuild.
+#
+# Uses host networking rather than a private Docker network so both
+# containers see "localhost" exactly like the native dev processes they're
+# replacing do - backend/.env.local already points DATABASE_URL at
+# 127.0.0.1:5432 (the Postgres already running natively on this machine,
+# see ROADMAP.md "System dependencies" - this file does NOT run its own
+# Postgres, to avoid a port conflict with it), and frontend/.env.local
+# already points API_URL at http://localhost:8000. Linux-only: host
+# networking isn't supported on Docker Desktop for Mac/Windows.
+#
+# Usage: docker compose up --build
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    network_mode: host
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    image: node:22
+    working_dir: /app
+    network_mode: host
+    command: ["npm", "run", "dev"]
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
