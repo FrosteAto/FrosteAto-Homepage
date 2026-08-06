@@ -1,0 +1,19 @@
+0brien.dev, www.0brien.dev {
+	encode gzip zstd
+
+	handle /api/* {
+		reverse_proxy backend:8080
+	}
+
+	handle /admin* {
+		reverse_proxy backend:8080
+	}
+
+	handle /media/* {
+		reverse_proxy backend:8080
+	}
+
+	handle {
+		reverse_proxy frontend:3000
+	}
+}
