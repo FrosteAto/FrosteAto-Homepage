@@ -14,6 +14,15 @@ Status legend: `[x]` done, `[ ]` not started, `[~]` in progress / partial.
 **Live at https://0brien.dev** on a DigitalOcean droplet, auto-deployed on
 every push to `main` via GitHub Actions -> GHCR -> SSH. See Phase 6.
 
+**Local dev via Docker**: `docker compose up --build` at the repo root
+boots backend+frontend in containers, bind-mounted for live editing, using
+the Postgres already running natively (see "System dependencies" - not
+containerized, to avoid a port clash). Requires the `nf_tables` kernel
+module loaded (`sudo modprobe nf_tables` - only needed once per boot after
+a kernel upgrade until you reboot into the matching kernel) for Docker's
+own networking to work at all. This is separate from `infra/docker-
+compose.yml`, which is the production stack.
+
 **Local dev DB has seed data** - one album ("Sample Album"), one photo
 (placeholder cat image), one tag ("landscape"), one published post
 ("Hello, World"), and one draft post, all inserted directly via a
