@@ -1,0 +1,11 @@
+vendor
+var/cache/*
+var/log/*
+.git
+# .env is Symfony's committed placeholder file (no real secrets) and is
+# required at runtime for Dotenv to boot - only exclude the gitignored,
+# secret-bearing local/env-specific override files.
+.env.local
+.env.dev
+.env.prod
+.env.test
