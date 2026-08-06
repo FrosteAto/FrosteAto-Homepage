@@ -11,6 +11,9 @@ ship as static/near-static content first.
 
 Status legend: `[x]` done, `[ ]` not started, `[~]` in progress / partial.
 
+**Live at https://0brien.dev** on a DigitalOcean droplet, auto-deployed on
+every push to `main` via GitHub Actions -> GHCR -> SSH. See Phase 6.
+
 **Local dev DB has seed data** - one album ("Sample Album"), one photo
 (placeholder cat image), one tag ("landscape"), one published post
 ("Hello, World"), and one draft post, all inserted directly via a
@@ -237,25 +240,37 @@ pull + restart. The droplet never runs a build itself.
       else -> frontend
 - [x] `.github/workflows/deploy.yml`: build + push images to GHCR on push to
       `main`, then SSH deploy (`docker compose pull && up -d`) on the droplet
-- [ ] GitHub repo secrets - add these in repo Settings -> Secrets and
-      variables -> Actions once you're ready to let the workflow run:
-  - [ ] `DEPLOY_HOST` = `209.97.187.99`
-  - [ ] `DEPLOY_SSH_KEY` = contents of `~/.ssh/0brien_deploy` (the deploy
-        private key generated earlier - ask me to print it when you're
-        ready to paste it in)
-- [ ] GHCR package visibility - the first push makes the images private
-      by default; the droplet needs read access to pull them. Simplest
-      fix once the first workflow run has created the packages: go to
-      your GitHub profile -> Packages -> each `0brien-frontend` /
-      `0brien-backend` package -> Package settings -> Change visibility
-      -> Public (repo's already public, so this doesn't add any real
-      exposure)
-- [ ] `infra/.env` created directly on the droplet at `/opt/0brien/.env`
-      (real `POSTGRES_PASSWORD`/`APP_SECRET`, see `infra/.env.example`
-      for the shape) - not committed, I can generate strong values and
-      write it via SSH once you say go
-- [ ] Point `0brien.dev` DNS at 209.97.187.99 (A record), retire the GitHub
-      Pages `CNAME` setup - which registrar is `0brien.dev` on?
+- [x] GitHub repo secrets added (`DEPLOY_HOST`, `DEPLOY_SSH_KEY`) as
+      Repository secrets (not Variables, not Environment secrets - the
+      workflow doesn't declare an `environment:`, so only repo-level
+      secrets are visible to it)
+- [x] GHCR package visibility - turned out to be a non-issue: images
+      pushed from a public repo's workflow inherited public visibility
+      automatically, so `docker compose pull` on the droplet needed no
+      registry login at all
+- [x] `infra/.env` created directly on the droplet at `/opt/0brien/.env`
+      (`POSTGRES_PASSWORD`/`APP_SECRET` generated with `openssl rand`,
+      written over SSH - never touched git, and the deploy workflow
+      never touches this file either)
+- [x] DNS: `0brien.dev` is on Squarespace. Removed the four GitHub Pages
+      A records + AAAA records at `@`/`www`, added A records for both
+      `@` and `www` pointing at `209.97.187.99`. Propagated within
+      minutes. Removed the repo's `CNAME` file (GitHub Pages custom
+      domain verification, no longer needed).
+- [x] Caddy obtained real Let's Encrypt certs for both `0brien.dev` and
+      `www.0brien.dev` automatically once DNS resolved correctly - no
+      manual TLS setup needed.
+- [x] First full push -> build -> GHCR -> SSH deploy pipeline run
+      end-to-end and verified live: `https://0brien.dev` returns
+      `200 HTTP/2`. One real bug hit and fixed along the way: the very
+      first deploy failed because `/opt/0brien/.env` didn't exist yet,
+      so Postgres refused to start with a blank superuser password -
+      fixed by creating the `.env` file (see above); confirmed via
+      `docker compose up -d` returning exit 0 and all four containers
+      healthy/running before the next workflow run.
+- [ ] (Not urgent) Disable GitHub Pages entirely - Settings -> Pages ->
+      Source -> None - stops the old "pages build and deployment"
+      workflow from running alongside the real one on every push
 
 ## Backlog / ideas (not scheduled)
 
