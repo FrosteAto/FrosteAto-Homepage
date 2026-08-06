@@ -161,8 +161,7 @@ export default function FrosteArchPage() {
         />
         <p className="max-w-xl text-lg leading-relaxed text-ink/80">
           A custom Arch Linux distro built around a practical, opinionated
-          setup for desktop, server, and appliance use. Three editions, one
-          install flow.
+          setup for desktop, server, and kiosk use, focused on ease of setup.
         </p>
         <Link
           href="https://github.com/FrosteAto/FrosteArch"
@@ -259,12 +258,12 @@ export default function FrosteArchPage() {
           name="Node Edition"
           packages={nodePackages}
           paragraphs={[
-            `FrosteArch Node is the deliberately boring one. Its entire job is to boot, log into a minimal KDE Plasma
-            session, and open Firefox to a dashboard - nothing more. Sleep, suspend, and hibernate are disabled so it
+            `FrosteArch Node is... minimal. Its entire job is to boot, log into a KDE Plasma
+            session, and open Firefox to the Glance dashboard hosted by FrosteArch Server. Sleep, suspend, and hibernate are disabled when plugged in, so it
             stays reachable as an always-on appliance, and it shares the same ufw firewall baseline as the other
             editions.`,
-            `There's no AUR or Flatpak software layered on top, and the package list is honestly small - Node is meant
-            to disappear into the background, not to be tinkered with.`,
+
+            `It's theme is pretty cute though.`,
           ]}
         />
       </div>
