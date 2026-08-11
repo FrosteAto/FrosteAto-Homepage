@@ -42,7 +42,7 @@ export default async function BlogPostPage({
         <h1 className="font-[family-name:var(--font-heading)] text-4xl">
           {post.title}
         </h1>
-        <p className="mt-2 text-sm text-grey">{formatDate(post.publishedAt)}</p>
+        <p className="mt-2 text-sm text-muted">{formatDate(post.publishedAt)}</p>
       </div>
       <div className="flex flex-col gap-4 text-lg leading-relaxed">
         {paragraphs.map((p, i) => (

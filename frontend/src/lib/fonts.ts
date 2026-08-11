@@ -23,3 +23,9 @@ export const ibmPlexMono = localFont({
   variable: "--font-plex-mono",
   display: "swap",
 });
+
+export const jetbrainsMono = localFont({
+  src: "../fonts/JetBrainsMono-Bold.ttf",
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});

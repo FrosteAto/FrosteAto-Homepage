@@ -8,6 +8,7 @@ import {
   commitMono,
   satisfy,
   ibmPlexMono,
+  jetbrainsMono,
 } from "@/lib/fonts";
 import "./globals.css";
 
@@ -17,6 +18,14 @@ export const metadata: Metadata = {
     "FrosteAto - Software Developer, Computer Scientist, & General Creator.",
 };
 
+const THEME_INIT_SCRIPT = `(function () {
+  try {
+    var stored = localStorage.getItem('theme');
+    var isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (isDark) document.documentElement.classList.add('dark');
+  } catch (e) {}
+})();`;
+
 export default function RootLayout({
   children,
 }: {
@@ -25,8 +34,11 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${helveticaNeue.variable} ${commitMono.variable} ${satisfy.variable} ${ibmPlexMono.variable}`}
+      className={`${helveticaNeue.variable} ${commitMono.variable} ${satisfy.variable} ${ibmPlexMono.variable} ${jetbrainsMono.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="flex min-h-screen flex-col antialiased">
         <Script
           src="https://kit.fontawesome.com/787a4a31b3.js"

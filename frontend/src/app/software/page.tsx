@@ -116,7 +116,7 @@ export default function SoftwarePage() {
       </div>
 
       <section>
-        <h2 className="text-2xl font-black text-grey">Competencies</h2>
+        <h2 className="text-2xl font-black text-muted">Competencies</h2>
         <div className="mt-4 space-y-2">
           {competencies.map((c) => (
             <p key={c.label} className="text-lg leading-loose">
@@ -147,15 +147,15 @@ export default function SoftwarePage() {
         </div>
       </section>
 
-      <hr className="border-2 border-dashed border-light-brown" />
+      <hr className="border-2 border-dashed border-fg/20" />
 
       <section className="flex flex-col gap-10">
-        <h2 className="text-2xl font-black text-grey">Projects</h2>
+        <h2 className="text-2xl font-black text-muted">Projects</h2>
 
         {projects.map((p) => (
           <div key={p.title} className="flex items-start gap-6">
             <div>
-              <p className="text-2xl font-black text-grey">{p.title}</p>
+              <p className="text-2xl font-black text-muted">{p.title}</p>
               <p className="mt-2 max-w-2xl text-lg leading-relaxed">
                 {p.description}
               </p>
@@ -199,7 +199,7 @@ export default function SoftwarePage() {
         ))}
 
         <div>
-          <p className="text-2xl font-black text-grey">Other Projects</p>
+          <p className="text-2xl font-black text-muted">Other Projects</p>
           <ul className="mt-2 max-w-2xl space-y-2 text-lg leading-relaxed">
             {otherProjects.map((op) => (
               <li key={op.href}>

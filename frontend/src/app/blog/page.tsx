@@ -43,25 +43,25 @@ export default async function BlogPage() {
       </div>
 
       {unavailable && (
-        <p className="text-ink/60">
+        <p className="text-fg/60">
           Couldn&apos;t reach the blog backend right now - check back soon.
         </p>
       )}
 
       {!unavailable && posts.length === 0 && (
-        <p className="text-ink/60">Nothing posted yet - check back soon.</p>
+        <p className="text-fg/60">Nothing posted yet - check back soon.</p>
       )}
 
       <div className="flex flex-col gap-8">
         {posts.map((post) => (
-          <article key={post.id} className="border-b border-light-brown/40 pb-8">
+          <article key={post.id} className="border-b border-fg/12 pb-8">
             <Link href={`/blog/${post.slug}`}>
-              <h2 className="font-[family-name:var(--font-heading)] text-2xl hover:text-dark-green">
+              <h2 className="font-[family-name:var(--font-heading)] text-2xl hover:text-tan-text">
                 {post.title}
               </h2>
             </Link>
-            <p className="mt-1 text-sm text-grey">{formatDate(post.publishedAt)}</p>
-            <p className="mt-3 leading-relaxed text-ink/80">{excerpt(post.body)}</p>
+            <p className="mt-1 text-sm text-muted">{formatDate(post.publishedAt)}</p>
+            <p className="mt-3 leading-relaxed text-fg/80">{excerpt(post.body)}</p>
             <Link
               href={`/blog/${post.slug}`}
               className="mt-2 inline-block text-link"

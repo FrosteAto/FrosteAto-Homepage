@@ -44,7 +44,7 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
               key={photo.id}
               type="button"
               onClick={() => setOpenIndex(i)}
-              className="group relative aspect-square overflow-hidden rounded-lg bg-light-brown/20"
+              className="group relative aspect-square overflow-hidden rounded-md bg-fg/8"
             >
               {url && (
                 <Image

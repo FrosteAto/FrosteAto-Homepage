@@ -17,53 +17,48 @@ Photography, Music, and Blog. Live at [0brien.dev](https://0brien.dev).
 - **Node.js** and **npm**
 - **PHP 8.4+** and **Composer**, with the `pdo_pgsql`, `pgsql`, `intl`, `gd`, `ctype`, `iconv`, and `zip` extensions enabled
 - **PostgreSQL** (server), running locally
-- **Docker** and **Docker Compose** - optional, but the easiest way to run both apps once Postgres is set up (see step 5 below)
+- **Docker** and **Docker Compose** - optional, but the easiest way to run both apps once step 2 is done (see step 4 below)
 
 Exact install commands vary by OS/package manager. On Arch Linux, for example:
 
 ```bash
-sudo pacman -S postgresql php-pgsql php-gd
+sudo pacman -S postgresql php composer php-pgsql php-gd
 sudo -iu postgres initdb --locale=C.UTF-8 -D /var/lib/postgres/data
 sudo systemctl enable --now postgresql
 ```
 
-### 2. Create the local database
+(`intl`, `iconv`, and `zip` ship inside Arch's base `php` package but are disabled
+by default - no separate install needed, but see step 2: the setup script
+detects this and tells you exactly how to switch them on.)
+
+### 2. Run the setup script
 
 ```bash
-sudo -iu postgres psql -c "CREATE ROLE app WITH LOGIN PASSWORD 'app-dev-password';"
-sudo -iu postgres psql -c "CREATE DATABASE app OWNER app;"
+./setup.sh
 ```
 
-### 3. Configure environment variables
+This handles everything else:
 
-Both apps read local config from a gitignored `.env.local` - copy the example and adjust if needed:
+- Checks that PHP actually has the extensions above enabled, and prints the exact fix if not - including a ready-made `.dev/php-extra.ini` for distros (like Arch above) that install an extension but leave it switched off
+- Creates `backend/.env.local` and `frontend/.env.local` - gitignored local config - with a generated `APP_SECRET` and the `DATABASE_URL`/`API_URL` defaults used below
+- Creates the local `app` PostgreSQL role (password `app-dev-password`) and `app` database, if PostgreSQL is running and it has the access to do so (otherwise it prints the exact `sudo -iu postgres psql ...` command to run by hand)
+- Runs `composer install` and `npm install`
+- Runs the database migrations
 
-```bash
-# backend/.env.local
-APP_SECRET=<any random string>
-DATABASE_URL="postgresql://app:app-dev-password@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
-```
+It's safe to re-run any time, e.g. after pulling changes that add new
+dependencies or migrations - it won't overwrite `.env.local` values you've
+already customized.
 
-```bash
-# frontend/.env.local (see frontend/.env.example)
-API_URL=http://localhost:8000
-```
+### 3. Create an admin user
 
-### 4. Install dependencies and run migrations
+The one thing the script can't do for you, since it needs a real email and password:
 
 ```bash
 cd backend
-composer install
-php bin/console doctrine:migrations:migrate
 php bin/console app:create-admin-user you@example.com a-strong-password
 ```
 
-```bash
-cd frontend
-npm install
-```
-
-### 5. Run it
+### 4. Run it
 
 **Option A - natively:**
 
@@ -84,13 +79,35 @@ docker compose up --build
 ```
 
 Builds and runs both apps in containers, bind-mounted so edits take effect
-without a rebuild. Still uses the Postgres from step 1/2 running natively
-(not containerized, to avoid a port clash) - steps 1-3 above are still
-required first. This is a dev-only setup; `infra/docker-compose.yml` is
-the separate production stack the deploy workflow uses.
+without a rebuild. The containers don't install dependencies themselves -
+they reuse `vendor/` and `node_modules/` from the host - and they connect to
+the native Postgres from step 1 (not a containerized one, to avoid a port
+clash), so steps 1-2 above are still required first. (Step 3 isn't required
+to start the containers, but you'll still need it to log into `/admin`.)
+This is a dev-only setup; `infra/docker-compose.yml` is the separate
+production stack the deploy workflow uses.
 
 Once running: the site is at `http://localhost:3000`, the API at
 `http://localhost:8000/api`, and the admin panel at `http://localhost:8000/admin`.
+
+## Editing the site
+
+Most pages are plain React components - edit, save, and `npm run dev`
+hot-reloads immediately:
+
+- **Home** - `frontend/src/app/page.tsx`
+- **Software Development** - `frontend/src/app/software/page.tsx`
+- **FrosteArch** - `frontend/src/app/frostearch/page.tsx`
+- **Music** - `frontend/src/app/music/page.tsx`
+
+Shared UI lives in `frontend/src/components/`, site-wide styles in
+`frontend/src/app/globals.css`, and fonts in `frontend/src/fonts/`.
+
+**Blog** and **Photography** are different: their content comes from the
+backend, not frontend source files. With the backend running (see "Run it"
+above), manage posts, photos, albums, and tags at
+`http://localhost:8000/admin` - the frontend pages just render whatever the
+API returns, and pick up new or edited content without a rebuild (ISR).
 
 ## Technology overview
 

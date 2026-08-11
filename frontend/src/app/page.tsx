@@ -38,22 +38,22 @@ export default function Home() {
           <p className="font-[family-name:var(--font-heading)] text-4xl sm:text-5xl">
             FrosteAto O&apos;Brien
           </p>
-          <p className="mt-2 text-lg text-grey">
+          <p className="mt-2 text-lg text-muted">
             Software Developer, Computer Scientist, &amp; General Creator
           </p>
-          <div className="mt-3 flex gap-4 text-xl text-grey">
-            <Link href="https://github.com/FrosteAto" className="hover:text-ink">
+          <div className="mt-3 flex gap-4 text-xl text-tan-text">
+            <Link href="https://github.com/FrosteAto" className="hover:text-fg">
               <i className="fa-brands fa-github" aria-hidden />
             </Link>
             <Link
               href="https://www.linkedin.com/in/djob/"
-              className="hover:text-ink"
+              className="hover:text-fg"
             >
               <i className="fa-brands fa-linkedin" aria-hidden />
             </Link>
             <Link
               href="mailto:FrosteAto.exparrot@protonmail.com"
-              className="hover:text-ink"
+              className="hover:text-fg"
             >
               <i className="fa-solid fa-envelope" aria-hidden />
             </Link>

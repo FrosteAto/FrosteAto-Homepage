@@ -10,10 +10,10 @@ export default function ComingSoon({
       <h1 className="font-[family-name:var(--font-heading)] text-4xl">
         {title}
       </h1>
-      <p className="max-w-xl text-lg leading-relaxed text-ink/80">
+      <p className="max-w-xl text-lg leading-relaxed text-fg/80">
         {description}
       </p>
-      <p className="text-sm font-bold uppercase tracking-wide text-grey">
+      <p className="text-sm font-bold uppercase tracking-wide text-muted">
         Coming soon
       </p>
     </main>

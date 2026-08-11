@@ -36,7 +36,7 @@ export default function MusicPage() {
         <h1 className="font-[family-name:var(--font-heading)] text-4xl">
           Music
         </h1>
-        <p className="mt-3 max-w-2xl text-lg leading-relaxed text-ink/80">
+        <p className="mt-3 max-w-2xl text-lg leading-relaxed text-fg/80">
           Albums I&apos;ve released, or will release, linked out to
           Bandcamp. I also wrote and performed the score for{" "}
           <Link href="/software" className="text-link">
@@ -47,7 +47,7 @@ export default function MusicPage() {
       </div>
 
       {releases.length === 0 ? (
-        <p className="text-ink/60">Nothing released yet - check back soon.</p>
+        <p className="text-fg/60">Nothing released yet - check back soon.</p>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {releases.map((release) => {
@@ -55,7 +55,7 @@ export default function MusicPage() {
 
             const card = (
               <>
-                <div className="relative aspect-square w-full overflow-hidden bg-light-brown/20">
+                <div className="relative aspect-square w-full overflow-hidden bg-fg/8">
                   {release.coverImage ? (
                     <Image
                       src={release.coverImage}
@@ -65,7 +65,7 @@ export default function MusicPage() {
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-light-brown/30 to-dark-green/10 text-ink/40">
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-fg/40">
                       <svg
                         viewBox="0 0 24 24"
                         fill="currentColor"
@@ -78,16 +78,16 @@ export default function MusicPage() {
                     </div>
                   )}
                   {isPlaceholder && (
-                    <span className="absolute right-2 top-2 rounded-full bg-ink/70 px-2 py-0.5 text-xs text-white">
+                    <span className="absolute right-2 top-2 rounded-full bg-ink/70 px-2 py-0.5 text-xs text-cream">
                       Coming soon
                     </span>
                   )}
                 </div>
                 <div className="p-4">
-                  <p className="font-[family-name:var(--font-heading)] text-lg">
+                  <p className="font-[family-name:var(--font-heading)] text-lg text-fg">
                     {release.title}
                   </p>
-                  <p className="text-sm text-grey">{release.year ?? "TBA"}</p>
+                  <p className="text-sm text-muted">{release.year ?? "TBA"}</p>
                 </div>
               </>
             );
@@ -95,7 +95,7 @@ export default function MusicPage() {
             return isPlaceholder ? (
               <div
                 key={release.title}
-                className="block overflow-hidden rounded-lg border border-dashed border-light-brown/50 bg-white/40"
+                className="block overflow-hidden rounded-md border border-dashed border-fg/20 bg-card"
               >
                 {card}
               </div>
@@ -103,7 +103,7 @@ export default function MusicPage() {
               <Link
                 key={release.title}
                 href={release.bandcampUrl!}
-                className="group block overflow-hidden rounded-lg border border-light-brown/40 bg-white/40"
+                className="group block overflow-hidden rounded-md border border-fg/12 bg-card"
               >
                 {card}
               </Link>

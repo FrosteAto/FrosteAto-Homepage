@@ -16,12 +16,12 @@ export default function SectionCard({
     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
       <Link
         href={href}
-        className="block h-full rounded-lg border border-light-brown/40 bg-white/40 p-5 shadow-sm transition-shadow hover:shadow-md"
+        className="block h-full rounded-md border border-fg/12 bg-card p-5 transition-colors hover:border-tan"
       >
-        <p className="font-[family-name:var(--font-heading)] text-xl text-ink">
+        <p className="font-[family-name:var(--font-heading)] text-xl text-fg">
           {title}
         </p>
-        <p className="mt-2 text-sm text-ink/70">{description}</p>
+        <p className="mt-2 text-sm text-fg/70">{description}</p>
       </Link>
     </motion.div>
   );

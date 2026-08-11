@@ -32,7 +32,7 @@ export default async function PhotoTagPage({
       </div>
 
       {photos.length === 0 ? (
-        <p className="text-ink/60">No photos tagged #{slug} yet.</p>
+        <p className="text-fg/60">No photos tagged #{slug} yet.</p>
       ) : (
         <PhotoGrid photos={photos} />
       )}

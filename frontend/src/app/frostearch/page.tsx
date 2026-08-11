@@ -4,6 +4,9 @@ import Link from "next/link";
 import FlavourSection from "@/components/FlavourSection";
 import type { PackageGroup } from "@/components/PackageList";
 
+const packageCount = (groups: PackageGroup[]) =>
+  groups.reduce((sum, g) => sum + g.items.length, 0);
+
 export const metadata: Metadata = {
   title: "FrosteArch | FrosteAto",
 };
@@ -159,7 +162,7 @@ export default function FrosteArchPage() {
           priority
           className="h-auto w-full max-w-sm"
         />
-        <p className="max-w-xl text-lg leading-relaxed text-ink/80">
+        <p className="max-w-xl text-lg leading-relaxed text-fg/80">
           A custom Arch Linux distro built around a practical, opinionated
           setup for desktop, server, and kiosk use, focused on ease of setup.
         </p>
@@ -178,7 +181,7 @@ export default function FrosteArchPage() {
               key={edition.id}
               href={`#${edition.id}`}
               aria-label={`${edition.name} edition`}
-              className="group relative block overflow-hidden rounded-2xl border border-light-brown/40 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-dark-green/50 hover:shadow-xl"
+              className="group relative block overflow-hidden rounded-md border border-fg/12 transition-colors hover:border-tan"
             >
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
@@ -198,72 +201,111 @@ export default function FrosteArchPage() {
         </div>
       </div>
 
-      <div className="mt-6 flex flex-col divide-y divide-light-brown/30">
+      <div className="mt-6 flex flex-col divide-y divide-fg/10">
         <FlavourSection
           id="desktop"
           name="Desktop Edition"
+          host="frostearch-desktop"
+          accent="purple"
+          specs={[
+            { label: "Role", value: "Gaming + dev + creative" },
+            { label: "DE", value: "KDE Plasma" },
+            { label: "Terminal", value: "kitty" },
+            { label: "Est. Size", value: "~5.4 GB" },
+            { label: "Packages", value: `${packageCount(desktopPackages)} (pacman)` },
+          ]}
           packages={desktopPackages}
-          paragraphs={[
-            `FrosteArch Desktop is where it all began. When I first started using Linux, I did a bit of distro hopping.
-            Eventually, I got sick of the whole 'reinstalling everything' malarkey, so I began making a script to install 
-            the packages I want. Eventually, it became a distro that has EVERYTHING I could use my PC for. 
-            This is no 'hyper lightweight, bloat is the enemy' system (Though it *is* light and efficient.)`,
-            
-            `For gaming, it comes with Steam pre-installed, along with wine and proton. AMD drivers are pre-installed, 
-            so don't even think about worrying. Nowadays, what more do you need?`,
-            
-            `Coding is ready from first boot: Python, PHP with Composer, Node.js with npm, Docker and Docker Compose,
-            Git, and VS Code, backed by build tooling like make and cmake.`,
-            
-            `On the creative side, Krita, Blender, Kdenlive, OBS Studio, Audacity, and Darktable cover illustration,
-            3D, video editing, streaming, and photo work.`,
-            
-            `Music production gets special treatment too: a dedicated setup script configures a Wine prefix specifically
-            for FL Studio and the Hatsune Miku V4X & Piapro Studio, sidestepping what is historically one of the 
-            most painful things to get working on Linux.`,
-             
-            `Underneath all of that sits ordinary desktop polish - KDE Plasma that is highly customised with multiple
-            themes and preset widgets, printing and scanning supportvia CUPS and SANE, and Wacom tablet drivers configured 
-            out of the box.`,
+          intro="Where it all began. After one too many rounds of distro-hopping and
+            reinstalling everything from scratch, I scripted my way to a distro with
+            EVERYTHING I need pre-installed - not a 'bloat is the enemy' minimal setup,
+            though it's still light and efficient."
+          topics={[
+            {
+              title: "Gaming",
+              body: "Steam, Wine, and Proton pre-installed, AMD drivers ready to go. Nowadays, what more do you need?",
+            },
+            {
+              title: "Development",
+              body: "Python, PHP with Composer, Node.js with npm, Docker and Docker Compose, Git, and VS Code - ready from first boot, backed by make and cmake.",
+            },
+            {
+              title: "Creative & Media",
+              body: "Krita, Blender, Kdenlive, OBS Studio, Audacity, and Darktable cover illustration, 3D, video editing, streaming, and photo work.",
+            },
+            {
+              title: "Music Production",
+              body: "A dedicated setup script configures a Wine prefix specifically for FL Studio and Hatsune Miku V4X & Piapro Studio - sidestepping one of the most painful things to get working on Linux.",
+            },
+            {
+              title: "Desktop Polish",
+              body: "KDE Plasma, heavily customised with multiple themes and preset widgets, plus printing and scanning via CUPS and SANE, and Wacom tablet drivers out of the box.",
+            },
           ]}
         />
         <FlavourSection
           id="server"
           name="Server Edition"
+          host="frostearch-server"
+          accent="blue"
+          specs={[
+            { label: "Role", value: "Self-hosted services" },
+            { label: "DE", value: "KDE Plasma" },
+            { label: "Terminal", value: "kitty" },
+            { label: "Est. Size", value: "~1.9 GB" },
+            { label: "Packages", value: `${packageCount(serverPackages)} (pacman)` },
+          ]}
           packages={serverPackages}
-          paragraphs={[
-            `FrosteArch Server, as the name implies, is a server-focused edition. I am aware using Arch Linux as a
-             server is somewhat unconventional, but if you know what you're doing, it works just fine.`,
-            `It keeps enough local tooling to allow localised debugging: a terminal, a file manager, a text editor, but also
-            keeps SSH open for standard remote access.`,
-            `Security's handled automatically too - ufw is enabled out of the box with only the ports each running
-            service actually needs left open, rather than everything wide open until someone remembers to lock it
-            down.`,
-            `Plex Media Server is installed and enabled from first boot, so once you point it at a library it's
-            straight into transcoding and streaming - no extra setup required.`,
-            `For network storage, Samba handles file sharing, with wsdd making the server show up properly in Windows'
-            Network browser. Cockpit sits alongside it as a proper web GUI for managing shares, disks, and RAID
-            arrays, backed by smartmontools keeping an eye on disk health in the background.`,
-            `Glance ties it all together as a self-hosted dashboard on port 8080 - weather, news, and server stats,
-            sure, but also a genuinely custom-built finances page with bank sync, budget tracking, and
-            recurring-payment detection, plus meal-planning widgets with their own recipe rotation. All of it's
-            driven by small systemd-timer helper scripts running quietly in the background.`,
-            `Home Assistant runs containerised on port 8123 for smart-home control, with support for a Zigbee
-            coordinator dongle if you plug one in. Its data lives outside the container, so it survives reinstalls,
-            and updating it is just a docker pull and a restart.`,
+          intro="As the name implies, a server-focused edition. Using Arch Linux as a
+            server is somewhat unconventional, but if you know what you're doing, it
+            works just fine."
+          topics={[
+            {
+              title: "Media",
+              body: "Plex Media Server is installed and enabled from first boot - point it at a library and it's straight into transcoding and streaming.",
+            },
+            {
+              title: "File Sharing",
+              body: "Samba handles file sharing, with wsdd making the server show up properly in Windows' Network browser. Cockpit adds a web GUI for shares, disks, and RAID arrays, with smartmontools watching disk health.",
+            },
+            {
+              title: "Dashboard",
+              body: "Glance runs on :8080 - weather, news, and server stats, but also a genuinely custom-built finances page with bank sync and budget tracking, plus meal-planning widgets, all driven by small systemd-timer scripts.",
+            },
+            {
+              title: "Smart Home",
+              body: "Home Assistant runs containerised on :8123 for smart-home control, with support for a Zigbee coordinator dongle. Its data lives outside the container, so it survives reinstalls.",
+            },
+            {
+              title: "Remote Access",
+              body: "Enough local tooling for hands-on debugging - terminal, file manager, text editor - plus SSH open for standard remote access, with ufw locked to only the ports each service actually needs.",
+            },
           ]}
         />
         <FlavourSection
           id="node"
           name="Node Edition"
+          host="frostearch-node"
+          accent="yellow"
+          specs={[
+            { label: "Role", value: "Always-on kiosk" },
+            { label: "DE", value: "KDE Plasma" },
+            { label: "Terminal", value: "kitty" },
+            { label: "Est. Size", value: "~1.5 GB" },
+            { label: "Packages", value: `${packageCount(nodePackages)} (pacman)` },
+          ]}
           packages={nodePackages}
-          paragraphs={[
-            `FrosteArch Node is... minimal. Its entire job is to boot, log into a KDE Plasma
-            session, and open Firefox to the Glance dashboard hosted by FrosteArch Server. Sleep, suspend, and hibernate are disabled when plugged in, so it
-            stays reachable as an always-on appliance, and it shares the same ufw firewall baseline as the other
-            editions.`,
-
-            `It's theme is pretty cute though.`,
+          intro="Node is... minimal. Its entire job is to boot straight into a kiosk
+            pointed at the Server's dashboard - and it shares the same ufw firewall
+            baseline as the other editions. It's theme is pretty cute though."
+          topics={[
+            {
+              title: "Boot Sequence",
+              body: "Boots into a KDE Plasma session and opens Firefox straight to the Glance dashboard hosted by FrosteArch Server - no manual steps.",
+            },
+            {
+              title: "Always On",
+              body: "Sleep, suspend, and hibernate are all disabled while plugged in, so it stays reachable as an always-on appliance.",
+            },
           ]}
         />
       </div>

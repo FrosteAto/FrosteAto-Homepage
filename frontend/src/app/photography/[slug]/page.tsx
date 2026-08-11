@@ -39,12 +39,12 @@ export default async function AlbumPage({
           {album.name}
         </h1>
         {album.description && (
-          <p className="mt-2 max-w-2xl text-ink/70">{album.description}</p>
+          <p className="mt-2 max-w-2xl text-fg/70">{album.description}</p>
         )}
       </div>
 
       {photos.length === 0 ? (
-        <p className="text-ink/60">No photos in this album yet.</p>
+        <p className="text-fg/60">No photos in this album yet.</p>
       ) : (
         <PhotoGrid photos={photos} />
       )}

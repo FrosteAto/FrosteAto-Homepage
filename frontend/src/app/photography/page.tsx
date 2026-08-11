@@ -24,13 +24,13 @@ export default async function PhotographyPage() {
       </h1>
 
       {unavailable && (
-        <p className="text-ink/60">
+        <p className="text-fg/60">
           Couldn&apos;t reach the photo backend right now - check back soon.
         </p>
       )}
 
       {!unavailable && albums.length === 0 && (
-        <p className="text-ink/60">No albums yet - check back soon.</p>
+        <p className="text-fg/60">No albums yet - check back soon.</p>
       )}
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
@@ -40,9 +40,9 @@ export default async function PhotographyPage() {
             <Link
               key={album.id}
               href={`/photography/${album.slug}`}
-              className="group block overflow-hidden rounded-lg border border-light-brown/40 bg-white/40"
+              className="group block overflow-hidden rounded-md border border-fg/12 bg-card"
             >
-              <div className="relative aspect-square w-full overflow-hidden bg-light-brown/20">
+              <div className="relative aspect-square w-full overflow-hidden bg-fg/8">
                 {coverUrl && (
                   <Image
                     src={coverUrl}
@@ -54,11 +54,11 @@ export default async function PhotographyPage() {
                 )}
               </div>
               <div className="p-4">
-                <p className="font-[family-name:var(--font-heading)] text-lg">
+                <p className="font-[family-name:var(--font-heading)] text-lg text-fg">
                   {album.name}
                 </p>
                 {album.description && (
-                  <p className="mt-1 line-clamp-2 text-sm text-ink/70">
+                  <p className="mt-1 line-clamp-2 text-sm text-fg/70">
                     {album.description}
                   </p>
                 )}
