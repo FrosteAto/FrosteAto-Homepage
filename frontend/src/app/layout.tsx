@@ -18,10 +18,13 @@ export const metadata: Metadata = {
     "FrosteAto - Software Developer, Computer Scientist, & General Creator.",
 };
 
+// TEMPORARY: defaults to light regardless of system preference - dark mode
+// still needs work. Explicit toggles (localStorage) are still respected.
+// Revert by restoring the matchMedia('(prefers-color-scheme: dark)') fallback.
 const THEME_INIT_SCRIPT = `(function () {
   try {
     var stored = localStorage.getItem('theme');
-    var isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var isDark = stored === 'dark';
     if (isDark) document.documentElement.classList.add('dark');
   } catch (e) {}
 })();`;
