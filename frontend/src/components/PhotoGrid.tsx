@@ -40,11 +40,14 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
         {photos.map((photo, i) => {
           const url = apiImageUrl(photo.imageUrl);
           return (
-            <button
+            <motion.button
               key={photo.id}
               type="button"
               onClick={() => setOpenIndex(i)}
               className="group relative aspect-square overflow-hidden rounded-md bg-fg/8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: Math.min(i * 0.03, 0.5) }}
             >
               {url && (
                 <Image
@@ -55,7 +58,7 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               )}
-            </button>
+            </motion.button>
           );
         })}
       </div>

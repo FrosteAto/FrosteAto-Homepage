@@ -36,6 +36,8 @@ jobs:
           tags: ${{ env.FRONTEND_IMAGE }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            NEXT_PUBLIC_API_URL=https://0brien.dev
 
       - name: Build and push backend
         uses: docker/build-push-action@v6

@@ -1,4 +1,10 @@
 const API_URL = process.env.API_URL ?? "http://localhost:8000";
+// Same origin as API_URL in every environment today, but must be a separate
+// NEXT_PUBLIC_ variable: apiImageUrl() below produces <img src> values that
+// the browser fetches directly, and non-NEXT_PUBLIC_ vars are stripped from
+// the client bundle at build time.
+const NEXT_PUBLIC_API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 type HydraCollection<T> = {
   member: T[];
@@ -107,5 +113,5 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 }
 
 export function apiImageUrl(path: string | null): string | null {
-  return path ? `${API_URL}${path}` : null;
+  return path ? `${NEXT_PUBLIC_API_URL}${path}` : null;
 }

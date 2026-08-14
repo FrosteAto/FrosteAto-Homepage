@@ -182,4 +182,9 @@ class Photo
     {
         return $this->createdAt;
     }
+
+    public function __toString(): string
+    {
+        return $this->title ?? $this->imageName ?? 'Photo #'.($this->id ?? '?');
+    }
 }

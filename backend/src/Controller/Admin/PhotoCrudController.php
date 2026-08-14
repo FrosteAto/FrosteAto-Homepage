@@ -31,10 +31,11 @@ class PhotoCrudController extends AbstractCrudController
         yield IdField::new('id')->onlyOnIndex();
         yield ImageField::new('imageName', 'Image')
             ->setFlysystemStorage('photos.storage')
+            ->setUploadDir('/')
             ->setFlysystemUrlPrefix('/media/photos/')
             ->setUploadedFileNamePattern('[randomhash].[extension]');
         yield TextField::new('title')->setRequired(false);
-        yield AssociationField::new('album')->setRequired(false);
+        yield AssociationField::new('album')->setRequired(false)->autocomplete();
         yield AssociationField::new('camera')
             ->setRequired(false)
             ->autocomplete()

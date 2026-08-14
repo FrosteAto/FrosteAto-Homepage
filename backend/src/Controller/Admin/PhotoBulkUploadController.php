@@ -85,8 +85,11 @@ class PhotoBulkUploadController extends AbstractController
 
                     $this->storage->write($newFilename, $file->getContent());
 
+                    $originalTitle = pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME);
+
                     $photo = new Photo();
                     $photo->setImageName($newFilename);
+                    $photo->setTitle('' !== $originalTitle ? mb_substr($originalTitle, 0, 150) : null);
                     $photo->setAlbum($album);
                     if (null !== $camera) {
                         $photo->setCamera($camera);
