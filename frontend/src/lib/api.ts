@@ -70,7 +70,8 @@ export async function getAlbumBySlug(slug: string): Promise<Album | null> {
 }
 
 export function photoSortDate(photo: Photo): number {
-  return new Date(photo.takenAt ?? photo.createdAt).getTime();
+  const time = new Date(photo.takenAt ?? photo.createdAt ?? 0).getTime();
+  return Number.isNaN(time) ? 0 : time;
 }
 
 export async function getPhotos(filter?: {

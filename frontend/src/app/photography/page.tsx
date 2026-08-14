@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import AlbumBrowser from "@/components/AlbumBrowser";
 import { groupAlbumsByCamera } from "@/lib/photography";
-import { getAlbums, getPhotos, type Album } from "@/lib/api";
+import { getAlbums, getPhotos, type Album, type Photo } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Photography | FrosteAto",
@@ -9,15 +9,15 @@ export const metadata: Metadata = {
 
 export default async function PhotographyPage() {
   let albums: Album[] = [];
+  let photos: Photo[] = [];
   let unavailable = false;
 
   try {
-    albums = await getAlbums();
+    [albums, photos] = await Promise.all([getAlbums(), getPhotos()]);
   } catch {
     unavailable = true;
   }
 
-  const photos = unavailable ? [] : await getPhotos();
   const { sortedAlbums, cameraGroups, unknownAlbums } = groupAlbumsByCamera(
     albums,
     photos,
