@@ -98,6 +98,7 @@
     <p>Pick as many files as you like, an album and tags applied to all of them, and submit. Titles and taken-at dates stay editable per photo afterward via the normal Photos list.</p>
 
     {{ form_start(form) }}
+        {{ form_errors(form) }}
         {{ form_row(form.photos) }}
         {{ form_row(form.album) }}
         {{ form_row(form.tags) }}
