@@ -70,5 +70,6 @@ jobs:
             cd /opt/0brien &&
             docker compose pull &&
             docker compose up -d --remove-orphans &&
+            docker compose restart caddy &&
             docker image prune -f
           '
