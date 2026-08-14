@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { apiImageUrl, getAlbums, type Album } from "@/lib/api";
+import AlbumBrowser from "@/components/AlbumBrowser";
+import { groupAlbumsByCamera } from "@/lib/photography";
+import { getAlbums, getPhotos, type Album } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Photography | FrosteAto",
@@ -16,6 +16,12 @@ export default async function PhotographyPage() {
   } catch {
     unavailable = true;
   }
+
+  const photos = unavailable ? [] : await getPhotos();
+  const { sortedAlbums, cameraGroups, unknownAlbums } = groupAlbumsByCamera(
+    albums,
+    photos,
+  );
 
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-4 py-10 sm:px-6">
@@ -33,40 +39,13 @@ export default async function PhotographyPage() {
         <p className="text-fg/60">No albums yet - check back soon.</p>
       )}
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-        {albums.map((album) => {
-          const coverUrl = apiImageUrl(album.coverPhoto?.imageUrl ?? null);
-          return (
-            <Link
-              key={album.id}
-              href={`/photography/${album.slug}`}
-              className="group block overflow-hidden rounded-md border border-fg/12 bg-card"
-            >
-              <div className="relative aspect-square w-full overflow-hidden bg-fg/8">
-                {coverUrl && (
-                  <Image
-                    src={coverUrl}
-                    alt={album.name}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                )}
-              </div>
-              <div className="p-4">
-                <p className="font-[family-name:var(--font-heading)] text-lg text-fg">
-                  {album.name}
-                </p>
-                {album.description && (
-                  <p className="mt-1 line-clamp-2 text-sm text-fg/70">
-                    {album.description}
-                  </p>
-                )}
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+      {!unavailable && albums.length > 0 && (
+        <AlbumBrowser
+          sortedAlbums={sortedAlbums}
+          cameraGroups={cameraGroups}
+          unknownAlbums={unknownAlbums}
+        />
+      )}
     </main>
   );
 }
