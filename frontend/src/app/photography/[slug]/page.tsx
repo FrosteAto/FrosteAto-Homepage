@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import FeaturedCarousel from "@/components/FeaturedCarousel";
 import PhotoGrid from "@/components/PhotoGrid";
 import { getAlbumBySlug, getPhotos } from "@/lib/api";
 
@@ -28,6 +29,7 @@ export default async function AlbumPage({
   }
 
   const photos = await getPhotos({ albumSlug: slug });
+  const featuredPhotos = photos.filter((photo) => photo.featured);
 
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-10 sm:px-6">
@@ -42,6 +44,10 @@ export default async function AlbumPage({
           <p className="mt-2 max-w-2xl text-fg/70">{album.description}</p>
         )}
       </div>
+
+      {featuredPhotos.length > 0 && (
+        <FeaturedCarousel photos={featuredPhotos} />
+      )}
 
       {photos.length === 0 ? (
         <p className="text-fg/60">No photos in this album yet.</p>

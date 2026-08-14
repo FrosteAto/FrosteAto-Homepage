@@ -32,6 +32,7 @@ export type Photo = {
   takenAt: string | null;
   imageUrl: string | null;
   createdAt: string;
+  featured: boolean;
 };
 
 export type Album = {

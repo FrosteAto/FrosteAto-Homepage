@@ -65,6 +65,10 @@ class Photo
     #[Groups(['photo:read', 'photo:write'])]
     private ?\DateTimeImmutable $takenAt = null;
 
+    #[ORM\Column(options: ['default' => false])]
+    #[Groups(['photo:read', 'photo:write'])]
+    private bool $featured = false;
+
     /**
      * Filename within the `photos.storage` Flysystem storage. Uploaded and
      * managed through the admin panel (see PhotoCrudController) rather than
@@ -155,6 +159,18 @@ class Photo
     public function setTakenAt(?\DateTimeImmutable $takenAt): static
     {
         $this->takenAt = $takenAt;
+
+        return $this;
+    }
+
+    public function isFeatured(): bool
+    {
+        return $this->featured;
+    }
+
+    public function setFeatured(bool $featured): static
+    {
+        $this->featured = $featured;
 
         return $this;
     }

@@ -6,6 +6,7 @@ use App\Entity\Photo;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -35,6 +36,9 @@ class PhotoCrudController extends AbstractCrudController
             ->setFlysystemUrlPrefix('/media/photos/')
             ->setUploadedFileNamePattern('[randomhash].[extension]');
         yield TextField::new('title')->setRequired(false);
+        yield BooleanField::new('featured')
+            ->setRequired(false)
+            ->setHelp('Shown in a highlighted carousel at the top of this photo\'s album page.');
         yield AssociationField::new('album')->setRequired(false)->autocomplete();
         yield AssociationField::new('camera')
             ->setRequired(false)
