@@ -132,6 +132,11 @@ A few things about the photo admin worth knowing:
   event or trip date) to control where it lands in the photography page's
   ordering. Leave it blank and the album sorts by its most recent photo's
   taken-at date instead, or by upload date if it has no dated photos yet.
+- **Mark a photo as `Featured`** (checkbox on the Photos admin page, also
+  toggleable straight from the Photos list without opening each one) to show
+  it in a carousel at the top of its album's page. Featured photos still
+  appear in their normal spot in the grid below too - the carousel is
+  additive, not a replacement.
 - On the public site, `/photography` has a **"Group by camera" toggle**
   that reorganizes the album grid into collapsible sections by camera
   (with an "Unknown camera" section for albums with no camera-tagged
