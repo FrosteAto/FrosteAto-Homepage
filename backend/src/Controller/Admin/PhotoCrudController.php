@@ -35,6 +35,10 @@ class PhotoCrudController extends AbstractCrudController
             ->setUploadedFileNamePattern('[randomhash].[extension]');
         yield TextField::new('title')->setRequired(false);
         yield AssociationField::new('album')->setRequired(false);
+        yield AssociationField::new('camera')
+            ->setRequired(false)
+            ->autocomplete()
+            ->setHelp("Auto-detected from the photo's EXIF data when possible (JPEG only) - override here if it's wrong or missing.");
         yield AssociationField::new('tags')->setRequired(false)->autocomplete();
         yield DateTimeField::new('takenAt')->setRequired(false);
         yield DateTimeField::new('createdAt')->onlyOnIndex();
