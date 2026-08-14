@@ -105,9 +105,29 @@ Shared UI lives in `frontend/src/components/`, site-wide styles in
 
 **Blog** and **Photography** are different: their content comes from the
 backend, not frontend source files. With the backend running (see "Run it"
-above), manage posts, photos, albums, and tags at
+above), manage posts, photos, albums, tags, and cameras at
 `http://localhost:8000/admin` - the frontend pages just render whatever the
 API returns, and pick up new or edited content without a rebuild (ISR).
+
+A few things about the photo admin worth knowing:
+
+- **Camera detection is automatic, JPEG-only.** Uploading a photo reads its
+  EXIF data and fills in the Camera field for you, if the file has one -
+  most real camera JPEGs do, but PNGs, screenshots, and some
+  already-edited/exported files often don't. When it can't detect one, the
+  photo just has no camera set; edit it by hand on the Photos page if you
+  want to fix or add one. Photos uploaded before this feature existed are
+  never retroactively scanned - they'll show as no-camera until edited.
+- **Bulk upload** (`Bulk Upload` in the admin menu) uploads many photos in
+  one go, applying one album and one set of tags to the whole batch. Titles
+  and taken-at dates aren't set in bulk - edit those per-photo afterward on
+  the Photos page if needed. After submitting, you'll see a summary of how
+  many succeeded and, if any failed, why.
+- On the public site, `/photography` has a **"Group by camera" toggle**
+  that reorganizes the album grid into collapsible sections by camera
+  (with an "Unknown camera" section for albums with no camera-tagged
+  photos yet). Everything sorts newest-shot-first by default, using each
+  photo's taken-at date rather than when it was uploaded.
 
 ## Technology overview
 
