@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Album;
+use App\Entity\Camera;
 use App\Entity\Photo;
 use App\Entity\Tag;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,6 +42,12 @@ class PhotoBulkUploadController extends AbstractController
                 'required' => false,
                 'placeholder' => 'No album',
             ])
+            ->add('camera', EntityType::class, [
+                'class' => Camera::class,
+                'choice_label' => 'name',
+                'required' => false,
+                'placeholder' => 'Auto-detect from EXIF',
+            ])
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
                 'choice_label' => 'name',
@@ -56,6 +63,7 @@ class PhotoBulkUploadController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $album = $form->get('album')->getData();
+            $camera = $form->get('camera')->getData();
             $tags = $form->get('tags')->getData();
 
             /** @var UploadedFile[] $files */
@@ -80,6 +88,9 @@ class PhotoBulkUploadController extends AbstractController
                     $photo = new Photo();
                     $photo->setImageName($newFilename);
                     $photo->setAlbum($album);
+                    if (null !== $camera) {
+                        $photo->setCamera($camera);
+                    }
                     foreach ($tags as $tag) {
                         $photo->addTag($tag);
                     }

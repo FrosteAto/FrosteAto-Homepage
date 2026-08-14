@@ -119,10 +119,13 @@ A few things about the photo admin worth knowing:
   want to fix or add one. Photos uploaded before this feature existed are
   never retroactively scanned - they'll show as no-camera until edited.
 - **Bulk upload** (`Bulk Upload` in the admin menu) uploads many photos in
-  one go, applying one album and one set of tags to the whole batch. Titles
-  and taken-at dates aren't set in bulk - edit those per-photo afterward on
-  the Photos page if needed. After submitting, you'll see a summary of how
-  many succeeded and, if any failed, why.
+  one go, applying one album and one set of tags to the whole batch. Camera
+  is optional: leave it unset to auto-detect per photo from EXIF (the usual
+  behavior), or pick one to apply it to every photo in the batch instead,
+  skipping detection entirely. Titles and taken-at dates aren't set in bulk -
+  edit those per-photo afterward on the Photos page if needed. After
+  submitting, you'll see a summary of how many succeeded and, if any failed,
+  why.
 - On the public site, `/photography` has a **"Group by camera" toggle**
   that reorganizes the album grid into collapsible sections by camera
   (with an "Unknown camera" section for albums with no camera-tagged
