@@ -31,9 +31,9 @@ final class Version20260814143323 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE camera');
         $this->addSql('ALTER TABLE photo DROP CONSTRAINT FK_14B78418B47685CD');
         $this->addSql('DROP INDEX IDX_14B78418B47685CD');
         $this->addSql('ALTER TABLE photo DROP camera_id');
+        $this->addSql('DROP TABLE camera');
     }
 }
