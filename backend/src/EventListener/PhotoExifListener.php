@@ -31,10 +31,11 @@ class PhotoExifListener
             return;
         }
 
+        $name = mb_substr($name, 0, 100);
         $camera = $this->cameraRepository->findOneBy(['name' => $name]);
         if (null === $camera) {
             $camera = new Camera();
-            $camera->setName(mb_substr($name, 0, 100));
+            $camera->setName($name);
             $args->getObjectManager()->persist($camera);
         }
 
