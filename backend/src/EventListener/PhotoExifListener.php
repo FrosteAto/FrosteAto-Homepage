@@ -22,11 +22,48 @@ class PhotoExifListener
 
     public function prePersist(Photo $photo, PrePersistEventArgs $args): void
     {
-        if (null !== $photo->getCamera() || null === $photo->getImageName()) {
+        $needsCamera = null === $photo->getCamera();
+        $needsTakenAt = null === $photo->getTakenAt();
+
+        if ((!$needsCamera && !$needsTakenAt) || null === $photo->getImageName()) {
             return;
         }
 
-        $name = $this->detectCameraName($photo->getImageName());
+        $exif = $this->readExif($photo->getImageName());
+        if (null === $exif) {
+            return;
+        }
+
+        if ($needsCamera) {
+            $this->applyCameraName($photo, $exif, $args);
+        }
+
+        if ($needsTakenAt) {
+            $this->applyTakenAt($photo, $exif);
+        }
+    }
+
+    private function readExif(string $imageName): ?array
+    {
+        $stream = null;
+
+        try {
+            $stream = $this->storage->readStream($imageName);
+            $exif = @exif_read_data($stream);
+        } catch (\Throwable) {
+            return null;
+        } finally {
+            if (\is_resource($stream)) {
+                fclose($stream);
+            }
+        }
+
+        return false !== $exif ? $exif : null;
+    }
+
+    private function applyCameraName(Photo $photo, array $exif, PrePersistEventArgs $args): void
+    {
+        $name = $this->detectCameraName($exif);
         if (null === $name) {
             return;
         }
@@ -42,25 +79,8 @@ class PhotoExifListener
         $photo->setCamera($camera);
     }
 
-    private function detectCameraName(string $imageName): ?string
+    private function detectCameraName(array $exif): ?string
     {
-        $stream = null;
-
-        try {
-            $stream = $this->storage->readStream($imageName);
-            $exif = @exif_read_data($stream);
-        } catch (\Throwable) {
-            return null;
-        } finally {
-            if (\is_resource($stream)) {
-                fclose($stream);
-            }
-        }
-
-        if (false === $exif) {
-            return null;
-        }
-
         $make = isset($exif['Make']) ? trim((string) $exif['Make']) : '';
         $model = isset($exif['Model']) ? trim((string) $exif['Model']) : '';
 
@@ -83,5 +103,30 @@ class PhotoExifListener
         }
 
         return $make.' '.$model;
+    }
+
+    private function applyTakenAt(Photo $photo, array $exif): void
+    {
+        $takenAt = $this->detectTakenAt($exif);
+        if (null !== $takenAt) {
+            $photo->setTakenAt($takenAt);
+        }
+    }
+
+    private function detectTakenAt(array $exif): ?\DateTimeImmutable
+    {
+        // DateTimeOriginal is when the shutter fired; DateTimeDigitized is
+        // usually identical for straight-from-camera JPEGs. Deliberately NOT
+        // falling back to the plain "DateTime" tag - that one tracks when the
+        // file/metadata was last modified (e.g. by editing software), which
+        // can silently misrepresent when the photo was actually taken.
+        $value = $exif['DateTimeOriginal'] ?? $exif['DateTimeDigitized'] ?? null;
+        if (!\is_string($value) || '' === trim($value)) {
+            return null;
+        }
+
+        $date = \DateTimeImmutable::createFromFormat('Y:m:d H:i:s', trim($value));
+
+        return false !== $date ? $date : null;
     }
 }

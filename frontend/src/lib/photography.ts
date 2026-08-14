@@ -41,15 +41,23 @@ export function groupAlbumsByCamera(
     }
   }
 
-  function albumSortDate(albumId: number): number {
-    const albumPhotos = photosByAlbum.get(albumId);
-    return albumPhotos && albumPhotos.length > 0
-      ? photoSortDate(albumPhotos[0])
-      : -Infinity;
+  function albumSortDate(album: Album): number {
+    if (album.takenAt) {
+      const time = new Date(album.takenAt).getTime();
+      if (!Number.isNaN(time)) return time;
+    }
+
+    const albumPhotos = photosByAlbum.get(album.id);
+    if (albumPhotos && albumPhotos.length > 0) {
+      return photoSortDate(albumPhotos[0]);
+    }
+
+    const created = new Date(album.createdAt).getTime();
+    return Number.isNaN(created) ? -Infinity : created;
   }
 
   const sortedAlbums = [...albums].sort(
-    (a, b) => albumSortDate(b.id) - albumSortDate(a.id),
+    (a, b) => albumSortDate(b) - albumSortDate(a),
   );
 
   const groupsBySlug = new Map<string, CameraGroup>();

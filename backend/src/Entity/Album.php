@@ -55,11 +55,16 @@ class Album
     #[Groups(['album:read', 'album:write'])]
     private ?Photo $coverPhoto = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(['album:read', 'album:write'])]
+    private ?\DateTimeImmutable $takenAt = null;
+
     /** @var Collection<int, Photo> */
     #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'album')]
     private Collection $photos;
 
     #[ORM\Column]
+    #[Groups(['album:read'])]
     private \DateTimeImmutable $createdAt;
 
     public function __construct()
@@ -121,8 +126,26 @@ class Album
         return $this->photos;
     }
 
+    public function getTakenAt(): ?\DateTimeImmutable
+    {
+        return $this->takenAt;
+    }
+
+    public function setTakenAt(?\DateTimeImmutable $takenAt): static
+    {
+        $this->takenAt = $takenAt;
+
+        return $this;
+    }
+
+    #[Groups(['album:read'])]
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

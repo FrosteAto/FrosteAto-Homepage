@@ -40,6 +40,8 @@ export type Album = {
   slug: string;
   description: string | null;
   coverPhoto: Photo | null;
+  takenAt: string | null;
+  createdAt: string;
 };
 
 export type Post = {

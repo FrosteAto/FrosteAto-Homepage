@@ -111,27 +111,31 @@ API returns, and pick up new or edited content without a rebuild (ISR).
 
 A few things about the photo admin worth knowing:
 
-- **Camera detection is automatic, JPEG-only.** Uploading a photo reads its
-  EXIF data and fills in the Camera field for you, if the file has one -
-  most real camera JPEGs do, but PNGs, screenshots, and some
-  already-edited/exported files often don't. When it can't detect one, the
-  photo just has no camera set; edit it by hand on the Photos page if you
-  want to fix or add one. Photos uploaded before this feature existed are
-  never retroactively scanned - they'll show as no-camera until edited.
+- **Camera and taken-at date detection are automatic, JPEG-only.** Uploading
+  a photo reads its EXIF data and fills in the Camera and Taken at fields for
+  you, if the file has them - most real camera JPEGs do, but PNGs,
+  screenshots, and some already-edited/exported files often don't. When
+  detection comes up empty, those fields just stay unset; edit them by hand
+  on the Photos page if you want to fix or add one. Photos uploaded before
+  this feature existed are never retroactively scanned - they'll show as
+  no-camera/no-date until edited.
 - **Bulk upload** (`Bulk Upload` in the admin menu) uploads many photos in
-  one go, applying one album and one set of tags to the whole batch. Camera
-  is optional: leave it unset to auto-detect per photo from EXIF (the usual
-  behavior), or pick one to apply it to every photo in the batch instead,
-  skipping detection entirely. Titles and taken-at dates aren't set in bulk -
-  edit those per-photo afterward on the Photos page if needed. After
-  submitting, you'll see a summary of how many succeeded and, if any failed,
-  why.
+  one go, applying one album and one set of tags to the whole batch, with
+  camera and taken-at detected per photo from EXIF as above. Camera can also
+  be set for the whole batch instead - pick one from the dropdown and every
+  photo gets it, regardless of its own EXIF; taken-at is still detected per
+  photo from EXIF either way. Each photo's title defaults to its original
+  filename. After submitting, you'll see a summary of how many succeeded
+  and, if any failed, why.
+- **Albums have their own optional date too** (`Date` on the Albums admin
+  page) - set it to when the album's content actually happened (e.g. an
+  event or trip date) to control where it lands in the photography page's
+  ordering. Leave it blank and the album sorts by its most recent photo's
+  taken-at date instead, or by upload date if it has no dated photos yet.
 - On the public site, `/photography` has a **"Group by camera" toggle**
   that reorganizes the album grid into collapsible sections by camera
   (with an "Unknown camera" section for albums with no camera-tagged
-  photos yet). Everything sorts newest-first by default - by each
-  photo's taken-at date if you've set one (still manual entry, same as
-  before), falling back to upload date otherwise.
+  photos yet). Everything sorts newest-first as described above.
 
 ## Technology overview
 
