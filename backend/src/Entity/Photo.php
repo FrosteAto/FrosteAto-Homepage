@@ -51,6 +51,10 @@ class Photo
     #[Groups(['photo:read', 'photo:write'])]
     private ?Album $album = null;
 
+    #[ORM\ManyToOne(targetEntity: Camera::class, inversedBy: 'photos')]
+    #[Groups(['photo:read', 'photo:write'])]
+    private ?Camera $camera = null;
+
     /** @var Collection<int, Tag> */
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'photos')]
     #[Groups(['photo:read', 'photo:write'])]
@@ -103,6 +107,18 @@ class Photo
     public function setAlbum(?Album $album): static
     {
         $this->album = $album;
+
+        return $this;
+    }
+
+    public function getCamera(): ?Camera
+    {
+        return $this->camera;
+    }
+
+    public function setCamera(?Camera $camera): static
+    {
+        $this->camera = $camera;
 
         return $this;
     }
