@@ -10,7 +10,7 @@ RUN apk add --no-cache \
         libwebp-dev \
         libzip-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j"$(nproc)" pdo_pgsql pgsql intl gd zip opcache
+    && docker-php-ext-install -j"$(nproc)" pdo_pgsql pgsql intl gd zip exif opcache
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
