@@ -13,6 +13,10 @@
 		reverse_proxy backend:8000
 	}
 
+	handle /fonts/* {
+		reverse_proxy backend:8000
+	}
+
 	handle /bundles/* {
 		reverse_proxy backend:8000
 	}
