@@ -12,6 +12,14 @@ RUN apk add --no-cache \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j"$(nproc)" pdo_pgsql pgsql intl gd zip exif opcache
 
+RUN { \
+        echo 'upload_max_filesize=40M'; \
+        echo 'post_max_size=800M'; \
+        echo 'max_file_uploads=100'; \
+        echo 'memory_limit=1024M'; \
+        echo 'max_execution_time=300'; \
+    } > /usr/local/etc/php/conf.d/uploads.ini
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
