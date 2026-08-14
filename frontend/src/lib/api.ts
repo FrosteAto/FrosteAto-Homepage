@@ -11,11 +11,18 @@ export type Tag = {
   slug: string;
 };
 
+export type Camera = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
 export type Photo = {
   id: number;
   title: string | null;
   album: { id: number; name: string } | null;
   tags: Tag[];
+  camera: Camera | null;
   takenAt: string | null;
   imageUrl: string | null;
   createdAt: string;
@@ -62,6 +69,10 @@ export async function getAlbumBySlug(slug: string): Promise<Album | null> {
   return data.member[0] ?? null;
 }
 
+export function photoSortDate(photo: Photo): number {
+  return new Date(photo.takenAt ?? photo.createdAt).getTime();
+}
+
 export async function getPhotos(filter?: {
   albumSlug?: string;
   tagSlug?: string;
@@ -74,7 +85,7 @@ export async function getPhotos(filter?: {
   const data = await apiFetch<HydraCollection<Photo>>(
     `/api/photos${query ? `?${query}` : ""}`,
   );
-  return data.member;
+  return data.member.sort((a, b) => photoSortDate(b) - photoSortDate(a));
 }
 
 export async function getTags(): Promise<Tag[]> {
