@@ -25,6 +25,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Put(security: "is_granted('ROLE_ADMIN')"),
         new Delete(security: "is_granted('ROLE_ADMIN')"),
     ],
+    paginationEnabled: false,
     order: ['createdAt' => 'DESC'],
     normalizationContext: ['groups' => ['photo:read']],
     denormalizationContext: ['groups' => ['photo:write']],
@@ -74,6 +75,7 @@ class Photo
     private ?string $imageName = null;
 
     #[ORM\Column]
+    #[Groups(['photo:read'])]
     private \DateTimeImmutable $createdAt;
 
     public function __construct()
@@ -175,6 +177,7 @@ class Photo
         return $this->imageName ? '/media/photos/'.$this->imageName : null;
     }
 
+    #[Groups(['photo:read'])]
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;

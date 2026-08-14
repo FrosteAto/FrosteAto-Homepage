@@ -65,6 +65,8 @@ class PhotoBulkUploadController extends AbstractController
             $failures = [];
 
             foreach ($files as $file) {
+                $newFilename = null;
+
                 try {
                     if (false === @getimagesize($file->getPathname())) {
                         throw new \RuntimeException('Not a readable image file');
@@ -87,7 +89,20 @@ class PhotoBulkUploadController extends AbstractController
 
                     ++$succeeded;
                 } catch (\Throwable $e) {
+                    if (null !== $newFilename) {
+                        try {
+                            $this->storage->delete($newFilename);
+                        } catch (\Throwable) {
+                            // Best-effort cleanup - the failure below is already reported.
+                        }
+                    }
+
                     $failures[] = \sprintf('%s: %s', $file->getClientOriginalName(), $e->getMessage());
+
+                    if (!$this->entityManager->isOpen()) {
+                        $failures[] = 'Batch stopped early: a database error closed the connection, so remaining files were not processed.';
+                        break;
+                    }
                 }
             }
 

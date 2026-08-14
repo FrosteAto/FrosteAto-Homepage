@@ -126,8 +126,9 @@ A few things about the photo admin worth knowing:
 - On the public site, `/photography` has a **"Group by camera" toggle**
   that reorganizes the album grid into collapsible sections by camera
   (with an "Unknown camera" section for albums with no camera-tagged
-  photos yet). Everything sorts newest-shot-first by default, using each
-  photo's taken-at date rather than when it was uploaded.
+  photos yet). Everything sorts newest-first by default - by each
+  photo's taken-at date if you've set one (still manual entry, same as
+  before), falling back to upload date otherwise.
 
 ## Technology overview
 

@@ -14,6 +14,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[ORM\Entity(repositoryClass: AlbumRepository::class)]
 #[ApiResource(
+    paginationEnabled: false,
     normalizationContext: ['groups' => ['album:read']],
     denormalizationContext: ['groups' => ['album:write']],
 )]

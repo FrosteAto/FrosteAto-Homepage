@@ -34,7 +34,7 @@ class PhotoExifListener
         $camera = $this->cameraRepository->findOneBy(['name' => $name]);
         if (null === $camera) {
             $camera = new Camera();
-            $camera->setName($name);
+            $camera->setName(mb_substr($name, 0, 100));
             $args->getObjectManager()->persist($camera);
         }
 
