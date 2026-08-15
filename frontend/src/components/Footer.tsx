@@ -31,7 +31,7 @@ export default function Footer() {
 
       <p className="text-sm text-chrome-fg/70">Made lovingly by hand</p>
       <p className="text-sm text-chrome-fg/70">
-        &copy; FrosteAto O&apos;Brien {new Date().getFullYear()}
+        &copy; FrosteAto {new Date().getFullYear()}
       </p>
     </footer>
   );
