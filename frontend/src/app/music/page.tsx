@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getMusicAlbums, imageOptimizerUrl } from "@/lib/api";
+import { getMusicAlbums, imageOptimizerUrl, type MusicAlbum } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Music | FrosteAto",
 };
 
 export default async function MusicPage() {
-  const albums = await getMusicAlbums();
+  let albums: MusicAlbum[] = [];
+  let unavailable = false;
+
+  try {
+    albums = await getMusicAlbums();
+  } catch {
+    unavailable = true;
+  }
 
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-4 py-10 sm:px-6">
@@ -26,9 +33,17 @@ export default async function MusicPage() {
         </p>
       </div>
 
-      {albums.length === 0 ? (
+      {unavailable && (
+        <p className="text-fg/60">
+          Couldn&apos;t reach the music backend right now - check back soon.
+        </p>
+      )}
+
+      {!unavailable && albums.length === 0 && (
         <p className="text-fg/60">Nothing released yet - check back soon.</p>
-      ) : (
+      )}
+
+      {!unavailable && albums.length > 0 && (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {albums.map((album) => {
             const isPlaceholder = !album.bandcampUrl;
