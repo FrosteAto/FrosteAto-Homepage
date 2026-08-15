@@ -44,11 +44,11 @@ export default async function AlbumPage({
   const lensName = album.lens?.name ?? null;
   let gear: string | null = null;
   if (primaryCamera && lensName) {
-    gear = `Shot on ${primaryCamera} with ${lensName}`;
+    gear = `Shot on a ${primaryCamera} with a ${lensName} lens`;
   } else if (primaryCamera) {
-    gear = `Shot on ${primaryCamera}`;
+    gear = `Shot on a ${primaryCamera}`;
   } else if (lensName) {
-    gear = `Shot with ${lensName}`;
+    gear = `Shot with a ${lensName} lens`;
   }
   const meta = [date, photoCount, gear].filter(Boolean).join(" · ");
 
