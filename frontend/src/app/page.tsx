@@ -70,27 +70,26 @@ export default function Home() {
 
       <div className="flex max-w-3xl flex-col gap-4 text-lg leading-relaxed">
         <p>
-          Hi, I&apos;m FrosteAto! Welcome to my personal website. I am a
-          passionate developer looking for experience in any role in the
-          computing industry, and this site is home to everything else I
-          make too - code, photos, music, and the odd blog post.
+          Hi, I&apos;m FrosteAto! Welcome to my personal website. I am a software
+          developer by trade, and you will find the personal projects im most proud of here.
+          This includes FrosteArch, a Linux distro I maintain myself, as well as this website
+          and anything else I come up with.
         </p>
         <p>
-          I got into computing because I liked taking things apart to see
-          how they worked, and that hasn&apos;t really changed - it&apos;s
-          just software now instead of whatever I could get my hands on as
-          a kid. These days that shows up as FrosteArch, a Linux
-          distribution I build and maintain myself, and a string of
-          personal projects I keep coming back to outside of whatever I&apos;m
-          doing for work.
+          Outside of the software world, I also enjoy photography, music, cooking, and even
+          the odd bit of drawing. Now, not all of this is currently available on this site,
+          but as I become more confident with it I will pop it up for display.
+
+          Photography is immediately available, and I am currently working on music to put up here soon.
+          Recipes will also shortly be available for display as well.
         </p>
         <p>
-          Outside of code, I&apos;m usually behind a camera, working on
-          music, or both at once. I&apos;d rather make something and put it
-          out than sit on it, which is why you&apos;ll find half-finished
-          albums next to finished ones and photos from wherever I happened
-          to be standing. Have a look around - there&apos;s more of all of
-          it below.
+          I also have a (admittedly pretty empty) blog where I will post my random thoughts and opinions
+          from time to time. Read those if you want. Or don't, I suppose.
+        </p>
+        <p>
+          So, use the nav bar up top to explore the different sections of my life, and feel 
+          free to reach out to me if you have any questions.
         </p>
       </div>
 
