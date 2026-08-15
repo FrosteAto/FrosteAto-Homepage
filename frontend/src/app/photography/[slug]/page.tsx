@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import FeaturedCarousel from "@/components/FeaturedCarousel";
+import FeaturedGrid from "@/components/FeaturedGrid";
 import PhotoGrid from "@/components/PhotoGrid";
 import { getAlbumBySlug, getPhotos } from "@/lib/api";
 
@@ -45,9 +45,7 @@ export default async function AlbumPage({
         )}
       </div>
 
-      {featuredPhotos.length > 0 && (
-        <FeaturedCarousel photos={featuredPhotos} />
-      )}
+      {featuredPhotos.length > 0 && <FeaturedGrid photos={featuredPhotos} />}
 
       {photos.length === 0 ? (
         <p className="text-fg/60">No photos in this album yet.</p>

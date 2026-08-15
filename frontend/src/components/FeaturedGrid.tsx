@@ -5,18 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { apiImageUrl, type Photo } from "@/lib/api";
 
-export default function FeaturedCarousel({ photos }: { photos: Photo[] }) {
-  const [index, setIndex] = useState(0);
+export default function FeaturedGrid({ photos }: { photos: Photo[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const showPrev = useCallback(
-    () => setIndex((i) => (i - 1 + photos.length) % photos.length),
-    [photos.length],
-  );
-  const showNext = useCallback(
-    () => setIndex((i) => (i + 1) % photos.length),
-    [photos.length],
-  );
 
   const closeLightbox = useCallback(() => setOpenIndex(null), []);
   const lightboxPrev = useCallback(
@@ -46,69 +36,38 @@ export default function FeaturedCarousel({ photos }: { photos: Photo[] }) {
 
   if (photos.length === 0) return null;
 
-  const photo = photos[index];
-  const url = apiImageUrl(photo.imageUrl);
   const openPhoto = openIndex !== null ? photos[openIndex] : null;
   const hasMultiple = photos.length > 1;
 
   return (
-    <div className="flex flex-col gap-3">
-      <h2 className="font-[family-name:var(--font-heading)] text-lg text-fg/70">
+    <div className="flex flex-col gap-4 rounded-lg border border-fg/12 bg-card/50 p-4 sm:p-6">
+      <h2 className="font-[family-name:var(--font-heading)] text-2xl">
         Featured
       </h2>
 
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-md bg-fg/8 sm:aspect-[21/9]">
-        <button
-          type="button"
-          onClick={() => setOpenIndex(index)}
-          className="absolute inset-0"
-          aria-label={`View ${photo.title ?? "featured photo"} full size`}
-        >
-          {url && (
-            <Image
-              src={url}
-              alt={photo.title ?? "Featured photo"}
-              fill
-              sizes="(max-width: 1024px) 100vw, 1024px"
-              priority
-              className="object-cover"
-            />
-          )}
-        </button>
-
-        {hasMultiple && (
-          <>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {photos.map((photo, i) => {
+          const url = apiImageUrl(photo.imageUrl);
+          return (
             <button
+              key={photo.id}
               type="button"
-              onClick={showPrev}
-              aria-label="Previous featured photo"
-              className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/40 px-3 py-2 text-2xl text-white hover:bg-black/60"
+              onClick={() => setOpenIndex(i)}
+              className="group relative aspect-square overflow-hidden rounded-md bg-fg/8"
+              aria-label={`View ${photo.title ?? "featured photo"} full size`}
             >
-              &#8249;
-            </button>
-            <button
-              type="button"
-              onClick={showNext}
-              aria-label="Next featured photo"
-              className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/40 px-3 py-2 text-2xl text-white hover:bg-black/60"
-            >
-              &#8250;
-            </button>
-            <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-              {photos.map((p, i) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => setIndex(i)}
-                  aria-label={`Go to featured photo ${i + 1}`}
-                  className={`h-2 w-2 rounded-full transition-colors ${
-                    i === index ? "bg-white" : "bg-white/40"
-                  }`}
+              {url && (
+                <Image
+                  src={url}
+                  alt={photo.title ?? "Featured photo"}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-              ))}
-            </div>
-          </>
-        )}
+              )}
+            </button>
+          );
+        })}
       </div>
 
       <AnimatePresence>
