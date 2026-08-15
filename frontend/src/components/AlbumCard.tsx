@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { apiImageUrl, type Album } from "@/lib/api";
+import { apiImageUrl, formatAlbumDate, type Album } from "@/lib/api";
 
 export default function AlbumCard({ album }: { album: Album }) {
   const coverUrl = apiImageUrl(album.coverPhoto?.imageUrl ?? null);
+  const date = album.takenAt ? formatAlbumDate(album.takenAt) : null;
 
   return (
     <Link
@@ -25,6 +26,7 @@ export default function AlbumCard({ album }: { album: Album }) {
         <p className="font-[family-name:var(--font-heading)] text-lg text-fg">
           {album.name}
         </p>
+        {date && <p className="mt-0.5 text-xs text-fg/60">{date}</p>}
         {album.description && (
           <p className="mt-1 line-clamp-2 text-sm text-fg/70">
             {album.description}

@@ -83,6 +83,17 @@ export function photoSortDate(photo: Photo): number {
   return Number.isNaN(time) ? 0 : time;
 }
 
+export function formatAlbumDate(dateString: string): string | null {
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return null;
+
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export async function getPhotos(filter?: {
   albumSlug?: string;
   tagSlug?: string;
