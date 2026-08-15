@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -36,6 +37,10 @@ class AlbumCrudController extends AbstractCrudController
         yield DateField::new('takenAt', 'Date')
             ->setRequired(false)
             ->setHelp('When this album\'s content happened, e.g. the event or trip date. Controls its position in the photography page - newest first, falling back to the upload date when left blank.');
+        yield AssociationField::new('lens')
+            ->setRequired(false)
+            ->autocomplete()
+            ->setHelp('The lens used for this album\'s photos, if you want to record it - not auto-detected. Shown on the album page next to the camera.');
     }
 
     public function configureActions(Actions $actions): Actions

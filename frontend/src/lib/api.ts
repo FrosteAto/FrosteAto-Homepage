@@ -45,6 +45,12 @@ export type Camera = {
   slug: string;
 };
 
+export type Lens = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
 export type Photo = {
   id: number;
   title: string | null;
@@ -69,6 +75,7 @@ export type Album = {
   description: string | null;
   coverPhoto: Photo | null;
   takenAt: string | null;
+  lens: Lens | null;
   createdAt: string;
 };
 

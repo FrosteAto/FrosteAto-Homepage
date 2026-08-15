@@ -41,13 +41,16 @@ export default async function AlbumPage({
       ? `${photos.length} photo${photos.length === 1 ? "" : "s"}`
       : null;
   const primaryCamera = primaryCameraName(photos);
-  const meta = [
-    date,
-    photoCount,
-    primaryCamera ? `Shot on ${primaryCamera}` : null,
-  ]
-    .filter(Boolean)
-    .join(" · ");
+  const lensName = album.lens?.name ?? null;
+  let gear: string | null = null;
+  if (primaryCamera && lensName) {
+    gear = `Shot on ${primaryCamera} with ${lensName}`;
+  } else if (primaryCamera) {
+    gear = `Shot on ${primaryCamera}`;
+  } else if (lensName) {
+    gear = `Shot with ${lensName}`;
+  }
+  const meta = [date, photoCount, gear].filter(Boolean).join(" · ");
 
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-10 sm:px-6">

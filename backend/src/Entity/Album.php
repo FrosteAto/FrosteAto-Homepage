@@ -59,6 +59,10 @@ class Album
     #[Groups(['album:read', 'album:write'])]
     private ?\DateTimeImmutable $takenAt = null;
 
+    #[ORM\ManyToOne(targetEntity: Lens::class, inversedBy: 'albums')]
+    #[Groups(['album:read', 'album:write'])]
+    private ?Lens $lens = null;
+
     /** @var Collection<int, Photo> */
     #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'album')]
     private Collection $photos;
@@ -134,6 +138,18 @@ class Album
     public function setTakenAt(?\DateTimeImmutable $takenAt): static
     {
         $this->takenAt = $takenAt;
+
+        return $this;
+    }
+
+    public function getLens(): ?Lens
+    {
+        return $this->lens;
+    }
+
+    public function setLens(?Lens $lens): static
+    {
+        $this->lens = $lens;
 
         return $this;
     }

@@ -132,6 +132,11 @@ A few things about the photo admin worth knowing:
   event or trip date) to control where it lands in the photography page's
   ordering. Leave it blank and the album sorts by its most recent photo's
   taken-at date instead, or by upload date if it has no dated photos yet.
+- **Albums can also record a `Lens`** (its own admin section, managed the
+  same way as `Cameras`) - unlike camera, this is never auto-detected and
+  has to be picked by hand on the Albums admin page. When set, it's shown
+  on the album page next to whichever camera was used on most of its
+  photos.
 - **Mark a photo as `Featured`** (checkbox on the Photos admin page, also
   toggleable straight from the Photos list without opening each one, or from
   an album's own `Manage Photos` page) to show it in a larger-tiled section
