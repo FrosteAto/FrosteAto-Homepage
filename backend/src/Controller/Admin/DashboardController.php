@@ -53,5 +53,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(CameraCrudController::class, 'Cameras', 'fa fa-camera');
         yield MenuItem::linkTo(LensCrudController::class, 'Lenses', 'fa fa-dot-circle-o');
         yield MenuItem::linkTo(PostCrudController::class, 'Blog Posts', 'fa fa-pen');
+        yield MenuItem::linkTo(MusicAlbumCrudController::class, 'Music Albums', 'fa fa-music');
     }
 }

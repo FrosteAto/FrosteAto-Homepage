@@ -87,6 +87,15 @@ export type Post = {
   publishedAt: string | null;
 };
 
+export type MusicAlbum = {
+  id: number;
+  title: string;
+  description: string | null;
+  coverImageUrl: string | null;
+  bandcampUrl: string | null;
+  createdAt: string;
+};
+
 async function apiFetch<T>(path: string): Promise<T> {
   const res = await fetch(`${INTERNAL_API_URL}${path}`, {
     headers: { Accept: "application/ld+json" },
@@ -110,6 +119,13 @@ export async function getAlbumBySlug(slug: string): Promise<Album | null> {
     `/api/albums?slug=${encodeURIComponent(slug)}`,
   );
   return data.member[0] ?? null;
+}
+
+export async function getMusicAlbums(): Promise<MusicAlbum[]> {
+  const data = await apiFetch<HydraCollection<MusicAlbum>>(
+    "/api/music_albums",
+  );
+  return data.member;
 }
 
 export function photoSortDate(photo: Photo): number {

@@ -103,11 +103,12 @@ hot-reloads immediately:
 Shared UI lives in `frontend/src/components/`, site-wide styles in
 `frontend/src/app/globals.css`, and fonts in `frontend/src/fonts/`.
 
-**Blog** and **Photography** are different: their content comes from the
-backend, not frontend source files. With the backend running (see "Run it"
-above), manage posts, photos, albums, tags, and cameras at
-`http://localhost:8000/admin` - the frontend pages just render whatever the
-API returns, and pick up new or edited content without a rebuild (ISR).
+**Blog**, **Photography**, and **Music** are different: their content comes
+from the backend, not frontend source files. With the backend running (see
+"Run it" above), manage posts, photos, albums, tags, cameras, and music
+albums at `http://localhost:8000/admin` - the frontend pages just render
+whatever the API returns, and pick up new or edited content without a
+rebuild (ISR).
 
 A few things about the photo admin worth knowing:
 
@@ -173,6 +174,15 @@ A few things about the photo admin worth knowing:
 - **The admin panel (`/admin`) uses the public site's light-mode colour
   palette** instead of EasyAdmin's default theme - see
   `backend/public/admin/theme.css` if it ever needs adjusting.
+
+**Music albums** (`Music Albums` in the admin menu) are simpler than
+photos: a title, an optional description, an optional cover image (upload
+and remove work the same as a photo's image field), and an optional
+Bandcamp link. There's no page per album on this site - clicking an
+album's card on `/music` sends visitors straight to its Bandcamp link in a
+new tab. Leave the Bandcamp link blank for an upcoming release and the
+card renders as an obvious "Coming soon" placeholder instead of a dead
+link.
 
 ## Technology overview
 

@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
       // in src/lib/api.ts) - the image optimizer fetches originals from here
       // directly instead of looping out through the public domain.
       new URL("http://backend:8000/media/photos/**"),
+      new URL("http://localhost:8000/media/music-covers/**"),
+      new URL("https://0brien.dev/media/music-covers/**"),
+      new URL("http://backend:8000/media/music-covers/**"),
     ],
     // The dev API runs on localhost, and the internal backend hostname above
     // resolves to a container's private IP - both trip Next's SSRF guard by

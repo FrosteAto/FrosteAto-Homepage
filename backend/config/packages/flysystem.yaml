@@ -16,3 +16,7 @@ flysystem:
             adapter: 'local'
             options:
                 directory: '%kernel.project_dir%/public/media/photos-thumbnails'
+        music_covers.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/public/media/music-covers'
