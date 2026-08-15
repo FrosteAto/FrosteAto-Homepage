@@ -154,6 +154,18 @@ A few things about the photo admin worth knowing:
   that reorganizes the album grid into collapsible sections by camera
   (with an "Unknown camera" section for albums with no camera-tagged
   photos yet). Everything sorts newest-first as described above.
+- **Shooting settings** (aperture, shutter speed, ISO, focal length) are
+  detected from EXIF alongside camera and taken-at, and shown next to the
+  camera name when a photo is opened in the lightbox. Like camera
+  detection, this is JPEG-only, best-effort, and never backfilled for
+  photos uploaded before it existed - anything missing from EXIF is just
+  left off the line rather than shown as unknown.
+- **Each album page shows which camera was used on the most photos in it**
+  (e.g. "Shot on Canon EOS R6"), alongside the date and photo count.
+  Computed from the album's own photos, so it needs no separate setup.
+- **The admin panel (`/admin`) uses the public site's light-mode colour
+  palette** instead of EasyAdmin's default theme - see
+  `backend/public/admin/theme.css` if it ever needs adjusting.
 
 ## Technology overview
 

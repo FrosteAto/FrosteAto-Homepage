@@ -3,7 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import FeaturedGrid from "@/components/FeaturedGrid";
 import PhotoGrid from "@/components/PhotoGrid";
-import { formatAlbumDate, getAlbumBySlug, getPhotos } from "@/lib/api";
+import {
+  formatAlbumDate,
+  getAlbumBySlug,
+  getPhotos,
+  primaryCameraName,
+} from "@/lib/api";
 
 export async function generateMetadata({
   params,
@@ -35,7 +40,14 @@ export default async function AlbumPage({
     photos.length > 0
       ? `${photos.length} photo${photos.length === 1 ? "" : "s"}`
       : null;
-  const meta = [date, photoCount].filter(Boolean).join(" · ");
+  const primaryCamera = primaryCameraName(photos);
+  const meta = [
+    date,
+    photoCount,
+    primaryCamera ? `Shot on ${primaryCamera}` : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-10 sm:px-6">
