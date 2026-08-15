@@ -1,0 +1,43 @@
+/*
+ * Re-tints EasyAdmin's default theme to match the public site's palette
+ * (frontend/src/app/globals.css) instead of its own indigo/gray default.
+ *
+ * EasyAdmin's whole theme derives from a handful of tokens in its own
+ * design-tokens.css/color-palette.css - --ea-primary (accent), --white, and
+ * a --gray-50..--gray-950 ramp that almost everything else (backgrounds,
+ * borders, text, table/form colors) is defined in terms of. Overriding just
+ * those here re-themes the backend without touching per-component CSS.
+ *
+ * Applied to both `:root` and `.ea-dark-scheme` (EasyAdmin's own light/dark
+ * split) so the result is always the site's light palette regardless of the
+ * admin's dark-mode toggle - "the whole admin panel should follow the light
+ * mode styling of the main website" means there's deliberately no separate
+ * dark variant here.
+ */
+:root,
+.ea-dark-scheme {
+    /* Accent (buttons, links, focus rings, active nav) - the same tan used
+       for the public site's nav/footer chrome accent. */
+    --ea-primary: #4d3014;
+    --ea-primary-foreground: #fefae0;
+    --ea-primary-mix-base: #fefae0;
+    --ea-primary-contrast-base: #283618;
+
+    --white: #fefae0;
+
+    /* Warm neutral ramp between the site's cream and ink, replacing
+       EasyAdmin's default blue-gray ramp. */
+    --gray-50: color-mix(in oklab, #283618 4%, #fefae0);
+    --gray-100: color-mix(in oklab, #283618 8%, #fefae0);
+    --gray-200: color-mix(in oklab, #283618 16%, #fefae0);
+    --gray-300: color-mix(in oklab, #283618 28%, #fefae0);
+    --gray-400: color-mix(in oklab, #283618 42%, #fefae0);
+    --gray-500: color-mix(in oklab, #283618 56%, #fefae0);
+    --gray-600: color-mix(in oklab, #283618 68%, #fefae0);
+    --gray-700: color-mix(in oklab, #283618 78%, #fefae0);
+    --gray-800: color-mix(in oklab, #283618 88%, #fefae0);
+    --gray-900: #283618;
+    --gray-950: #1c260f;
+
+    --text-color: #283618;
+}
