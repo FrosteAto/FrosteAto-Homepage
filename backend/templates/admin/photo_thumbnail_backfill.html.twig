@@ -34,11 +34,24 @@
             font-size: 1.25rem;
         }
 
+        h2 {
+            font-size: 1rem;
+            margin-top: 0;
+        }
+
         .panel {
             background: var(--color-champagne-soft);
             padding: 2rem;
             border-radius: 8px;
             margin-top: 1rem;
+        }
+
+        .panel + .panel {
+            margin-top: 1rem;
+        }
+
+        .panel p:first-child {
+            margin-top: 0;
         }
 
         button {
@@ -82,53 +95,63 @@
         }
     </style>
 </head>
-<body data-csrf-token="{{ csrf_token('thumbnail-backfill') }}" data-remaining="{{ remaining }}">
+<body data-csrf-token="{{ csrf_token('thumbnail-backfill') }}" data-missing="{{ missing }}" data-total="{{ total }}">
 <div class="page">
     <a href="{{ path('admin') }}">&larr; Back to admin</a>
-    <h1>Generate missing thumbnails</h1>
-    <p>Photos uploaded before thumbnail generation existed (and any where it failed) don't have a pre-sized copy yet, so they fall back to slower on-demand resizing when viewed. This generates the missing ones directly, in the background, without leaving this page.</p>
+    <h1>Generate thumbnails</h1>
 
     <div class="panel">
-        {% if remaining == 0 %}
-            <p class="done">All photos already have a thumbnail. Nothing to do.</p>
+        <h2>Missing thumbnails</h2>
+        <p>Photos uploaded before thumbnail generation existed (and any where it failed) don't have a pre-sized copy yet, so they fall back to slower on-demand resizing when viewed.</p>
+        {% if missing == 0 %}
+            <p class="done" id="missing-done-label">All photos already have a thumbnail. Nothing to do.</p>
         {% else %}
-            <p id="remaining-label">{{ remaining }} photo{{ remaining == 1 ? '' : 's' }} need{{ remaining == 1 ? 's' : '' }} a thumbnail.</p>
-            <button type="button" id="start-button">Generate missing thumbnails</button>
+            <p id="missing-label">{{ missing }} photo{{ missing == 1 ? '' : 's' }} need{{ missing == 1 ? 's' : '' }} a thumbnail.</p>
         {% endif %}
+        <button type="button" id="missing-button" {{ missing == 0 ? 'disabled' : '' }}>Generate missing thumbnails</button>
+    </div>
 
-        <div class="progress-wrap" id="progress-wrap">
-            <progress id="progress-bar" value="0" max="100"></progress>
-            <p class="progress-label" id="progress-label"></p>
-        </div>
+    <div class="panel">
+        <h2>Regenerate all thumbnails</h2>
+        <p>Redoes every photo's thumbnail from scratch, including ones that already have one - only needed after a fix to how thumbnails themselves are generated (e.g. a rotation bug), since otherwise already-generated ones are skipped.</p>
+        <button type="button" id="all-button" {{ total == 0 ? 'disabled' : '' }}>Regenerate all {{ total }} thumbnail{{ total == 1 ? '' : 's' }}</button>
+    </div>
+
+    <div class="panel progress-wrap" id="progress-wrap">
+        <progress id="progress-bar" value="0" max="100"></progress>
+        <p class="progress-label" id="progress-label"></p>
     </div>
 </div>
 <script>
     (function () {
         var csrfToken = document.body.dataset.csrfToken;
-        var total = parseInt(document.body.dataset.remaining, 10);
-        var startButton = document.getElementById('start-button');
-        var remainingLabel = document.getElementById('remaining-label');
+        var missingButton = document.getElementById('missing-button');
+        var allButton = document.getElementById('all-button');
+        var missingLabel = document.getElementById('missing-label');
         var progressWrap = document.getElementById('progress-wrap');
         var progressBar = document.getElementById('progress-bar');
         var progressLabel = document.getElementById('progress-label');
-
-        if (!startButton) return;
 
         // Safety net against an unbounded loop if every remaining photo
         // somehow keeps failing - well past what ~1000 photos in 20-photo
         // batches should ever need.
         var MAX_ROUNDS = 500;
 
-        function runBatch(processedSoFar, round) {
+        function runBatch(mode, total, processedSoFar, afterId, round) {
             if (round > MAX_ROUNDS) {
                 progressLabel.textContent = 'Stopped after ' + MAX_ROUNDS + ' rounds - some photos may keep failing to process. Processed ' + processedSoFar + ' of ' + total + '.';
                 return;
             }
 
+            var body = '_token=' + encodeURIComponent(csrfToken) + '&mode=' + encodeURIComponent(mode);
+            if (mode === 'all') {
+                body += '&afterId=' + encodeURIComponent(afterId);
+            }
+
             fetch('{{ path('admin_photos_backfill_thumbnails_run') }}', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: '_token=' + encodeURIComponent(csrfToken),
+                body: body,
             })
                 .then(function (res) {
                     if (!res.ok) throw new Error('Request failed');
@@ -140,24 +163,33 @@
                     progressBar.value = Math.min(percent, 100);
                     progressLabel.textContent = 'Processed ' + processed + ' / ' + total;
 
-                    if (data.batchSize === 0 || data.remaining === 0) {
+                    if (data.batchSize === 0) {
                         progressLabel.textContent = 'Done - processed ' + processed + ' / ' + total + '.';
                         return;
                     }
 
-                    runBatch(processed, round + 1);
+                    runBatch(mode, total, processed, data.lastId, round + 1);
                 })
                 .catch(function () {
                     progressLabel.innerHTML = '<span class="failure">Something went wrong - refresh the page to see current progress and try again.</span>';
                 });
         }
 
-        startButton.addEventListener('click', function () {
-            startButton.disabled = true;
-            remainingLabel.style.display = 'none';
+        function start(mode, total) {
+            missingButton.disabled = true;
+            allButton.disabled = true;
+            if (missingLabel) missingLabel.style.display = 'none';
             progressWrap.style.display = 'block';
             progressLabel.textContent = 'Starting…';
-            runBatch(0, 1);
+            runBatch(mode, total, 0, 0, 1);
+        }
+
+        missingButton.addEventListener('click', function () {
+            start('missing', parseInt(document.body.dataset.missing, 10));
+        });
+
+        allButton.addEventListener('click', function () {
+            start('all', parseInt(document.body.dataset.total, 10));
         });
     })();
 </script>
