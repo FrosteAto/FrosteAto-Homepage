@@ -78,6 +78,17 @@ class Photo
     #[Groups(['photo:read'])]
     private ?string $imageName = null;
 
+    /**
+     * Set once a pre-sized copy exists in the `photos_thumbnails.storage`
+     * Flysystem storage under the same filename as imageName (see
+     * PhotoThumbnailListener). Null means no thumbnail yet - either it
+     * hasn't been backfilled, or generation failed - and callers should
+     * fall back to resizing the original on demand.
+     */
+    #[ORM\Column(nullable: true)]
+    #[Groups(['photo:read'])]
+    private ?\DateTimeImmutable $thumbnailGeneratedAt = null;
+
     #[ORM\Column]
     #[Groups(['photo:read'])]
     private \DateTimeImmutable $createdAt;
@@ -191,6 +202,26 @@ class Photo
     public function getImageUrl(): ?string
     {
         return $this->imageName ? '/media/photos/'.$this->imageName : null;
+    }
+
+    public function getThumbnailGeneratedAt(): ?\DateTimeImmutable
+    {
+        return $this->thumbnailGeneratedAt;
+    }
+
+    public function setThumbnailGeneratedAt(?\DateTimeImmutable $thumbnailGeneratedAt): static
+    {
+        $this->thumbnailGeneratedAt = $thumbnailGeneratedAt;
+
+        return $this;
+    }
+
+    #[Groups(['photo:read', 'album:read'])]
+    public function getThumbnailUrl(): ?string
+    {
+        return $this->thumbnailGeneratedAt && $this->imageName
+            ? '/media/photos-thumbnails/'.$this->imageName
+            : null;
     }
 
     #[Groups(['photo:read'])]

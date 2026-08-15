@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { apiImageUrl, imageOptimizerUrl, type Photo } from "@/lib/api";
+import { apiImageUrl, photoThumbnail, type Photo } from "@/lib/api";
 
 export default function FeaturedGrid({ photos }: { photos: Photo[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -47,7 +47,7 @@ export default function FeaturedGrid({ photos }: { photos: Photo[] }) {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {photos.map((photo, i) => {
-          const url = imageOptimizerUrl(photo.imageUrl);
+          const { src, preGenerated } = photoThumbnail(photo);
           return (
             <button
               key={photo.id}
@@ -56,11 +56,12 @@ export default function FeaturedGrid({ photos }: { photos: Photo[] }) {
               className="group relative aspect-square overflow-hidden rounded-md bg-fg/8"
               aria-label={`View ${photo.title ?? "featured photo"} full size`}
             >
-              {url && (
+              {src && (
                 <Image
-                  src={url}
+                  src={src}
                   alt={photo.title ?? "Featured photo"}
                   fill
+                  unoptimized={preGenerated}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />

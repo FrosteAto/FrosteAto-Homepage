@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { apiImageUrl, imageOptimizerUrl, type Photo } from "@/lib/api";
+import { apiImageUrl, photoThumbnail, type Photo } from "@/lib/api";
 
 export default function PhotoGrid({ photos }: { photos: Photo[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -38,7 +38,7 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
     <>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
         {photos.map((photo, i) => {
-          const url = imageOptimizerUrl(photo.imageUrl);
+          const { src, preGenerated } = photoThumbnail(photo);
           return (
             <motion.button
               key={photo.id}
@@ -49,11 +49,12 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: Math.min(i * 0.03, 0.5) }}
             >
-              {url && (
+              {src && (
                 <Image
-                  src={url}
+                  src={src}
                   alt={photo.title ?? "Photo"}
                   fill
+                  unoptimized={preGenerated}
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />

@@ -133,10 +133,23 @@ A few things about the photo admin worth knowing:
   ordering. Leave it blank and the album sorts by its most recent photo's
   taken-at date instead, or by upload date if it has no dated photos yet.
 - **Mark a photo as `Featured`** (checkbox on the Photos admin page, also
-  toggleable straight from the Photos list without opening each one) to show
-  it in a carousel at the top of its album's page. Featured photos still
-  appear in their normal spot in the grid below too - the carousel is
-  additive, not a replacement.
+  toggleable straight from the Photos list without opening each one, or from
+  an album's own `Manage Photos` page) to show it in a larger-tiled section
+  at the top of its album's page. Featured photos still appear in their
+  normal spot in the grid below too - it's additive, not a replacement.
+- **Each album's `Manage Photos` page** (linked from the Albums list and
+  edit page) shows every photo in that album as a grid with instant
+  Featured and Cover Photo toggles - the only way to set an album's cover
+  photo, since picking one from hundreds by filename in a dropdown wasn't
+  workable.
+- **Thumbnails are pre-generated on upload** (a resized copy, not the full
+  original) so browsing an album doesn't trigger a burst of on-demand
+  resizing - previously the real bottleneck on large albums, occasionally
+  slow or unreliable under concurrent load. Photos uploaded before this
+  existed don't have one yet; visit **`Generate Thumbnails`** in the admin
+  menu and click the button to backfill them all in the background, with
+  live progress. Anything not yet backfilled just falls back to the old
+  on-demand resizing - never a broken image, just slower until it's done.
 - On the public site, `/photography` has a **"Group by camera" toggle**
   that reorganizes the album grid into collapsible sections by camera
   (with an "Unknown camera" section for albums with no camera-tagged

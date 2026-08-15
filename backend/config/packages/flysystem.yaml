@@ -12,3 +12,7 @@ flysystem:
             adapter: 'local'
             options:
                 directory: '%kernel.project_dir%/public/media/photos'
+        photos_thumbnails.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/public/media/photos-thumbnails'

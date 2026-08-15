@@ -30,6 +30,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkTo(PhotoCrudController::class, 'Photos', 'fa fa-image');
         yield MenuItem::linkToRoute('Bulk Upload', 'fa fa-upload', 'admin_photos_bulk_upload');
+        yield MenuItem::linkToRoute('Generate Thumbnails', 'fa fa-images', 'admin_photos_backfill_thumbnails');
         yield MenuItem::linkTo(AlbumCrudController::class, 'Albums', 'fa fa-folder');
         yield MenuItem::linkTo(TagCrudController::class, 'Tags', 'fa fa-tag');
         yield MenuItem::linkTo(CameraCrudController::class, 'Cameras', 'fa fa-camera');

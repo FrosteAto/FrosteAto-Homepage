@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate thumbnails | 0brien.dev admin</title>
+    <style>
+        :root {
+            --color-cream: #fefae0;
+            --color-champagne-soft: #f5eed8;
+            --color-sage-deep: #bfcb9a;
+            --color-tan-deep: #4d3014;
+            --color-ink: #283618;
+            --color-rust: #6e352c;
+        }
+
+        body {
+            font-family: ui-monospace, monospace;
+            background: var(--color-cream);
+            color: var(--color-ink);
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .page {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        a {
+            color: var(--color-tan-deep);
+        }
+
+        h1 {
+            font-size: 1.25rem;
+        }
+
+        .panel {
+            background: var(--color-champagne-soft);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: .5rem;
+            background: var(--color-tan-deep);
+            color: var(--color-cream);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        button:disabled {
+            opacity: .5;
+            cursor: default;
+        }
+
+        .progress-wrap {
+            display: none;
+            margin-top: 1.5rem;
+        }
+
+        progress {
+            width: 100%;
+            height: 1.25rem;
+            accent-color: var(--color-tan-deep);
+        }
+
+        .progress-label {
+            margin-top: .35rem;
+            font-size: .875rem;
+        }
+
+        .done {
+            color: var(--color-ink);
+        }
+
+        .failure {
+            color: var(--color-rust);
+        }
+    </style>
+</head>
+<body data-csrf-token="{{ csrf_token('thumbnail-backfill') }}" data-remaining="{{ remaining }}">
+<div class="page">
+    <a href="{{ path('admin') }}">&larr; Back to admin</a>
+    <h1>Generate missing thumbnails</h1>
+    <p>Photos uploaded before thumbnail generation existed (and any where it failed) don't have a pre-sized copy yet, so they fall back to slower on-demand resizing when viewed. This generates the missing ones directly, in the background, without leaving this page.</p>
+
+    <div class="panel">
+        {% if remaining == 0 %}
+            <p class="done">All photos already have a thumbnail. Nothing to do.</p>
+        {% else %}
+            <p id="remaining-label">{{ remaining }} photo{{ remaining == 1 ? '' : 's' }} need{{ remaining == 1 ? 's' : '' }} a thumbnail.</p>
+            <button type="button" id="start-button">Generate missing thumbnails</button>
+        {% endif %}
+
+        <div class="progress-wrap" id="progress-wrap">
+            <progress id="progress-bar" value="0" max="100"></progress>
+            <p class="progress-label" id="progress-label"></p>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var csrfToken = document.body.dataset.csrfToken;
+        var total = parseInt(document.body.dataset.remaining, 10);
+        var startButton = document.getElementById('start-button');
+        var remainingLabel = document.getElementById('remaining-label');
+        var progressWrap = document.getElementById('progress-wrap');
+        var progressBar = document.getElementById('progress-bar');
+        var progressLabel = document.getElementById('progress-label');
+
+        if (!startButton) return;
+
+        // Safety net against an unbounded loop if every remaining photo
+        // somehow keeps failing - well past what ~1000 photos in 20-photo
+        // batches should ever need.
+        var MAX_ROUNDS = 500;
+
+        function runBatch(processedSoFar, round) {
+            if (round > MAX_ROUNDS) {
+                progressLabel.textContent = 'Stopped after ' + MAX_ROUNDS + ' rounds - some photos may keep failing to process. Processed ' + processedSoFar + ' of ' + total + '.';
+                return;
+            }
+
+            fetch('{{ path('admin_photos_backfill_thumbnails_run') }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: '_token=' + encodeURIComponent(csrfToken),
+            })
+                .then(function (res) {
+                    if (!res.ok) throw new Error('Request failed');
+                    return res.json();
+                })
+                .then(function (data) {
+                    var processed = processedSoFar + data.batchSize;
+                    var percent = total > 0 ? Math.round((processed / total) * 100) : 100;
+                    progressBar.value = Math.min(percent, 100);
+                    progressLabel.textContent = 'Processed ' + processed + ' / ' + total;
+
+                    if (data.batchSize === 0 || data.remaining === 0) {
+                        progressLabel.textContent = 'Done - processed ' + processed + ' / ' + total + '.';
+                        return;
+                    }
+
+                    runBatch(processed, round + 1);
+                })
+                .catch(function () {
+                    progressLabel.innerHTML = '<span class="failure">Something went wrong - refresh the page to see current progress and try again.</span>';
+                });
+        }
+
+        startButton.addEventListener('click', function () {
+            startButton.disabled = true;
+            remainingLabel.style.display = 'none';
+            progressWrap.style.display = 'block';
+            progressLabel.textContent = 'Starting…';
+            runBatch(0, 1);
+        });
+    })();
+</script>
+</body>
+</html>

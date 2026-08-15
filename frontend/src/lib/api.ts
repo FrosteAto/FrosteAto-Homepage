@@ -53,6 +53,7 @@ export type Photo = {
   camera: Camera | null;
   takenAt: string | null;
   imageUrl: string | null;
+  thumbnailUrl: string | null;
   createdAt: string;
   featured: boolean;
 };
@@ -158,4 +159,22 @@ export function apiImageUrl(path: string | null): string | null {
 // so it can point at the internal backend URL instead of the public one.
 export function imageOptimizerUrl(path: string | null): string | null {
   return path ? `${NEXT_PUBLIC_INTERNAL_API_URL}${path}` : null;
+}
+
+export type PhotoThumbnail = {
+  src: string | null;
+  // True when src is already a pre-sized thumbnail (generated at upload
+  // time or by the backfill) - callers should render it with next/image's
+  // `unoptimized` so Next doesn't also try to resize an already-right-sized
+  // image. False means src still needs Next's on-demand resize, same as
+  // before thumbnails existed - true for anything not yet backfilled.
+  preGenerated: boolean;
+};
+
+export function photoThumbnail(photo: Photo): PhotoThumbnail {
+  if (photo.thumbnailUrl) {
+    return { src: apiImageUrl(photo.thumbnailUrl), preGenerated: true };
+  }
+
+  return { src: imageOptimizerUrl(photo.imageUrl), preGenerated: false };
 }

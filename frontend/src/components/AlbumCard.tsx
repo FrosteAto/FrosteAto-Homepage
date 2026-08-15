@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { formatAlbumDate, imageOptimizerUrl, type Album } from "@/lib/api";
+import { formatAlbumDate, photoThumbnail, type Album } from "@/lib/api";
 
 export default function AlbumCard({ album }: { album: Album }) {
-  const coverUrl = imageOptimizerUrl(album.coverPhoto?.imageUrl ?? null);
+  const cover = album.coverPhoto
+    ? photoThumbnail(album.coverPhoto)
+    : { src: null, preGenerated: false };
   const date = album.takenAt ? formatAlbumDate(album.takenAt) : null;
 
   return (
@@ -12,11 +14,12 @@ export default function AlbumCard({ album }: { album: Album }) {
       className="group block overflow-hidden rounded-md border border-fg/12 bg-card"
     >
       <div className="relative aspect-square w-full overflow-hidden bg-fg/8">
-        {coverUrl && (
+        {cover.src && (
           <Image
-            src={coverUrl}
+            src={cover.src}
             alt={album.name}
             fill
+            unoptimized={cover.preGenerated}
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
