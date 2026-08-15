@@ -36,7 +36,7 @@ export default function Home() {
       <div className="flex items-center gap-6">
         <div>
           <p className="font-[family-name:var(--font-heading)] text-4xl sm:text-5xl">
-            FrosteAto O&apos;Brien
+            FrosteAto
           </p>
           <p className="mt-2 text-lg text-muted">
             Software Developer, Computer Scientist, &amp; General Creator
@@ -68,12 +68,31 @@ export default function Home() {
         />
       </div>
 
-      <p className="max-w-3xl text-lg leading-relaxed">
-        Hi, I&apos;m FrosteAto! Welcome to my personal website. I am a
-        passionate developer looking for experience in any role in the
-        computing industry, and this site is home to everything else I
-        make too - code, photos, music, and the odd blog post.
-      </p>
+      <div className="flex max-w-3xl flex-col gap-4 text-lg leading-relaxed">
+        <p>
+          Hi, I&apos;m FrosteAto! Welcome to my personal website. I am a
+          passionate developer looking for experience in any role in the
+          computing industry, and this site is home to everything else I
+          make too - code, photos, music, and the odd blog post.
+        </p>
+        <p>
+          I got into computing because I liked taking things apart to see
+          how they worked, and that hasn&apos;t really changed - it&apos;s
+          just software now instead of whatever I could get my hands on as
+          a kid. These days that shows up as FrosteArch, a Linux
+          distribution I build and maintain myself, and a string of
+          personal projects I keep coming back to outside of whatever I&apos;m
+          doing for work.
+        </p>
+        <p>
+          Outside of code, I&apos;m usually behind a camera, working on
+          music, or both at once. I&apos;d rather make something and put it
+          out than sit on it, which is why you&apos;ll find half-finished
+          albums next to finished ones and photos from wherever I happened
+          to be standing. Have a look around - there&apos;s more of all of
+          it below.
+        </p>
+      </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {sections.map((s) => (
