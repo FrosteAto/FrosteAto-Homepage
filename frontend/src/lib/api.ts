@@ -56,6 +56,10 @@ export type Photo = {
   thumbnailUrl: string | null;
   createdAt: string;
   featured: boolean;
+  aperture: string | null;
+  shutterSpeed: string | null;
+  iso: number | null;
+  focalLength: string | null;
 };
 
 export type Album = {
@@ -177,4 +181,42 @@ export function photoThumbnail(photo: Photo): PhotoThumbnail {
   }
 
   return { src: imageOptimizerUrl(photo.imageUrl), preGenerated: false };
+}
+
+// Camera + shooting settings for the lightbox, e.g.
+// "Canon EOS R6 · f/2.8 · 1/500s · ISO 400 · 50mm". Any piece missing from
+// EXIF (or the photo predates EXIF detection) is just left out - never a
+// stray "· ·" or a line of "unknown" placeholders.
+export function photoSettingsLine(photo: Photo): string | null {
+  const parts = [
+    photo.camera?.name,
+    photo.aperture,
+    photo.shutterSpeed,
+    photo.iso ? `ISO ${photo.iso}` : null,
+    photo.focalLength,
+  ].filter((part): part is string => Boolean(part));
+
+  return parts.length > 0 ? parts.join(" · ") : null;
+}
+
+// The camera used on the most photos in an album, for the album page's
+// "shot on X" line. Ties resolve to whichever camera name is encountered
+// first. Returns null if no photo in the album has a camera set.
+export function primaryCameraName(photos: Photo[]): string | null {
+  const counts = new Map<string, number>();
+  for (const photo of photos) {
+    if (!photo.camera) continue;
+    counts.set(photo.camera.name, (counts.get(photo.camera.name) ?? 0) + 1);
+  }
+
+  let best: string | null = null;
+  let bestCount = 0;
+  for (const [name, count] of counts) {
+    if (count > bestCount) {
+      best = name;
+      bestCount = count;
+    }
+  }
+
+  return best;
 }

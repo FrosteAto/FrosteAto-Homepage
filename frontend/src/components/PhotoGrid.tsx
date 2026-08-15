@@ -4,7 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { apiImageUrl, photoThumbnail, type Photo } from "@/lib/api";
+import {
+  apiImageUrl,
+  photoSettingsLine,
+  photoThumbnail,
+  type Photo,
+} from "@/lib/api";
 
 export default function PhotoGrid({ photos }: { photos: Photo[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -109,9 +114,16 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
                   className="max-h-[75vh] w-auto rounded object-contain"
                 />
               )}
-              {(openPhoto.title || openPhoto.tags.length > 0) && (
+              {(openPhoto.title ||
+                openPhoto.tags.length > 0 ||
+                photoSettingsLine(openPhoto)) && (
                 <div className="mt-3 flex flex-col items-center gap-2 text-center text-white">
                   {openPhoto.title && <p className="text-lg">{openPhoto.title}</p>}
+                  {photoSettingsLine(openPhoto) && (
+                    <p className="text-sm text-white/70">
+                      {photoSettingsLine(openPhoto)}
+                    </p>
+                  )}
                   {openPhoto.tags.length > 0 && (
                     <div className="flex flex-wrap justify-center gap-2">
                       {openPhoto.tags.map((tag) => (

@@ -70,6 +70,29 @@ class Photo
     private bool $featured = false;
 
     /**
+     * Shooting settings below are read-only, detected from EXIF at upload
+     * time (see PhotoExifListener) - there's no admin form field for them,
+     * unlike camera/takenAt which can be manually overridden. Formatted as
+     * display-ready strings (e.g. "f/2.8", "1/500s", "50mm") rather than
+     * raw numbers, since that's the only thing they're used for.
+     */
+    #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(['photo:read'])]
+    private ?string $aperture = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(['photo:read'])]
+    private ?string $shutterSpeed = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['photo:read'])]
+    private ?int $iso = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(['photo:read'])]
+    private ?string $focalLength = null;
+
+    /**
      * Filename within the `photos.storage` Flysystem storage. Uploaded and
      * managed through the admin panel (see PhotoCrudController) rather than
      * via the API directly.
@@ -182,6 +205,54 @@ class Photo
     public function setFeatured(bool $featured): static
     {
         $this->featured = $featured;
+
+        return $this;
+    }
+
+    public function getAperture(): ?string
+    {
+        return $this->aperture;
+    }
+
+    public function setAperture(?string $aperture): static
+    {
+        $this->aperture = $aperture;
+
+        return $this;
+    }
+
+    public function getShutterSpeed(): ?string
+    {
+        return $this->shutterSpeed;
+    }
+
+    public function setShutterSpeed(?string $shutterSpeed): static
+    {
+        $this->shutterSpeed = $shutterSpeed;
+
+        return $this;
+    }
+
+    public function getIso(): ?int
+    {
+        return $this->iso;
+    }
+
+    public function setIso(?int $iso): static
+    {
+        $this->iso = $iso;
+
+        return $this;
+    }
+
+    public function getFocalLength(): ?string
+    {
+        return $this->focalLength;
+    }
+
+    public function setFocalLength(?string $focalLength): static
+    {
+        $this->focalLength = $focalLength;
 
         return $this;
     }

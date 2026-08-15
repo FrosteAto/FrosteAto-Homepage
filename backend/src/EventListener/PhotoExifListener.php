@@ -22,10 +22,7 @@ class PhotoExifListener
 
     public function prePersist(Photo $photo, PrePersistEventArgs $args): void
     {
-        $needsCamera = null === $photo->getCamera();
-        $needsTakenAt = null === $photo->getTakenAt();
-
-        if ((!$needsCamera && !$needsTakenAt) || null === $photo->getImageName()) {
+        if (null === $photo->getImageName()) {
             return;
         }
 
@@ -34,13 +31,18 @@ class PhotoExifListener
             return;
         }
 
-        if ($needsCamera) {
+        if (null === $photo->getCamera()) {
             $this->applyCameraName($photo, $exif, $args);
         }
 
-        if ($needsTakenAt) {
+        if (null === $photo->getTakenAt()) {
             $this->applyTakenAt($photo, $exif);
         }
+
+        // Unlike camera/takenAt, shooting settings have no admin form field
+        // to override - a new Photo's values here are always null at this
+        // point, so there's no "already set" case to skip.
+        $this->applySettings($photo, $exif);
     }
 
     private function readExif(string $imageName): ?array
@@ -128,5 +130,85 @@ class PhotoExifListener
         $date = \DateTimeImmutable::createFromFormat('Y:m:d H:i:s', trim($value));
 
         return false !== $date ? $date : null;
+    }
+
+    private function applySettings(Photo $photo, array $exif): void
+    {
+        $photo->setAperture($this->detectAperture($exif));
+        $photo->setShutterSpeed($this->detectShutterSpeed($exif));
+        $photo->setIso($this->detectIso($exif));
+        $photo->setFocalLength($this->detectFocalLength($exif));
+    }
+
+    private function detectAperture(array $exif): ?string
+    {
+        $value = $this->parseRational($exif['FNumber'] ?? null);
+        if (null === $value || $value <= 0) {
+            return null;
+        }
+
+        return 'f/'.$this->trimTrailingZero(round($value, 1));
+    }
+
+    private function detectShutterSpeed(array $exif): ?string
+    {
+        $value = $this->parseRational($exif['ExposureTime'] ?? null);
+        if (null === $value || $value <= 0) {
+            return null;
+        }
+
+        if ($value >= 1) {
+            return $this->trimTrailingZero(round($value, 1)).'s';
+        }
+
+        return '1/'.(int) round(1 / $value).'s';
+    }
+
+    private function detectIso(array $exif): ?int
+    {
+        $value = $exif['ISOSpeedRatings'] ?? null;
+        // Bracketed/multi-shot modes can report ISO as an array - the first
+        // value is the one that applies to this exposure.
+        if (\is_array($value)) {
+            $value = $value[0] ?? null;
+        }
+
+        return is_numeric($value) ? (int) $value : null;
+    }
+
+    private function detectFocalLength(array $exif): ?string
+    {
+        $value = $this->parseRational($exif['FocalLength'] ?? null);
+        if (null === $value || $value <= 0) {
+            return null;
+        }
+
+        return ((int) round($value)).'mm';
+    }
+
+    /**
+     * exif_read_data() leaves rational tags (FNumber, ExposureTime,
+     * FocalLength) as "numerator/denominator" strings rather than resolving
+     * them to a decimal - this does that division. Accepts a plain numeric
+     * value too, in case a given file/driver already resolved it.
+     */
+    private function parseRational(mixed $raw): ?float
+    {
+        if (\is_numeric($raw)) {
+            return (float) $raw;
+        }
+
+        if (!\is_string($raw) || !str_contains($raw, '/')) {
+            return null;
+        }
+
+        [$numerator, $denominator] = array_map('floatval', explode('/', $raw, 2));
+
+        return 0.0 !== $denominator ? $numerator / $denominator : null;
+    }
+
+    private function trimTrailingZero(float $value): string
+    {
+        return rtrim(rtrim(number_format($value, 1), '0'), '.');
     }
 }

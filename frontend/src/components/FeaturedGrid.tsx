@@ -3,7 +3,12 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { apiImageUrl, photoThumbnail, type Photo } from "@/lib/api";
+import {
+  apiImageUrl,
+  photoSettingsLine,
+  photoThumbnail,
+  type Photo,
+} from "@/lib/api";
 
 export default function FeaturedGrid({ photos }: { photos: Photo[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -118,10 +123,15 @@ export default function FeaturedGrid({ photos }: { photos: Photo[] }) {
                   className="max-h-[75vh] w-auto rounded object-contain"
                 />
               )}
-              {openPhoto.title && (
-                <p className="mt-3 text-center text-lg text-white">
-                  {openPhoto.title}
-                </p>
+              {(openPhoto.title || photoSettingsLine(openPhoto)) && (
+                <div className="mt-3 flex flex-col items-center gap-1 text-center text-white">
+                  {openPhoto.title && <p className="text-lg">{openPhoto.title}</p>}
+                  {photoSettingsLine(openPhoto) && (
+                    <p className="text-sm text-white/70">
+                      {photoSettingsLine(openPhoto)}
+                    </p>
+                  )}
+                </div>
               )}
             </motion.div>
 
