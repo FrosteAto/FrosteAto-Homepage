@@ -31,6 +31,11 @@ export default async function AlbumPage({
   const photos = await getPhotos({ albumSlug: slug });
   const featuredPhotos = photos.filter((photo) => photo.featured);
   const date = album.takenAt ? formatAlbumDate(album.takenAt) : null;
+  const photoCount =
+    photos.length > 0
+      ? `${photos.length} photo${photos.length === 1 ? "" : "s"}`
+      : null;
+  const meta = [date, photoCount].filter(Boolean).join(" · ");
 
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-10 sm:px-6">
@@ -41,7 +46,7 @@ export default async function AlbumPage({
         <h1 className="mt-2 font-[family-name:var(--font-heading)] text-4xl">
           {album.name}
         </h1>
-        {date && <p className="mt-1 text-sm text-fg/60">{date}</p>}
+        {meta && <p className="mt-1 text-sm text-fg/60">{meta}</p>}
         {album.description && (
           <p className="mt-2 max-w-2xl text-fg/70">{album.description}</p>
         )}
