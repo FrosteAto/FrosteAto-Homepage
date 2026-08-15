@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ album.name }} photos | 0brien.dev admin</title>
+    <style>
+        :root {
+            --color-cream: #fefae0;
+            --color-champagne-soft: #f5eed8;
+            --color-sage-deep: #bfcb9a;
+            --color-tan-deep: #4d3014;
+            --color-ink: #283618;
+            --color-rust: #6e352c;
+        }
+
+        body {
+            font-family: ui-monospace, monospace;
+            background: var(--color-cream);
+            color: var(--color-ink);
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        a {
+            color: var(--color-tan-deep);
+        }
+
+        h1 {
+            font-size: 1.25rem;
+        }
+
+        .empty {
+            margin-top: 1.5rem;
+        }
+
+        .grid {
+            margin-top: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--color-champagne-soft);
+            border-radius: 8px;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .thumb {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--color-sage-deep);
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .title {
+            font-size: 0.8rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .toggle-row input {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body data-csrf-token="{{ csrf_token('album-photo-browser') }}" data-album-id="{{ album.id }}">
+<div class="page">
+    <a href="/admin/album/{{ album.id }}/edit">&larr; Back to album</a>
+    <h1>Photos in {{ album.name }}</h1>
+
+    {% if photos|length == 0 %}
+        <p class="empty">No photos in this album yet.</p>
+    {% else %}
+        <div class="grid">
+            {% for photo in photos %}
+                <div class="card">
+                    <div class="thumb">
+                        {% if photo.imageName %}
+                            <img src="/media/photos/{{ photo.imageName }}" alt="{{ photo.title ?? photo.imageName }}" loading="lazy">
+                        {% endif %}
+                    </div>
+                    <p class="title">{{ photo.title ?? photo.imageName ?? ('Photo #' ~ photo.id) }}</p>
+                    <label class="toggle-row">
+                        <input type="checkbox" class="js-toggle-featured" data-photo-id="{{ photo.id }}" {% if photo.featured %}checked{% endif %}>
+                        Featured
+                    </label>
+                    <label class="toggle-row">
+                        <input type="checkbox" class="js-toggle-cover" data-photo-id="{{ photo.id }}" {% if album.coverPhoto and album.coverPhoto.id == photo.id %}checked{% endif %}>
+                        Cover photo
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+<script>
+    (function () {
+        var csrfToken = document.body.dataset.csrfToken;
+        var albumId = document.body.dataset.albumId;
+
+        function postToggle(url, input, onSuccess) {
+            input.disabled = true;
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: '_token=' + encodeURIComponent(csrfToken),
+            })
+                .then(function (res) {
+                    if (!res.ok) throw new Error('Request failed');
+                    return res.json();
+                })
+                .then(onSuccess)
+                .catch(function () {
+                    input.checked = !input.checked;
+                    alert('Could not update - please try again.');
+                })
+                .finally(function () {
+                    input.disabled = false;
+                });
+        }
+
+        document.querySelectorAll('.js-toggle-featured').forEach(function (input) {
+            input.addEventListener('change', function () {
+                var photoId = input.dataset.photoId;
+                postToggle('/admin/photos/' + photoId + '/toggle-featured', input, function (data) {
+                    input.checked = data.featured;
+                });
+            });
+        });
+
+        document.querySelectorAll('.js-toggle-cover').forEach(function (input) {
+            input.addEventListener('change', function () {
+                var photoId = input.dataset.photoId;
+                postToggle('/admin/albums/' + albumId + '/set-cover-photo/' + photoId, input, function (data) {
+                    document.querySelectorAll('.js-toggle-cover').forEach(function (other) {
+                        other.checked = data.coverPhotoId !== null && String(data.coverPhotoId) === other.dataset.photoId;
+                    });
+                });
+            });
+        });
+    })();
+</script>
+</body>
+</html>

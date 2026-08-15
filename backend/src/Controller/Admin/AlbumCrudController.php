@@ -3,9 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Album;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -35,6 +36,15 @@ class AlbumCrudController extends AbstractCrudController
         yield DateField::new('takenAt', 'Date')
             ->setRequired(false)
             ->setHelp('When this album\'s content happened, e.g. the event or trip date. Controls its position in the photography page - newest first, falling back to the upload date when left blank.');
-        yield AssociationField::new('coverPhoto')->setRequired(false)->autocomplete();
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $managePhotos = Action::new('managePhotos', 'Manage Photos')
+            ->linkToUrl(fn (Album $album): string => $this->generateUrl('admin_album_photos', ['id' => $album->getId()]));
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $managePhotos)
+            ->add(Crud::PAGE_EDIT, $managePhotos);
     }
 }
