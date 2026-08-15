@@ -11,3 +11,4 @@ framework:
             - logout
             - album-photo-browser
             - thumbnail-backfill
+            - settings-backfill

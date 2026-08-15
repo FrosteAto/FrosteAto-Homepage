@@ -157,9 +157,11 @@ A few things about the photo admin worth knowing:
 - **Shooting settings** (aperture, shutter speed, ISO, focal length) are
   detected from EXIF alongside camera and taken-at, and shown next to the
   camera name when a photo is opened in the lightbox. Like camera
-  detection, this is JPEG-only, best-effort, and never backfilled for
-  photos uploaded before it existed - anything missing from EXIF is just
-  left off the line rather than shown as unknown.
+  detection, this is JPEG-only and best-effort - anything missing from
+  EXIF is just left off the line rather than shown as unknown. Unlike
+  camera detection, photos uploaded before this existed *can* be
+  backfilled: visit **`Backfill Camera Settings`** in the admin menu and
+  click the button, same shape as the thumbnail backfill.
 - **Each album page shows which camera was used on the most photos in it**
   (e.g. "Shot on Canon EOS R6"), alongside the date and photo count.
   Computed from the album's own photos, so it needs no separate setup.
