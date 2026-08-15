@@ -64,7 +64,14 @@ export default async function AlbumPage({
         )}
       </div>
 
-      {featuredPhotos.length > 0 && <FeaturedGrid photos={featuredPhotos} />}
+      {featuredPhotos.length > 0 && (
+        <>
+          <FeaturedGrid photos={featuredPhotos} />
+          <h2 className="font-[family-name:var(--font-heading)] text-2xl">
+            All Photos
+          </h2>
+        </>
+      )}
 
       {photos.length === 0 ? (
         <p className="text-fg/60">No photos in this album yet.</p>
