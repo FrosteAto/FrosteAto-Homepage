@@ -38,6 +38,7 @@ jobs:
           cache-to: type=gha,mode=max
           build-args: |
             NEXT_PUBLIC_API_URL=https://0brien.dev
+            NEXT_PUBLIC_INTERNAL_API_URL=http://backend:8000
 
       - name: Build and push backend
         uses: docker/build-push-action@v6

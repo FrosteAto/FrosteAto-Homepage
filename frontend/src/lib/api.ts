@@ -5,6 +5,28 @@ const API_URL = process.env.API_URL ?? "http://localhost:8000";
 // the client bundle at build time.
 const NEXT_PUBLIC_API_URL =
   process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+// Backend's Docker-internal hostname, reachable only from other containers
+// on the same compose network - never the browser. Used for apiFetch()'s
+// JSON calls below so they go straight to the backend container instead of
+// looping out through the public domain and back through Caddy. Falls back
+// to API_URL where there's no such distinction (local dev has no internal
+// vs. public split). Safe as a plain server-only var, unlike the pair below
+// - apiFetch() is only ever called from Server Components (the page.tsx
+// files), never from something that also re-runs client-side.
+const INTERNAL_API_URL = process.env.INTERNAL_API_URL ?? API_URL;
+// Same backend hostname as INTERNAL_API_URL, but for imageOptimizerUrl()
+// below, which -unlike apiFetch()- gets called from Client Components
+// (PhotoGrid, AlbumCard, FeaturedGrid all hydrate client-side). A plain
+// server-only var would resolve differently there: stripped from the client
+// bundle, falling back to a value that doesn't reach the backend from
+// inside the frontend container - the same server/client mismatch that
+// broke the lightbox before this got fixed. Being NEXT_PUBLIC_ makes it an
+// identical build-time constant in both places, so there's nothing to
+// mismatch. The value is meaningless outside the Docker network, so baking
+// it into the public bundle isn't a real exposure - it's not a secret, just
+// an address nothing outside docker-compose can do anything with.
+const NEXT_PUBLIC_INTERNAL_API_URL =
+  process.env.NEXT_PUBLIC_INTERNAL_API_URL ?? NEXT_PUBLIC_API_URL;
 
 type HydraCollection<T> = {
   member: T[];
@@ -54,7 +76,7 @@ export type Post = {
 };
 
 async function apiFetch<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, {
+  const res = await fetch(`${INTERNAL_API_URL}${path}`, {
     headers: { Accept: "application/ld+json" },
     next: { revalidate: 60 },
   });
@@ -128,4 +150,12 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 
 export function apiImageUrl(path: string | null): string | null {
   return path ? `${NEXT_PUBLIC_API_URL}${path}` : null;
+}
+
+// For next/image's `src` prop specifically: that value is embedded in the
+// /_next/image?url=... query string and fetched server-side by Next itself
+// to generate the resized image - the browser never connects to it directly,
+// so it can point at the internal backend URL instead of the public one.
+export function imageOptimizerUrl(path: string | null): string | null {
+  return path ? `${NEXT_PUBLIC_INTERNAL_API_URL}${path}` : null;
 }

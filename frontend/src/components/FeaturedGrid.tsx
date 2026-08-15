@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { apiImageUrl, type Photo } from "@/lib/api";
+import { apiImageUrl, imageOptimizerUrl, type Photo } from "@/lib/api";
 
 export default function FeaturedGrid({ photos }: { photos: Photo[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -47,7 +47,7 @@ export default function FeaturedGrid({ photos }: { photos: Photo[] }) {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {photos.map((photo, i) => {
-          const url = apiImageUrl(photo.imageUrl);
+          const url = imageOptimizerUrl(photo.imageUrl);
           return (
             <button
               key={photo.id}

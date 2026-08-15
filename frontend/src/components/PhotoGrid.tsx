@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { apiImageUrl, type Photo } from "@/lib/api";
+import { apiImageUrl, imageOptimizerUrl, type Photo } from "@/lib/api";
 
 export default function PhotoGrid({ photos }: { photos: Photo[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -38,7 +38,7 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
     <>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
         {photos.map((photo, i) => {
-          const url = apiImageUrl(photo.imageUrl);
+          const url = imageOptimizerUrl(photo.imageUrl);
           return (
             <motion.button
               key={photo.id}

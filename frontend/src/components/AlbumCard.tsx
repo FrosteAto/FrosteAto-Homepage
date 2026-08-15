@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { apiImageUrl, formatAlbumDate, type Album } from "@/lib/api";
+import { formatAlbumDate, imageOptimizerUrl, type Album } from "@/lib/api";
 
 export default function AlbumCard({ album }: { album: Album }) {
-  const coverUrl = apiImageUrl(album.coverPhoto?.imageUrl ?? null);
+  const coverUrl = imageOptimizerUrl(album.coverPhoto?.imageUrl ?? null);
   const date = album.takenAt ? formatAlbumDate(album.takenAt) : null;
 
   return (

@@ -9,9 +9,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       new URL("http://localhost:8000/media/photos/**"),
       new URL("https://0brien.dev/media/photos/**"),
+      // Backend's Docker-internal hostname (see NEXT_PUBLIC_INTERNAL_API_URL
+      // in src/lib/api.ts) - the image optimizer fetches originals from here
+      // directly instead of looping out through the public domain.
+      new URL("http://backend:8000/media/photos/**"),
     ],
-    // The dev API runs on localhost, which Next's SSRF guard blocks by
-    // default. Fine here since the URL is hardcoded, not user input.
+    // The dev API runs on localhost, and the internal backend hostname above
+    // resolves to a container's private IP - both trip Next's SSRF guard by
+    // default. Fine here since both URLs are hardcoded, not user input.
     dangerouslyAllowLocalIP: true,
   },
   experimental: {

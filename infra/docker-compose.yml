@@ -32,6 +32,7 @@ services:
     restart: unless-stopped
     environment:
       API_URL: https://0brien.dev
+      INTERNAL_API_URL: http://backend:8000
     depends_on:
       - backend
 
