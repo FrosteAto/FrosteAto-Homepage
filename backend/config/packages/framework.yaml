@@ -2,6 +2,20 @@
 framework:
     secret: '%env(APP_SECRET)%'
 
+    # In production this container's port is never published to the host -
+    # infra/docker-compose.yml only exposes Caddy's 80/443, so the only thing
+    # that can ever be the direct TCP peer of this app is Caddy itself,
+    # reverse-proxying real HTTPS traffic over plain HTTP inside the Docker
+    # network. Without trusting it, Symfony has no way to know the original
+    # request was HTTPS (Request::isSecure() reads the *direct* connection,
+    # which is always HTTP here) - breaking any absolute URL generation
+    # (e.g. EasyAdmin's autocomplete endpoint URLs) by emitting http:// on an
+    # https:// page, which browsers block as mixed content. REMOTE_ADDR
+    # dynamically trusts whichever host actually connected, which is safe
+    # specifically because nothing but Caddy can connect at all.
+    trusted_proxies: '127.0.0.1,REMOTE_ADDR'
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
+
     # Note that the session will be started ONLY if you read or write from it.
     session: true
 
