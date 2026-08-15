@@ -8,14 +8,16 @@
  * borders, text, table/form colors) is defined in terms of. Overriding just
  * those here re-themes the backend without touching per-component CSS.
  *
- * Applied to both `:root` and `.ea-dark-scheme` (EasyAdmin's own light/dark
- * split) so the result is always the site's light palette regardless of the
- * admin's dark-mode toggle - "the whole admin panel should follow the light
- * mode styling of the main website" means there's deliberately no separate
- * dark variant here.
+ * :root only - EasyAdmin's dark scheme is disabled outright in
+ * DashboardController (disableDarkMode()), not neutralized here. Re-tinting
+ * .ea-dark-scheme's own --gray-* values does NOT stop it looking dark:
+ * EasyAdmin's dark-mode CSS re-points semantic tokens like --body-bg at the
+ * *other end* of the ramp (e.g. --gray-950 instead of --white), so
+ * overriding just the ramp's colors keeps that light/dark structure intact
+ * and only recolors it - confirmed by testing against the real compiled
+ * bundle with .ea-dark-scheme forced on, not just reasoning about it.
  */
-:root,
-.ea-dark-scheme {
+:root {
     /* Accent (buttons, links, focus rings, active nav) - the same tan used
        for the public site's nav/footer chrome accent. */
     --ea-primary: #4d3014;

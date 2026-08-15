@@ -23,7 +23,16 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('0brien.dev admin');
+            ->setTitle('0brien.dev admin')
+            // Without this, EasyAdmin's own JS auto-applies its dark scheme
+            // when the browser/OS prefers dark - and its dark-scheme CSS
+            // re-points tokens like --body-bg at the *other end* of the
+            // --gray-* ramp (e.g. --gray-950 instead of --white). Overriding
+            // just the ramp's colors in theme.css doesn't stop that remap -
+            // it just recolors the same dark structure, so the admin still
+            // reads as dark, only tinted. Disabling dark mode outright is
+            // the actual fix for "always follow the site's light theme".
+            ->disableDarkMode();
     }
 
     public function configureAssets(): Assets
