@@ -53,56 +53,66 @@ export default async function RecipePage({
           {recipe.title}
         </h1>
 
-        <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-y border-accent-soft/60 py-4">
-          {recipe.servings && (
-            <div>
-              <dt className="text-xs uppercase tracking-[0.18em] text-muted">
-                Serves
-              </dt>
-              <dd className="mt-1 font-[family-name:var(--font-heading)] text-lg">
-                {recipe.servings}
-              </dd>
-            </div>
-          )}
-          {recipe.prepTime && (
-            <div>
-              <dt className="text-xs uppercase tracking-[0.18em] text-muted">
-                Prep time
-              </dt>
-              <dd className="mt-1 font-[family-name:var(--font-heading)] text-lg">
-                {recipe.prepTime}
-              </dd>
-            </div>
-          )}
-          {recipe.cookTime && (
-            <div>
-              <dt className="text-xs uppercase tracking-[0.18em] text-muted">
-                Cook time
-              </dt>
-              <dd className="mt-1 font-[family-name:var(--font-heading)] text-lg">
-                {recipe.cookTime}
-              </dd>
-            </div>
-          )}
-          <div>
-            <dt className="text-xs uppercase tracking-[0.18em] text-muted">
-              Calories
-            </dt>
-            <dd className="mt-1 font-[family-name:var(--font-heading)] text-lg">
-              {recipe.kcalPerServing} kcal
-            </dd>
+        <div className="mt-6 grid grid-cols-1 gap-6 border-y border-accent-soft/60 py-4 sm:grid-cols-2 sm:divide-x sm:divide-accent-soft/60">
+          <dl className="flex flex-wrap gap-x-10 gap-y-4 sm:pr-6">
+            {recipe.servings && (
+              <div>
+                <dt className="text-xs uppercase tracking-[0.18em] text-muted">
+                  Serves
+                </dt>
+                <dd className="mt-1 font-[family-name:var(--font-heading)] text-lg">
+                  {recipe.servings}
+                </dd>
+              </div>
+            )}
+            {recipe.prepTime && (
+              <div>
+                <dt className="text-xs uppercase tracking-[0.18em] text-muted">
+                  Prep time
+                </dt>
+                <dd className="mt-1 font-[family-name:var(--font-heading)] text-lg">
+                  {recipe.prepTime}
+                </dd>
+              </div>
+            )}
+            {recipe.cookTime && (
+              <div>
+                <dt className="text-xs uppercase tracking-[0.18em] text-muted">
+                  Cook time
+                </dt>
+                <dd className="mt-1 font-[family-name:var(--font-heading)] text-lg">
+                  {recipe.cookTime}
+                </dd>
+              </div>
+            )}
+          </dl>
+
+          <div className="sm:pl-6">
+            <p className="text-[0.65rem] uppercase tracking-[0.18em] text-muted/70">
+              Per serving
+            </p>
+            <dl className="mt-2 flex flex-wrap gap-x-10 gap-y-4">
+              <div>
+                <dt className="text-xs uppercase tracking-[0.18em] text-muted">
+                  Calories
+                </dt>
+                <dd className="mt-1 font-[family-name:var(--font-heading)] text-lg">
+                  {recipe.kcalPerServing} kcal
+                </dd>
+              </div>
+              {recipe.proteinPerServing != null && (
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-muted">
+                    Protein
+                  </dt>
+                  <dd className="mt-1 font-[family-name:var(--font-heading)] text-lg">
+                    {recipe.proteinPerServing}g
+                  </dd>
+                </div>
+              )}
+            </dl>
           </div>
-          {recipe.proteinPerServing != null && (
-            <div>
-              <dt className="text-xs uppercase tracking-[0.18em] text-muted">
-                Protein
-              </dt>
-              <dd className="mt-1 font-[family-name:var(--font-heading)] text-lg">
-                {recipe.proteinPerServing}g
-              </dd>
-            </div>
-          )}
-        </dl>
+        </div>
       </div>
 
       {imageSrc && (
