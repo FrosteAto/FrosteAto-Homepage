@@ -100,7 +100,7 @@ export default async function RecipePage({
       )}
 
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-        <section className="lg:col-span-5 lg:sticky lg:top-8 lg:self-start">
+        <section className="lg:col-span-5 lg:sticky lg:top-8 lg:max-h-[calc(100vh-4rem)] lg:self-start lg:overflow-y-auto">
           <div className="rounded-md border border-fg/12 bg-card-bg p-5 sm:p-6">
             <h2 className="font-[family-name:var(--font-heading)] text-2xl">
               Ingredients
@@ -125,7 +125,7 @@ export default async function RecipePage({
                 key={i}
                 className="grid grid-cols-[2.25rem_1fr] gap-x-4 sm:grid-cols-[3rem_1fr]"
               >
-                <span className="font-[family-name:var(--font-heading)] text-3xl leading-none text-accent-soft sm:text-4xl">
+                <span className="font-[family-name:var(--font-heading)] text-3xl leading-none text-accent sm:text-4xl">
                   {i + 1}
                 </span>
                 <p className="leading-relaxed">{line}</p>
