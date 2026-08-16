@@ -100,6 +100,7 @@ export type Recipe = {
   id: number;
   title: string;
   slug: string;
+  description: string | null;
   ingredients: string;
   steps: string;
   authorNotes: string | null;

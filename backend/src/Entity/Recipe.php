@@ -46,6 +46,15 @@ class Recipe implements Publishable
     #[Groups(['recipe:read'])]
     private string $slug;
 
+    /**
+     * Short intro/teaser shown between the photo and the ingredients on the
+     * recipe page - distinct from authorNotes, which reads as tips/asides
+     * and stays at the bottom of the page.
+     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['recipe:read', 'recipe:write'])]
+    private ?string $description = null;
+
     #[ORM\Column(type: 'text')]
     #[Groups(['recipe:read', 'recipe:write'])]
     private string $ingredients;
@@ -113,6 +122,18 @@ class Recipe implements Publishable
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
     }
 
     public function getIngredients(): string

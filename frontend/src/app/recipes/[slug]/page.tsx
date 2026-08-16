@@ -39,6 +39,9 @@ export default async function RecipePage({
   const notesParagraphs = recipe.authorNotes
     ? recipe.authorNotes.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean)
     : [];
+  const descriptionParagraphs = recipe.description
+    ? recipe.description.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean)
+    : [];
 
   return (
     <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 px-4 py-10 sm:gap-10 sm:px-6">
@@ -96,6 +99,14 @@ export default async function RecipePage({
             sizes="(max-width: 896px) 100vw, 896px"
             className="object-cover"
           />
+        </div>
+      )}
+
+      {descriptionParagraphs.length > 0 && (
+        <div className="flex max-w-3xl flex-col gap-3 text-lg leading-relaxed text-fg/80">
+          {descriptionParagraphs.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
         </div>
       )}
 

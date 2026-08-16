@@ -37,6 +37,10 @@ class RecipeCrudController extends AbstractCrudController
             ->setRequired(false);
         yield TextField::new('title');
         yield TextField::new('slug')->onlyOnIndex();
+        yield TextareaField::new('description')
+            ->setNumOfRows(3)
+            ->setRequired(false)
+            ->setHelp('A short intro shown between the photo and the ingredients - what makes this recipe worth making, not a list of steps.');
         yield TextareaField::new('ingredients')
             ->setNumOfRows(10)
             ->setHelp('One ingredient per line.');
