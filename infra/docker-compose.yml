@@ -25,6 +25,7 @@ services:
       - backend_media:/app/public/media/photos
       - backend_media_thumbnails:/app/public/media/photos-thumbnails
       - backend_media_music_covers:/app/public/media/music-covers
+      - backend_media_recipes:/app/public/media/recipes
     depends_on:
       postgres:
         condition: service_healthy
@@ -57,5 +58,6 @@ volumes:
   backend_media:
   backend_media_thumbnails:
   backend_media_music_covers:
+  backend_media_recipes:
   caddy_data:
   caddy_config:

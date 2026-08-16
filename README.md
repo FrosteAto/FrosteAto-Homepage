@@ -197,8 +197,8 @@ recipes 2-wide; clicking one opens its own page at `/recipes/<slug>`.
 **Frontend** - [Next.js](https://nextjs.org) (App Router, TypeScript),
 [Tailwind CSS](https://tailwindcss.com) v4, and
 [Framer Motion](https://www.framer.com/motion/) for animation. Statically
-generates most pages, with ISR for the Blog and Photography pages so new
-content appears without a redeploy.
+generates most pages, with ISR for the Blog, Photography, Music, and Recipes
+pages so new content appears without a redeploy.
 
 **Backend** - [Symfony](https://symfony.com) 8 with
 [API Platform](https://api-platform.com) exposing a JSON-LD/Hydra REST API,

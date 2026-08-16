@@ -30,7 +30,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 COPY . .
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress \
-    && mkdir -p var/cache var/log public/media/photos public/media/photos-thumbnails public/media/music-covers \
+    && mkdir -p var/cache var/log public/media/photos public/media/photos-thumbnails public/media/music-covers public/media/recipes \
     && chown -R www-data:www-data var public/media
 
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf

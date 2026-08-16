@@ -24,6 +24,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
         new Put(security: "is_granted('ROLE_ADMIN')"),
         new Delete(security: "is_granted('ROLE_ADMIN')"),
     ],
+    paginationEnabled: false,
     order: ['publishedAt' => 'DESC'],
     normalizationContext: ['groups' => ['recipe:read']],
     denormalizationContext: ['groups' => ['recipe:write']],

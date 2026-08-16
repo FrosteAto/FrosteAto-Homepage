@@ -24,6 +24,11 @@ const sections = [
     description: "Albums I've released, linked to Bandcamp.",
   },
   {
+    href: "/recipes",
+    title: "Recipes",
+    description: "Recipes I actually cook.",
+  },
+  {
     href: "/blog",
     title: "Blog",
     description: "Whatever's on my mind lately.",
@@ -80,8 +85,8 @@ export default function Home() {
           the odd bit of drawing. Now, not all of this is currently available on this site,
           but as I become more confident with it I will pop it up for display.
 
-          Photography is immediately available, and I am currently working on music to put up here soon.
-          Recipes will also shortly be available for display as well.
+          Photography and recipes are already up, and I am currently working on getting music
+          up here too.
         </p>
         <p>
           I also have a (admittedly pretty empty) blog where I will post my random thoughts and opinions
