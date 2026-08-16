@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import FlavourSection from "@/components/FlavourSection";
+import { accentBg, accentHoverBorder } from "@/lib/frostearchAccent";
+import type { Accent } from "@/lib/frostearchAccent";
 import type { PackageGroup } from "@/components/PackageList";
 
 const packageCount = (groups: PackageGroup[]) =>
@@ -11,10 +13,10 @@ export const metadata: Metadata = {
   title: "FrosteArch | FrosteAto",
 };
 
-const overview = [
-  { id: "desktop", name: "Desktop", image: "/images/frostearch/desktop.png" },
-  { id: "server", name: "Server", image: "/images/frostearch/server.png" },
-  { id: "node", name: "Node", image: "/images/frostearch/node.png" },
+const overview: { id: string; name: string; image: string; accent: Accent }[] = [
+  { id: "desktop", name: "Desktop", image: "/images/frostearch/desktop.png", accent: "purple" },
+  { id: "server", name: "Server", image: "/images/frostearch/server.png", accent: "blue" },
+  { id: "node", name: "Node", image: "/images/frostearch/node.png", accent: "yellow" },
 ];
 
 const desktopPackages: PackageGroup[] = [
@@ -180,22 +182,20 @@ export default function FrosteArchPage() {
             <a
               key={edition.id}
               href={`#${edition.id}`}
-              aria-label={`${edition.name} edition`}
-              className="group relative block overflow-hidden rounded-md border border-fg/12 transition-colors hover:border-accent-soft"
+              aria-label={`Jump to ${edition.name} edition`}
+              className={`group flex flex-col overflow-hidden rounded-md border border-fg/12 bg-card-bg transition-colors duration-300 ${accentHoverBorder[edition.accent]}`}
             >
-              <div className="relative aspect-video w-full overflow-hidden">
+              <span className={`h-1.5 w-full ${accentBg[edition.accent]}`} aria-hidden />
+              <span className="flex flex-1 items-center justify-center px-5 py-6 sm:px-6 sm:py-8">
                 <Image
                   src={edition.image}
-                  alt={`${edition.name} edition`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  alt={`${edition.name} edition logo`}
+                  width={480}
+                  height={189}
+                  sizes="(max-width: 640px) 80vw, 28vw"
+                  className="h-auto w-full max-w-[300px] transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0" />
-                <p className="absolute bottom-5 left-5 font-[family-name:var(--font-heading)] text-3xl text-white drop-shadow-md">
-                  {edition.name}
-                </p>
-              </div>
+              </span>
             </a>
           ))}
         </div>

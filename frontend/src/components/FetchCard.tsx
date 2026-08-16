@@ -1,20 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { accentBorder, accentText } from "@/lib/frostearchAccent";
+import type { Accent } from "@/lib/frostearchAccent";
 
-export type Accent = "purple" | "blue" | "yellow";
-
-export const accentText: Record<Accent, string> = {
-  purple: "text-frostearch-purple",
-  blue: "text-frostearch-blue",
-  yellow: "text-frostearch-yellow",
-};
-
-const accentBorder: Record<Accent, string> = {
-  purple: "border-t-frostearch-purple",
-  blue: "border-t-frostearch-blue",
-  yellow: "border-t-frostearch-yellow",
-};
+export type { Accent };
+export { accentText };
 
 // A miniature version of the FrosteArch mark - a mountain with an arch cut
 // into it - standing in for the ASCII-art logo real fetch tools print.
