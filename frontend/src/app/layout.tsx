@@ -50,7 +50,7 @@ export default function RootLayout({
         />
         <Nav />
         <PageTransition>{children}</PageTransition>
-        <Footer />
+        <Footer year={new Date().getFullYear()} />
       </body>
     </html>
   );

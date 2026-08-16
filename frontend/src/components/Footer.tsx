@@ -72,7 +72,11 @@ function quoteForPath(pathname: string): Quote {
   return match ? match.quote : homeQuote;
 }
 
-export default function Footer() {
+interface FooterProps {
+  year: number;
+}
+
+export default function Footer({ year }: FooterProps) {
   const pathname = usePathname();
   const quote = quoteForPath(pathname);
 
@@ -97,7 +101,7 @@ export default function Footer() {
 
       <p className="text-sm text-header-footer-fg/70">Made lovingly by hand</p>
       <p className="text-sm text-header-footer-fg/70">
-        &copy; FrosteAto {new Date().getFullYear()}
+        &copy; FrosteAto {year}
       </p>
     </footer>
   );
