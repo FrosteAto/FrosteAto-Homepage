@@ -29,7 +29,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
     denormalizationContext: ['groups' => ['post:write']],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['slug' => 'exact'])]
-class Post
+class Post implements Publishable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

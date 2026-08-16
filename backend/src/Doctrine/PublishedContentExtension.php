@@ -6,15 +6,16 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
-use App\Entity\Post;
+use App\Entity\Publishable;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
 
 /**
- * Hides unpublished/future-dated posts from anyone who isn't ROLE_ADMIN,
- * for both the collection (/api/posts) and item (/api/posts/{id}) queries.
+ * Hides unpublished/future-dated content from anyone who isn't ROLE_ADMIN,
+ * for both the collection and item queries of any entity implementing
+ * Publishable (e.g. Post, Recipe).
  */
-class PublishedPostExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
+class PublishedContentExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
     public function __construct(
         private readonly Security $security,
@@ -33,7 +34,7 @@ class PublishedPostExtension implements QueryCollectionExtensionInterface, Query
 
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void
     {
-        if (Post::class !== $resourceClass || $this->security->isGranted('ROLE_ADMIN')) {
+        if (!is_a($resourceClass, Publishable::class, true) || $this->security->isGranted('ROLE_ADMIN')) {
             return;
         }
 
