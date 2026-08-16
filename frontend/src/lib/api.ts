@@ -96,6 +96,21 @@ export type MusicAlbum = {
   createdAt: string;
 };
 
+export type Recipe = {
+  id: number;
+  title: string;
+  slug: string;
+  ingredients: string;
+  steps: string;
+  authorNotes: string | null;
+  servings: string | null;
+  prepTime: string | null;
+  cookTime: string | null;
+  imageUrl: string | null;
+  publishedAt: string | null;
+  createdAt: string;
+};
+
 async function apiFetch<T>(path: string): Promise<T> {
   const res = await fetch(`${INTERNAL_API_URL}${path}`, {
     headers: { Accept: "application/ld+json" },
@@ -172,6 +187,18 @@ export async function getPosts(): Promise<Post[]> {
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   const data = await apiFetch<HydraCollection<Post>>(
     `/api/posts?slug=${encodeURIComponent(slug)}`,
+  );
+  return data.member[0] ?? null;
+}
+
+export async function getRecipes(): Promise<Recipe[]> {
+  const data = await apiFetch<HydraCollection<Recipe>>("/api/recipes");
+  return data.member;
+}
+
+export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
+  const data = await apiFetch<HydraCollection<Recipe>>(
+    `/api/recipes?slug=${encodeURIComponent(slug)}`,
   );
   return data.member[0] ?? null;
 }
