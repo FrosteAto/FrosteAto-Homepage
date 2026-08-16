@@ -96,11 +96,18 @@ export type MusicAlbum = {
   createdAt: string;
 };
 
+export type RecipeCategory = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
 export type Recipe = {
   id: number;
   title: string;
   slug: string;
   description: string | null;
+  category: RecipeCategory | null;
   ingredients: string;
   steps: string;
   authorNotes: string | null;
@@ -204,6 +211,13 @@ export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
     `/api/recipes?slug=${encodeURIComponent(slug)}`,
   );
   return data.member[0] ?? null;
+}
+
+export async function getRecipeCategories(): Promise<RecipeCategory[]> {
+  const data = await apiFetch<HydraCollection<RecipeCategory>>(
+    "/api/recipe_categories",
+  );
+  return data.member;
 }
 
 export function apiImageUrl(path: string | null): string | null {

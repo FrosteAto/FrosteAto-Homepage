@@ -55,6 +55,10 @@ class Recipe implements Publishable
     #[Groups(['recipe:read', 'recipe:write'])]
     private ?string $description = null;
 
+    #[ORM\ManyToOne(targetEntity: RecipeCategory::class, inversedBy: 'recipes')]
+    #[Groups(['recipe:read', 'recipe:write'])]
+    private ?RecipeCategory $category = null;
+
     #[ORM\Column(type: 'text')]
     #[Groups(['recipe:read', 'recipe:write'])]
     private string $ingredients;
@@ -140,6 +144,18 @@ class Recipe implements Publishable
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCategory(): ?RecipeCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?RecipeCategory $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
