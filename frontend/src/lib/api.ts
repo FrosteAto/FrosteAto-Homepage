@@ -107,6 +107,8 @@ export type Recipe = {
   servings: string | null;
   prepTime: string | null;
   cookTime: string | null;
+  kcalPerServing: number;
+  proteinPerServing: number | null;
   imageUrl: string | null;
   publishedAt: string | null;
   createdAt: string;

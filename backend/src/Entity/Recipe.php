@@ -79,6 +79,14 @@ class Recipe implements Publishable
     #[Groups(['recipe:read', 'recipe:write'])]
     private ?string $cookTime = null;
 
+    #[ORM\Column]
+    #[Groups(['recipe:read', 'recipe:write'])]
+    private int $kcalPerServing;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['recipe:read', 'recipe:write'])]
+    private ?int $proteinPerServing = null;
+
     /**
      * Filename within the `recipes.storage` Flysystem storage. Uploaded and
      * managed through the admin panel (see RecipeCrudController) rather
@@ -204,6 +212,30 @@ class Recipe implements Publishable
     public function setCookTime(?string $cookTime): static
     {
         $this->cookTime = $cookTime;
+
+        return $this;
+    }
+
+    public function getKcalPerServing(): int
+    {
+        return $this->kcalPerServing;
+    }
+
+    public function setKcalPerServing(int $kcalPerServing): static
+    {
+        $this->kcalPerServing = $kcalPerServing;
+
+        return $this;
+    }
+
+    public function getProteinPerServing(): ?int
+    {
+        return $this->proteinPerServing;
+    }
+
+    public function setProteinPerServing(?int $proteinPerServing): static
+    {
+        $this->proteinPerServing = $proteinPerServing;
 
         return $this;
     }

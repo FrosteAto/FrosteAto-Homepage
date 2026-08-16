@@ -12,6 +12,8 @@ function metaLine(recipe: Recipe): string | null {
     recipe.servings ? `${recipe.servings} servings` : null,
     recipe.prepTime ? `Prep ${recipe.prepTime}` : null,
     recipe.cookTime ? `Cook ${recipe.cookTime}` : null,
+    `${recipe.kcalPerServing} kcal`,
+    recipe.proteinPerServing != null ? `${recipe.proteinPerServing}g protein` : null,
   ].filter((part): part is string => Boolean(part));
 
   return parts.length > 0 ? parts.join(" · ") : null;

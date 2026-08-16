@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -59,6 +60,10 @@ class RecipeCrudController extends AbstractCrudController
         yield TextField::new('cookTime', 'Cook time')
             ->setRequired(false)
             ->setHelp('e.g. "40 min".');
+        yield IntegerField::new('kcalPerServing', 'Calories per serving')
+            ->setHelp('kcal, per serving.');
+        yield IntegerField::new('proteinPerServing', 'Protein per serving (g)')
+            ->setRequired(false);
         yield DateTimeField::new('publishedAt')
             ->setRequired(false)
             ->setHelp('Leave blank to keep this recipe as a draft - it will not appear on the public site or API.');
