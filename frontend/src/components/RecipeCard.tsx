@@ -2,21 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { imageOptimizerUrl, type Recipe } from "@/lib/api";
 
-function metaLine(recipe: Recipe): string | null {
-  const parts = [
-    recipe.servings ? `${recipe.servings} servings` : null,
-    recipe.prepTime ? `Prep ${recipe.prepTime}` : null,
-    recipe.cookTime ? `Cook ${recipe.cookTime}` : null,
-    `${recipe.kcalPerServing} kcal`,
-    recipe.proteinPerServing != null ? `${recipe.proteinPerServing}g protein` : null,
-  ].filter((part): part is string => Boolean(part));
-
-  return parts.length > 0 ? parts.join(" · ") : null;
-}
-
 export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   const imageSrc = imageOptimizerUrl(recipe.imageUrl);
-  const meta = metaLine(recipe);
 
   return (
     <Link
@@ -38,7 +25,23 @@ export default function RecipeCard({ recipe }: { recipe: Recipe }) {
         <p className="font-[family-name:var(--font-heading)] text-lg text-fg">
           {recipe.title}
         </p>
-        {meta && <p className="mt-1 text-sm text-fg/60">{meta}</p>}
+
+        {/* Two fixed columns, not a wrapped bullet-joined line - so kcal and
+            protein always land in the same spot card to card, regardless of
+            how long the servings/prep/cook text is on the left. */}
+        <div className="mt-2 grid grid-cols-2 divide-x divide-fg/10 text-sm text-fg/60">
+          <div className="flex flex-col gap-0.5 pr-3">
+            {recipe.servings && <span>{recipe.servings} servings</span>}
+            {recipe.prepTime && <span>Prep {recipe.prepTime}</span>}
+            {recipe.cookTime && <span>Cook {recipe.cookTime}</span>}
+          </div>
+          <div className="flex flex-col gap-0.5 pl-3">
+            <span>{recipe.kcalPerServing} kcal</span>
+            {recipe.proteinPerServing != null && (
+              <span>{recipe.proteinPerServing}g protein</span>
+            )}
+          </div>
+        </div>
       </div>
     </Link>
   );
