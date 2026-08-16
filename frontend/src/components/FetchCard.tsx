@@ -1,22 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import FrosteArchGlyph from "@/components/FrosteArchGlyph";
 import { accentBorder, accentText } from "@/lib/frostearchAccent";
 import type { Accent } from "@/lib/frostearchAccent";
 
 export type { Accent };
 export { accentText };
-
-// A miniature version of the FrosteArch mark - a mountain with an arch cut
-// into it - standing in for the ASCII-art logo real fetch tools print.
-const Glyph = ({ className }: { className: string }) => (
-  <svg viewBox="0 0 100 100" aria-hidden className={className}>
-    <path
-      fill="currentColor"
-      d="M50 8 L92 92 L60 92 Q60 55 50 55 Q40 55 40 92 L8 92 Z"
-    />
-  </svg>
-);
 
 export default function FetchCard({
   edition,
@@ -42,7 +32,7 @@ export default function FetchCard({
       </p>
 
       <div className="flex gap-4">
-        <Glyph className={`mt-1 h-14 w-14 shrink-0 ${accentText[accent]}`} />
+        <FrosteArchGlyph className={`mt-1 h-14 w-14 shrink-0 ${accentText[accent]}`} />
 
         <dl className="flex-1 space-y-1.5">
           {[{ label: "OS", value: `FrosteArch ${edition}` }, ...specs].map(

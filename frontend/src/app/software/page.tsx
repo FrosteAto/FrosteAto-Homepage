@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import FrosteArchGlyph from "@/components/FrosteArchGlyph";
 
 export const metadata: Metadata = {
   title: "Software Development | FrosteAto",
@@ -132,25 +133,30 @@ export default function SoftwarePage() {
       <section className="flex flex-col gap-10">
         <h2 className="text-2xl font-black text-muted">Projects</h2>
 
-        <div className="rounded-md border border-fg/12 bg-card-bg p-6">
-          <p className="text-2xl font-black text-muted">FrosteArch</p>
-          <p className="mt-2 max-w-2xl text-lg leading-relaxed">
-            My own Arch Linux distribution - a set of install scripts and
-            package selections that turn a bare Arch install into three
-            ready-to-go editions (Desktop, Server, and Node), built around
-            getting a fully configured machine running with as little manual
-            setup as possible.
-          </p>
-          <p className="mt-3 text-lg">
-            <Link href="/frostearch" className="text-link">
-              See it in detail
-            </Link>
-            , or{" "}
-            <Link href="https://github.com/FrosteAto/FrosteArch" className="text-link">
-              view the source on GitHub
-            </Link>
-            .
-          </p>
+        <div className="flex items-start gap-6">
+          <div>
+            <p className="text-2xl font-black text-muted">FrosteArch</p>
+            <p className="mt-2 max-w-2xl text-lg leading-relaxed">
+              My own Arch Linux distribution - a set of install scripts and
+              package selections that turn a bare Arch install into three
+              ready-to-go editions (Desktop, Server, and Node), built around
+              getting a fully configured machine running with as little
+              manual setup as possible.
+            </p>
+            <p className="mt-2">
+              <Link href="/frostearch" className="text-link">
+                See it in detail
+              </Link>
+              , and{" "}
+              <Link href="https://github.com/FrosteAto/FrosteArch" className="text-link">
+                view the source on GitHub
+              </Link>
+              .
+            </p>
+          </div>
+          <div className="hidden h-[150px] w-[150px] shrink-0 items-center justify-center rounded-full bg-frostearch-purple/10 sm:flex">
+            <FrosteArchGlyph className="h-20 w-20 text-frostearch-purple" />
+          </div>
         </div>
 
         {projects.map((p) => (
