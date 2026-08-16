@@ -11,7 +11,7 @@ export default function AlbumCard({ album }: { album: Album }) {
   return (
     <Link
       href={`/photography/${album.slug}`}
-      className="group block overflow-hidden rounded-md border border-fg/12 bg-card"
+      className="group block overflow-hidden rounded-md border border-fg/12 bg-card-bg"
     >
       <div className="relative aspect-square w-full overflow-hidden bg-fg/8">
         {cover.src && (

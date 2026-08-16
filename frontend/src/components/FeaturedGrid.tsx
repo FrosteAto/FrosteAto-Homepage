@@ -45,7 +45,7 @@ export default function FeaturedGrid({ photos }: { photos: Photo[] }) {
   const hasMultiple = photos.length > 1;
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg border border-fg/12 bg-card/50 p-4 sm:p-6">
+    <div className="flex flex-col gap-4 rounded-lg border border-fg/12 bg-card-bg/50 p-4 sm:p-6">
       <h2 className="font-[family-name:var(--font-heading)] text-2xl">
         Featured
       </h2>

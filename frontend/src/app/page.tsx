@@ -41,7 +41,7 @@ export default function Home() {
           <p className="mt-2 text-lg text-muted">
             Software Developer, Computer Scientist, &amp; General Creator
           </p>
-          <div className="mt-3 flex gap-4 text-xl text-tan-text">
+          <div className="mt-3 flex gap-4 text-xl text-accent">
             <Link href="https://github.com/FrosteAto" className="hover:text-fg">
               <i className="fa-brands fa-github" aria-hidden />
             </Link>
@@ -85,7 +85,7 @@ export default function Home() {
         </p>
         <p>
           I also have a (admittedly pretty empty) blog where I will post my random thoughts and opinions
-          from time to time. Read those if you want. Or don't, I suppose.
+          from time to time. Read those if you want. Or don&apos;t, I suppose.
         </p>
         <p>
           So, use the nav bar up top to explore the different sections of my life, and feel 

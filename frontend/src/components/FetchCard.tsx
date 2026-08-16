@@ -5,15 +5,15 @@ import { motion } from "framer-motion";
 export type Accent = "purple" | "blue" | "yellow";
 
 export const accentText: Record<Accent, string> = {
-  purple: "text-dark-purple",
-  blue: "text-dark-blue",
-  yellow: "text-dark-yellow",
+  purple: "text-frostearch-purple",
+  blue: "text-frostearch-blue",
+  yellow: "text-frostearch-yellow",
 };
 
 const accentBorder: Record<Accent, string> = {
-  purple: "border-t-dark-purple",
-  blue: "border-t-dark-blue",
-  yellow: "border-t-dark-yellow",
+  purple: "border-t-frostearch-purple",
+  blue: "border-t-frostearch-blue",
+  yellow: "border-t-frostearch-yellow",
 };
 
 // A miniature version of the FrosteArch mark - a mountain with an arch cut
@@ -44,7 +44,7 @@ export default function FetchCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.4 }}
-      className={`rounded-t-md border border-fg/12 border-t-2 bg-card px-5 pb-5 pt-4 font-[family-name:var(--font-plex-mono)] text-sm ${accentBorder[accent]}`}
+      className={`rounded-t-md border border-fg/12 border-t-2 bg-card-bg px-5 pb-5 pt-4 font-[family-name:var(--font-plex-mono)] text-sm ${accentBorder[accent]}`}
     >
       <p className="mb-3 text-xs text-fg/40">
         dan@{host} ~ $ fastfetch

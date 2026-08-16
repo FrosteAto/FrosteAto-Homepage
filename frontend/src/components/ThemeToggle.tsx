@@ -12,7 +12,7 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggleTheme}
       aria-label="Toggle color theme"
-      className="text-chrome-fg/70 transition-colors hover:text-chrome-fg"
+      className="text-header-footer-fg/70 transition-colors hover:text-header-footer-fg"
     >
       <svg
         viewBox="0 0 24 24"

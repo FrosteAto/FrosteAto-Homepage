@@ -16,7 +16,7 @@ export default function SectionCard({
     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
       <Link
         href={href}
-        className="block h-full rounded-md border border-fg/12 bg-card p-5 transition-colors hover:border-tan"
+        className="block h-full rounded-md border border-fg/12 bg-card-bg p-5 transition-colors hover:border-accent-soft"
       >
         <p className="font-[family-name:var(--font-heading)] text-xl text-fg">
           {title}

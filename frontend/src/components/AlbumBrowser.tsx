@@ -42,7 +42,7 @@ export default function AlbumBrowser({
           {cameraGroups.map(({ camera, albums }) => (
             <details
               key={camera.slug}
-              className="rounded-md border border-fg/12 bg-card p-4"
+              className="rounded-md border border-fg/12 bg-card-bg p-4"
             >
               <summary className="cursor-pointer font-[family-name:var(--font-heading)] text-lg">
                 {camera.name} ({albums.length})
@@ -56,7 +56,7 @@ export default function AlbumBrowser({
           ))}
 
           {unknownAlbums.length > 0 && (
-            <details className="rounded-md border border-fg/12 bg-card p-4">
+            <details className="rounded-md border border-fg/12 bg-card-bg p-4">
               <summary className="cursor-pointer font-[family-name:var(--font-heading)] text-lg">
                 Unknown camera ({unknownAlbums.length})
               </summary>

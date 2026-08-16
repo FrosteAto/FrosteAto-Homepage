@@ -20,7 +20,7 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="relative z-20 w-full bg-chrome">
+    <header className="relative z-20 w-full bg-header-footer-bg">
       <div className="relative mx-auto flex max-w-5xl items-center justify-center px-4 py-4 sm:px-6">
         <div className="absolute right-4 top-1/2 -translate-y-1/2 sm:right-6">
           <ThemeToggle />
@@ -28,14 +28,14 @@ export default function Nav() {
 
         <button
           type="button"
-          className="text-chrome-fg sm:hidden"
+          className="text-header-footer-fg sm:hidden"
           aria-label="Toggle navigation"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
-          <span className="block h-0.5 w-6 bg-chrome-fg mb-1.5" />
-          <span className="block h-0.5 w-6 bg-chrome-fg mb-1.5" />
-          <span className="block h-0.5 w-6 bg-chrome-fg" />
+          <span className="block h-0.5 w-6 bg-header-footer-fg mb-1.5" />
+          <span className="block h-0.5 w-6 bg-header-footer-fg mb-1.5" />
+          <span className="block h-0.5 w-6 bg-header-footer-fg" />
         </button>
 
         <ul className="hidden items-center gap-1 sm:flex">
@@ -48,13 +48,13 @@ export default function Nav() {
               <li key={link.href} className="relative">
                 <Link
                   href={link.href}
-                  className="relative block px-3 py-2 text-sm font-bold text-chrome-fg/70 transition-colors hover:text-chrome-fg"
+                  className="relative block px-3 py-2 text-sm font-bold text-header-footer-fg/70 transition-colors hover:text-header-footer-fg"
                 >
                   {link.label}
                   {active && (
                     <motion.span
                       layoutId="nav-underline"
-                      className="absolute inset-x-2 -bottom-0.5 h-0.5 bg-chrome-fg"
+                      className="absolute inset-x-2 -bottom-0.5 h-0.5 bg-header-footer-fg"
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
@@ -75,11 +75,11 @@ export default function Nav() {
             className="overflow-hidden sm:hidden"
           >
             {links.map((link) => (
-              <li key={link.href} className="border-t border-chrome-fg/10">
+              <li key={link.href} className="border-t border-header-footer-fg/10">
                 <Link
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="block px-4 py-3 text-sm font-bold text-chrome-fg"
+                  className="block px-4 py-3 text-sm font-bold text-header-footer-fg"
                 >
                   {link.label}
                 </Link>

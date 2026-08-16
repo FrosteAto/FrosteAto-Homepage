@@ -56,7 +56,7 @@ export default async function BlogPage() {
         {posts.map((post) => (
           <article key={post.id} className="border-b border-fg/12 pb-8">
             <Link href={`/blog/${post.slug}`}>
-              <h2 className="font-[family-name:var(--font-heading)] text-2xl hover:text-tan-text">
+              <h2 className="font-[family-name:var(--font-heading)] text-2xl hover:text-accent">
                 {post.title}
               </h2>
             </Link>

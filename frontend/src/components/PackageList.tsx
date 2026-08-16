@@ -20,7 +20,7 @@ export default function PackageList({
   const total = groups.reduce((sum, g) => sum + g.items.length, 0);
 
   return (
-    <div className="overflow-hidden rounded-b-md border border-t-0 border-fg/12 bg-card font-[family-name:var(--font-plex-mono)]">
+    <div className="overflow-hidden rounded-b-md border border-t-0 border-fg/12 bg-card-bg font-[family-name:var(--font-plex-mono)]">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}

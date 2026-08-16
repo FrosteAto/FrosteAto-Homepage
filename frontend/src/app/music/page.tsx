@@ -95,7 +95,7 @@ export default async function MusicPage() {
             return isPlaceholder ? (
               <div
                 key={album.id}
-                className="block overflow-hidden rounded-md border border-dashed border-fg/20 bg-card"
+                className="block overflow-hidden rounded-md border border-dashed border-fg/20 bg-card-bg"
               >
                 {card}
               </div>
@@ -105,7 +105,7 @@ export default async function MusicPage() {
                 href={album.bandcampUrl!}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block overflow-hidden rounded-md border border-fg/12 bg-card"
+                className="group block overflow-hidden rounded-md border border-fg/12 bg-card-bg"
               >
                 {card}
               </a>

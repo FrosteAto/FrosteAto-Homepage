@@ -3,110 +3,51 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Palette, as given: sage / cream / champagne / tan, plus the dark olive
-     and mid-olive that complete the same family for text and dark mode.
-     Flat, modern, minimal - no gradients, no shadows. */
-  --color-cream: #fefae0;
-  --color-champagne: #faedcd;
-  /* Landed between two failed extremes: full cream saturation (93.8%)
-     at this lightness read as mustard, cutting it to 40% read as grey -
-     this palette doesn't have a grey in it. 60% keeps it recognisably
-     warm/champagne while staying well short of vivid. */
-  --color-champagne-soft: #f5eed8;
-  --color-sage-pale: #e9edc9;
-  --color-sage: #ccd5ae;
-  /* Sage, one step darker - for chrome, where the raw sage sat too close
-     to the cream page bg. Same hue/saturation, just less light. */
-  --color-sage-deep: #bfcb9a;
-  --color-tan: #d4a373;
-  /* Darkened for text/link use - the raw tan fails contrast on cream.
-     Stepped a touch darker still (37.6% -> 30.6% lightness), same hue/
-     sat, per request. */
-  --color-tan-text: #704d2c;
-  /* Darker than tan-text (which only clears 3.24 on the sage-deep chrome
-     bar), with saturation raised alongside the drop in lightness so it
-     reads as a rich coffee brown rather than thinning toward grey. */
-  --color-tan-deep: #4d3014;
   --color-ink: #283618;
-  --color-olive: #606c38;
-  /* Every green in this palette clusters at hue 67-75deg (sage-pale 67,
-     sage/sage-deep 74, olive 74, muted-dark 71) - except ink, which sits
-     at hue 88, a good 14-21deg off. Barely visible on its own, but ink
-     is also the light-mode chrome text, sitting directly on the sage-
-     family chrome bg, and that adjacency is where the mismatch actually
-     shows up as "these don't harmonise." Forest is ink's own saturation
-     and lightness (38.5%, 15.3%) re-hued to 74deg to match the rest of
-     the family, used only where that adjacency happens - ink itself
-     stays untouched everywhere else. */
-  --color-forest: #2f3618;
+  --color-cream: #fefae0;
 
-  /* Autumn accent (second palette) - dark mode's card surface, for variety
-     against all the green. Verified: cream text on it hits 9.04 contrast. */
-  --color-rust: #6e352c;
-  --color-muted-dark: #b7c08f;
+  --color-frostearch-purple: #5d4799;
+  --color-frostearch-blue: #40c4db;
+  --color-frostearch-yellow: #c9a23d;
 
-  /* Page backdrop + card surface - the only things that swap. */
-  --color-bg: var(--color-cream);
-  --color-fg: var(--color-ink);
-  --color-card: var(--color-champagne-soft);
-  --color-muted: var(--color-olive);
-
-  /* Chrome (nav + footer): light mode gets the light chrome, dark mode
-     gets the dark one - always paired with chrome-fg/chrome-accent so
-     text stays legible as the fill itself swaps. */
-  --color-chrome: var(--color-sage-deep);
-  --color-chrome-fg: var(--color-forest);
-  --color-chrome-accent: var(--color-tan-deep);
-
-  /* FrosteArch edition accents - unchanged, already tuned. */
-  --color-dark-purple: #5d4799;
-  --color-dark-blue: #40c4db;
-  --color-dark-yellow: #c9a23d;
+  --color-bg: #fefae0;
+  --color-fg: #283618;
+  --color-card-bg: #f5eed8;
+  --color-muted: #606c38;
+  --color-accent: #704d2c;
+  --color-accent-soft: #d4a373;
+  --color-header-footer-bg: #bfcb9a;
+  --color-header-footer-fg: #2f3618;
+  --color-header-footer-accent: #4d3014;
 }
 
 .dark {
-  --color-bg: var(--color-ink);
-  --color-fg: var(--color-cream);
-  --color-card: var(--color-rust);
-  --color-muted: var(--color-muted-dark);
-  /* tan-text is a light-mode value (tuned against cream) - unswapped, it
-     only hit 1.71 against the dark-mode ink bg, well under readable.
-     Same hue/sat family, lightened instead of darkened so links stay
-     legible here too (5.68 on ink). */
-  --color-tan-text: #cda57e;
-
-  /* Not pure ink - that's the page bg itself in dark mode, so chrome
-     would vanish into it. Olive is the same dark end of the family, one
-     step brighter, so nav/footer still read as a distinct band. */
-  --color-chrome: var(--color-olive);
-  --color-chrome-fg: var(--color-cream);
-  --color-chrome-accent: var(--color-tan);
+  --color-bg: #0a1b15;
+  --color-fg: #fefae0;
+  --color-card-bg: #09221d;
+  --color-muted: #d9c4a8;
+  --color-accent: #ccd5ae;
+  --color-accent-soft: #ccd5ae;
+  --color-header-footer-bg: #05130d;
+  --color-header-footer-fg: #fefae0;
+  --color-header-footer-accent: #ccd5ae;
 }
 
 @theme inline {
-  --color-cream: var(--color-cream);
-  --color-champagne: var(--color-champagne);
-  --color-champagne-soft: var(--color-champagne-soft);
-  --color-sage-pale: var(--color-sage-pale);
-  --color-sage: var(--color-sage);
-  --color-sage-deep: var(--color-sage-deep);
-  --color-tan: var(--color-tan);
-  --color-tan-text: var(--color-tan-text);
-  --color-tan-deep: var(--color-tan-deep);
   --color-ink: var(--color-ink);
-  --color-olive: var(--color-olive);
-  --color-forest: var(--color-forest);
-  --color-rust: var(--color-rust);
+  --color-cream: var(--color-cream);
+  --color-frostearch-purple: var(--color-frostearch-purple);
+  --color-frostearch-blue: var(--color-frostearch-blue);
+  --color-frostearch-yellow: var(--color-frostearch-yellow);
   --color-bg: var(--color-bg);
   --color-fg: var(--color-fg);
-  --color-card: var(--color-card);
+  --color-card-bg: var(--color-card-bg);
   --color-muted: var(--color-muted);
-  --color-chrome: var(--color-chrome);
-  --color-chrome-fg: var(--color-chrome-fg);
-  --color-chrome-accent: var(--color-chrome-accent);
-  --color-dark-purple: var(--color-dark-purple);
-  --color-dark-blue: var(--color-dark-blue);
-  --color-dark-yellow: var(--color-dark-yellow);
+  --color-accent: var(--color-accent);
+  --color-accent-soft: var(--color-accent-soft);
+  --color-header-footer-bg: var(--color-header-footer-bg);
+  --color-header-footer-fg: var(--color-header-footer-fg);
+  --color-header-footer-accent: var(--color-header-footer-accent);
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
@@ -122,9 +63,9 @@ body {
 }
 
 a.text-link {
-  color: var(--color-tan-text);
+  color: var(--color-accent);
   text-decoration: underline;
-  text-decoration-color: var(--color-tan);
+  text-decoration-color: var(--color-accent-soft);
   text-underline-offset: 3px;
   font-weight: 700;
 }

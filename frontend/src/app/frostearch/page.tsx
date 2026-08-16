@@ -181,7 +181,7 @@ export default function FrosteArchPage() {
               key={edition.id}
               href={`#${edition.id}`}
               aria-label={`${edition.name} edition`}
-              className="group relative block overflow-hidden rounded-md border border-fg/12 transition-colors hover:border-tan"
+              className="group relative block overflow-hidden rounded-md border border-fg/12 transition-colors hover:border-accent-soft"
             >
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
