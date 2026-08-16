@@ -25,42 +25,42 @@ const quotesByPrefix: { prefix: string; quote: Quote }[] = [
     prefix: "/software",
     quote: {
       text: '"It is possible to commit no mistakes and still lose. That is not a weakness. That is life."',
-      attribution: "-Jean-Luc Picard",
+      attribution: "-Jean-Luc Picard, 1989",
     },
   },
   {
     prefix: "/frostearch",
     quote: {
       text: "\"Things are only impossible until they're not!\"",
-      attribution: "-Jean-Luc Picard",
+      attribution: "-Jean-Luc Picard, 1988",
     },
   },
   {
     prefix: "/photography",
     quote: {
       text: '"Seize the time, Meribor. Live now. Make now always the most precious time. Now will never come again."',
-      attribution: "-Jean-Luc Picard",
+      attribution: "-Jean-Luc Picard, 1992",
     },
   },
   {
     prefix: "/music",
     quote: {
       text: "\"I know Hamlet. And what he might say with irony, I say with conviction. 'What a piece of work is a man! How noble in reason! how infinite in faculty! in form, in moving, how express and admirable! in action how like an angel! in apprehension how like a god!'\"",
-      attribution: "-Jean-Luc Picard",
+      attribution: "-Jean-Luc Picard, 1987",
     },
   },
   {
     prefix: "/blog",
     quote: {
       text: '"No being is so important that he can usurp the rights of another"',
-      attribution: "-Jean-Luc Picard",
+      attribution: "-Jean-Luc Picard, 1989",
     },
   },
   {
     prefix: "/recipes",
     quote: {
       text: '"Tea. Earl Grey. Hot."',
-      attribution: "-Jean-Luc Picard",
+      attribution: "-Jean-Luc Picard, 1989",
     },
   },
 ];
