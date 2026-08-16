@@ -12,6 +12,7 @@ const links = [
   { href: "/frostearch", label: "FrosteArch" },
   { href: "/photography", label: "Photography" },
   { href: "/music", label: "Music" },
+  { href: "/recipes", label: "Recipes" },
   { href: "/blog", label: "Blog" },
 ];
 
