@@ -1,12 +1,12 @@
 # 0brien.dev
 
 Personal site and portfolio: Home, Software Development, FrosteArch,
-Photography, Music, and Blog. Live at [0brien.dev](https://0brien.dev).
+Photography, Music, Recipes, and Blog. Live at [0brien.dev](https://0brien.dev).
 
 ## Project structure
 
 - `frontend/` - Next.js (App Router, TypeScript, Tailwind CSS, Framer Motion). The whole public site.
-- `backend/` - Symfony + API Platform. Powers the Photography and Blog admin/API; everything else is static content in the frontend.
+- `backend/` - Symfony + API Platform. Powers the Photography, Blog, Music, and Recipes admin/API; everything else is static content in the frontend.
 - `infra/` - Production Docker Compose stack and Caddyfile, used by the deploy workflow.
 - `.github/workflows/` - CI/CD: builds and deploys on push to `main`.
 
@@ -98,17 +98,16 @@ hot-reloads immediately:
 - **Home** - `frontend/src/app/page.tsx`
 - **Software Development** - `frontend/src/app/software/page.tsx`
 - **FrosteArch** - `frontend/src/app/frostearch/page.tsx`
-- **Music** - `frontend/src/app/music/page.tsx`
 
 Shared UI lives in `frontend/src/components/`, site-wide styles in
 `frontend/src/app/globals.css`, and fonts in `frontend/src/fonts/`.
 
-**Blog**, **Photography**, and **Music** are different: their content comes
-from the backend, not frontend source files. With the backend running (see
-"Run it" above), manage posts, photos, albums, tags, cameras, and music
-albums at `http://localhost:8000/admin` - the frontend pages just render
-whatever the API returns, and pick up new or edited content without a
-rebuild (ISR).
+**Blog**, **Photography**, **Music**, and **Recipes** are different: their
+content comes from the backend, not frontend source files. With the backend
+running (see "Run it" above), manage posts, photos, albums, tags, cameras,
+music albums, and recipes at `http://localhost:8000/admin` - the frontend
+pages just render whatever the API returns, and pick up new or edited
+content without a rebuild (ISR).
 
 A few things about the photo admin worth knowing:
 
@@ -183,6 +182,15 @@ album's card on `/music` sends visitors straight to its Bandcamp link in a
 new tab. Leave the Bandcamp link blank for an upcoming release and the
 card renders as an obvious "Coming soon" placeholder instead of a dead
 link.
+
+**Recipes** (`Recipes` in the admin menu) have a title, an optional photo
+(upload works the same as a photo's image field), ingredients and a method
+(each a textarea - one ingredient or step per line), optional author's
+notes, and optional servings/prep-time/cook-time strings (free text, so
+"4-6" or "~20 min" work fine). Like blog posts, a recipe with a blank
+`Published at` is a draft - saved in the admin but hidden from `/recipes`
+and the public API until you set that field. `/recipes` lists published
+recipes 2-wide; clicking one opens its own page at `/recipes/<slug>`.
 
 ## Technology overview
 
