@@ -56,7 +56,15 @@ const competencies: { label: string; items: CompetencyItem[] }[] = [
   },
 ];
 
-const projects = [
+type Project = {
+  title: string;
+  image: string;
+  description: string;
+  team?: { name: string; role: string; href: string }[];
+  links?: { label: string; href: string }[];
+};
+
+const projects: Project[] = [
   {
     title: "Drop By Drop",
     image: "/images/dbd.gif",
@@ -69,34 +77,6 @@ const projects = [
       { name: "Dylan Oates", role: "Business & Administration", href: "mailto:ddoates@outlook.com" },
       { name: "Nat Gough", role: "Writer & Designer", href: "mailto:goughnathan01@gmail.com" },
     ],
-  },
-  {
-    title: "DUST",
-    image: "/images/dustsite.png",
-    description:
-      "I was employed in an internship position during the summer of 2023 to begin producing a web application for the DUST initiative. It required the ability to load and display 3d models to the viewer, as well as 360 degree images. It must also allow people to traverse the models with limited freedom. I used three.JS to accomplish this.",
-    links: [
-      { label: "Find out more about DUST", href: "https://www.derby.ac.uk/derbys-urban-sustainable-transition/" },
-      { label: "my project", href: "https://github.com/FrosteAto/Derby-DUST-Website-Work" },
-    ],
-  },
-];
-
-const otherProjects = [
-  {
-    label: "Rolls-Royce Hackathon Website",
-    href: "https://hackathon.bfrd.uk/index.php",
-    description: "in which I produced a short visual novel to educate the voters on the merits of different power sources.",
-  },
-  {
-    label: "E-Ink/Pihole Integration",
-    href: "https://github.com/FrosteAto/Pihole-EInk-2.66inch",
-    description: "where I wrote a script that interacted with the PiHole API to display data about the DNS level adblocker's local statistics on an E-Ink display connected to a Raspberry Pi.",
-  },
-  {
-    label: "Space Monitor",
-    href: "https://github.com/FrosteAto/SpaceTraders-Custom-Client",
-    description: "a (very) WIP web frontend used to play the API-based space trading game 'spacetraders.io'.",
   },
 ];
 
@@ -152,6 +132,27 @@ export default function SoftwarePage() {
       <section className="flex flex-col gap-10">
         <h2 className="text-2xl font-black text-muted">Projects</h2>
 
+        <div className="rounded-md border border-fg/12 bg-card-bg p-6">
+          <p className="text-2xl font-black text-muted">FrosteArch</p>
+          <p className="mt-2 max-w-2xl text-lg leading-relaxed">
+            My own Arch Linux distribution - a set of install scripts and
+            package selections that turn a bare Arch install into three
+            ready-to-go editions (Desktop, Server, and Node), built around
+            getting a fully configured machine running with as little manual
+            setup as possible.
+          </p>
+          <p className="mt-3 text-lg">
+            <Link href="/frostearch" className="text-link">
+              See it in detail
+            </Link>
+            , or{" "}
+            <Link href="https://github.com/FrosteAto/FrosteArch" className="text-link">
+              view the source on GitHub
+            </Link>
+            .
+          </p>
+        </div>
+
         {projects.map((p) => (
           <div key={p.title} className="flex items-start gap-6">
             <div>
@@ -200,23 +201,14 @@ export default function SoftwarePage() {
 
         <div>
           <p className="text-2xl font-black text-muted">Other Projects</p>
-          <ul className="mt-2 max-w-2xl space-y-2 text-lg leading-relaxed">
-            {otherProjects.map((op) => (
-              <li key={op.href}>
-                <Link href={op.href} className="text-link">
-                  {op.label}
-                </Link>
-                , {op.description}
-              </li>
-            ))}
-            <li>
-              Discover all these and more on my{" "}
-              <Link href="https://github.com/FrosteAto" className="text-link">
-                Github
-              </Link>{" "}
-              page.
-            </li>
-          </ul>
+          <p className="mt-2 max-w-2xl text-lg leading-relaxed">
+            Hackathon entries, one-off scripts, and other smaller things live
+            on my{" "}
+            <Link href="https://github.com/FrosteAto" className="text-link">
+              GitHub
+            </Link>
+            .
+          </p>
         </div>
       </section>
     </main>
