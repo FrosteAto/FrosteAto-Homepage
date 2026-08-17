@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import FrosteArchGlyph from "@/components/FrosteArchGlyph";
 
 export const metadata: Metadata = {
   title: "Software Development | FrosteAto",
@@ -155,7 +154,13 @@ export default function SoftwarePage() {
             </p>
           </div>
           <div className="hidden h-[150px] w-[150px] shrink-0 items-center justify-center rounded-full bg-frostearch-purple/10 sm:flex">
-            <FrosteArchGlyph className="h-20 w-20 text-frostearch-purple" />
+            <Image
+              src="/images/frostearch/logo2.png"
+              alt="FrosteArch"
+              width={96}
+              height={96}
+              className="h-24 w-24 object-contain"
+            />
           </div>
         </div>
 
