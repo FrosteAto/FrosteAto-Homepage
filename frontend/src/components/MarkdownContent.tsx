@@ -37,17 +37,37 @@ const components: Components = {
       {children}
     </blockquote>
   ),
-  code: ({ children }) => (
-    <code className="rounded bg-fg/8 px-1.5 py-0.5 font-[family-name:var(--font-plex-mono)] text-[0.9em]">
-      {children}
-    </code>
-  ),
+  code: ({ className, children }) => {
+    const isBlock = Boolean(className);
+    return isBlock ? (
+      <code className={`font-[family-name:var(--font-plex-mono)] text-sm ${className ?? ""}`}>
+        {children}
+      </code>
+    ) : (
+      <code className="rounded bg-fg/8 px-1.5 py-0.5 font-[family-name:var(--font-plex-mono)] text-[0.9em]">
+        {children}
+      </code>
+    );
+  },
   pre: ({ children }) => (
     <pre className="overflow-x-auto rounded-md bg-fg/8 p-4 font-[family-name:var(--font-plex-mono)] text-sm">
       {children}
     </pre>
   ),
   hr: () => <hr className="border-fg/12" />,
+  table: ({ children }) => (
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse text-base">{children}</table>
+    </div>
+  ),
+  thead: ({ children }) => <thead className="border-b border-fg/20">{children}</thead>,
+  tr: ({ children }) => <tr className="border-b border-fg/12">{children}</tr>,
+  th: ({ children }) => (
+    <th className="px-3 py-2 text-left font-[family-name:var(--font-heading)] font-normal">
+      {children}
+    </th>
+  ),
+  td: ({ children }) => <td className="px-3 py-2">{children}</td>,
 };
 
 export default function MarkdownContent({ content }: { content: string }) {
