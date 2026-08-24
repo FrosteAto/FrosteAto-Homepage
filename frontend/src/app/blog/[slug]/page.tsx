@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/lib/api";
+import MarkdownContent from "@/components/MarkdownContent";
 
 function formatDate(iso: string | null) {
   if (!iso) return "";
@@ -34,8 +35,6 @@ export default async function BlogPostPage({
     notFound();
   }
 
-  const paragraphs = post.body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
-
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 py-10 sm:px-6">
       <div>
@@ -44,11 +43,7 @@ export default async function BlogPostPage({
         </h1>
         <p className="mt-2 text-sm text-muted">{formatDate(post.publishedAt)}</p>
       </div>
-      <div className="flex flex-col gap-4 text-lg leading-relaxed">
-        {paragraphs.map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
-      </div>
+      <MarkdownContent content={post.body} />
     </main>
   );
 }
