@@ -38,9 +38,9 @@ const components: Components = {
     </blockquote>
   ),
   code: ({ className, children }) => {
-    const isBlock = Boolean(className);
+    const isBlock = String(children).includes("\n");
     return isBlock ? (
-      <code className={`font-[family-name:var(--font-plex-mono)] text-sm ${className ?? ""}`}>
+      <code className={`font-[family-name:var(--font-plex-mono)] text-sm${className ? ` ${className}` : ""}`}>
         {children}
       </code>
     ) : (
