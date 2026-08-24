@@ -29,6 +29,9 @@ export default async function RecipesPage() {
         <p className="mt-3 max-w-2xl text-lg leading-relaxed text-fg/80">
           Things I actually cook, written down before I forget how.
         </p>
+        <p className="mt-3 max-w-2xl text-lg leading-relaxed text-fg/80">
+          I tend to focus on ingredients being available in a local, small grocery shop. Anything else should be easy to find online, and last a long time once opened.
+        </p>
       </div>
 
       {unavailable && (
