@@ -30,7 +30,9 @@ class PostCrudController extends AbstractCrudController
         yield IdField::new('id')->onlyOnIndex();
         yield TextField::new('title');
         yield TextField::new('slug')->onlyOnIndex();
-        yield TextareaField::new('body')->setNumOfRows(15);
+        yield TextareaField::new('body')
+            ->setNumOfRows(15)
+            ->setHelp('Supports Markdown: **bold**, _italic_, ## heading, - bullets, 1. numbered list, [link text](https://example.com).');
         yield DateTimeField::new('publishedAt')
             ->setRequired(false)
             ->setHelp('Leave blank to keep this post as a draft - it will not appear on the public site or API.');
