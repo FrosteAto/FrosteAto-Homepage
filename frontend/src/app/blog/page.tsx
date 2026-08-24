@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getPosts, type Post } from "@/lib/api";
+import { stripMarkdown } from "@/lib/markdown";
 
 export const metadata: Metadata = {
   title: "Blog | FrosteAto",
@@ -19,7 +20,7 @@ function formatDate(iso: string | null) {
 }
 
 function excerpt(body: string, length = 200) {
-  const flat = body.replace(/\s+/g, " ").trim();
+  const flat = stripMarkdown(body).replace(/\s+/g, " ").trim();
   return flat.length > length ? `${flat.slice(0, length).trim()}…` : flat;
 }
 

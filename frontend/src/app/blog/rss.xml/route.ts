@@ -1,4 +1,5 @@
 import { getPosts } from "@/lib/api";
+import { stripMarkdown } from "@/lib/markdown";
 
 const SITE_URL = "https://0brien.dev";
 
@@ -20,7 +21,7 @@ export async function GET() {
       const pubDate = post.publishedAt
         ? new Date(post.publishedAt).toUTCString()
         : "";
-      const excerpt = post.body.replace(/\s+/g, " ").trim().slice(0, 300);
+      const excerpt = stripMarkdown(post.body).replace(/\s+/g, " ").trim().slice(0, 300);
 
       return `
     <item>
