@@ -12,9 +12,27 @@ security:
         dev:
             pattern: ^/(_profiler|_wdt|assets|build)/
             security: false
+        # Only one entry_point (the thing that decides how to respond to a
+        # request that needs auth it doesn't have) can be configured per
+        # firewall - form_login's is "redirect to the login page", which is
+        # right for /admin but wrong for /api (an API client should see a
+        # plain 401, not a redirect into an HTML login form). This firewall
+        # has no authenticator of its own - context: admin shares session
+        # storage with the main firewall below, so a browser that's already
+        # logged in via /admin/login is recognized here too, and with no
+        # form_login/entry_point configured on this firewall, Symfony's
+        # default response to missing auth is a plain 401 rather than a
+        # redirect. Must come before main below: firewalls are matched in
+        # definition order, and this pattern is the more specific one.
+        api:
+            pattern: ^/api
+            provider: app_user_provider
+            context: admin
+            stateless: false
         main:
             lazy: true
             provider: app_user_provider
+            context: admin
             login_throttling:
                 max_attempts: 5
             form_login:
