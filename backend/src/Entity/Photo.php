@@ -112,6 +112,18 @@ class Photo
     #[Groups(['photo:read'])]
     private ?\DateTimeImmutable $thumbnailGeneratedAt = null;
 
+    /**
+     * Set once a stripping pass has removed any GPS location data from
+     * this photo's original file in `photos.storage` (see
+     * PhotoGpsStripper, PhotoExifListener). Null means it hasn't been
+     * processed yet - either it predates this feature, or a backfill run
+     * hasn't reached it. Means "checked", not "GPS was found": it's set
+     * the same way whether or not the file actually had GPS data.
+     */
+    #[ORM\Column(nullable: true)]
+    #[Groups(['photo:read'])]
+    private ?\DateTimeImmutable $gpsStrippedAt = null;
+
     #[ORM\Column]
     #[Groups(['photo:read'])]
     private \DateTimeImmutable $createdAt;
@@ -283,6 +295,18 @@ class Photo
     public function setThumbnailGeneratedAt(?\DateTimeImmutable $thumbnailGeneratedAt): static
     {
         $this->thumbnailGeneratedAt = $thumbnailGeneratedAt;
+
+        return $this;
+    }
+
+    public function getGpsStrippedAt(): ?\DateTimeImmutable
+    {
+        return $this->gpsStrippedAt;
+    }
+
+    public function setGpsStrippedAt(?\DateTimeImmutable $gpsStrippedAt): static
+    {
+        $this->gpsStrippedAt = $gpsStrippedAt;
 
         return $this;
     }
