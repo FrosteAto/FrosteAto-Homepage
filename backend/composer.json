@@ -12,6 +12,7 @@
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6",
         "easycorp/easyadmin-bundle": "^5.5",
+        "fileeye/pel": "^0.12.1",
         "league/flysystem-aws-s3-v3": "^3.35",
         "league/flysystem-bundle": "^3.7",
         "symfony/console": "8.1.*",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf219be877d00836fe3805a61f36d256",
+    "content-hash": "dacc4f3762a6cf7d6ddc4ecc77a98431",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1678,6 +1678,68 @@
                 }
             ],
             "time": "2026-08-11T06:28:56+00:00"
+        },
+        {
+            "name": "fileeye/pel",
+            "version": "0.12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FileEye/pel.git",
+                "reference": "96cce8aef576c8fe3154282d9d37f3cace7455e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FileEye/pel/zipball/96cce8aef576c8fe3154282d9d37f3cace7455e9",
+                "reference": "96cce8aef576c8fe3154282d9d37f3cace7455e9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "ext-exif": "*",
+                "ext-gd": "*",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2",
+                "phpstan/phpstan-phpunit": "^2",
+                "phpunit/phpunit": "^10 || ^11 || ^12 || ^13",
+                "squizlabs/php_codesniffer": ">=3.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "lsolesen\\pel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Lars Olesen",
+                    "email": "lars@intraface.dk",
+                    "homepage": "http://intraface.dk",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Martin Geisler",
+                    "email": "martin@geisler.net",
+                    "homepage": "http://geisler.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Exif Library. A library for reading and writing Exif headers in JPEG and TIFF images using PHP.",
+            "homepage": "https://github.com/FileEye/pel",
+            "keywords": [
+                "exif",
+                "image"
+            ],
+            "support": {
+                "issues": "https://github.com/FileEye/pel/issues",
+                "source": "https://github.com/FileEye/pel/tree/0.12.1"
+            },
+            "time": "2026-03-19T18:27:55+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
