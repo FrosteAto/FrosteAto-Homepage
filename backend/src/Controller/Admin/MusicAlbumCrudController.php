@@ -36,7 +36,8 @@ class MusicAlbumCrudController extends AbstractCrudController
             ->setUploadDir('/')
             ->setFlysystemUrlPrefix('/media/music-covers/')
             ->setUploadedFileNamePattern('[randomhash].[extension]')
-            ->setRequired(false);
+            ->setRequired(false)
+            ->mimeTypes('image/jpeg,image/png,image/webp,image/gif');
         yield UrlField::new('bandcampUrl', 'Bandcamp link')
             ->setRequired(false)
             ->setHelp("Clicking the album on the public site sends visitors straight here. Leave blank for an upcoming release - it'll show as a \"Coming soon\" card instead of a dead link.");

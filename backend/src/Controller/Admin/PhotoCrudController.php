@@ -34,7 +34,8 @@ class PhotoCrudController extends AbstractCrudController
             ->setFlysystemStorage('photos.storage')
             ->setUploadDir('/')
             ->setFlysystemUrlPrefix('/media/photos/')
-            ->setUploadedFileNamePattern('[randomhash].[extension]');
+            ->setUploadedFileNamePattern('[randomhash].[extension]')
+            ->mimeTypes('image/jpeg,image/png,image/webp,image/gif');
         yield TextField::new('title')->setRequired(false);
         yield BooleanField::new('featured')
             ->setRequired(false)

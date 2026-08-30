@@ -36,7 +36,8 @@ class RecipeCrudController extends AbstractCrudController
             ->setUploadDir('/')
             ->setFlysystemUrlPrefix('/media/recipes/')
             ->setUploadedFileNamePattern('[randomhash].[extension]')
-            ->setRequired(false);
+            ->setRequired(false)
+            ->mimeTypes('image/jpeg,image/png,image/webp,image/gif');
         yield TextField::new('title');
         yield TextField::new('slug')->onlyOnIndex();
         yield AssociationField::new('category')->setRequired(false)->autocomplete();
