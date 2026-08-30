@@ -79,19 +79,42 @@ class PhotoGpsBackfillController extends AbstractController
                     $stripped = $this->gpsStripper->strip($original);
                     if ($stripped !== $original) {
                         $this->storage->write($imageName, $stripped);
-                        // The existing thumbnail (if any) may be a verbatim
-                        // byte-for-byte copy of the pre-strip original - see
-                        // PhotoThumbnailGenerator's orientation-1-and-narrow-
-                        // enough fast path - so it needs regenerating from
-                        // the now-clean original too. Without this, a photo
-                        // can be marked GPS-checked while an old GPS-bearing
-                        // copy stays publicly reachable at its own URL.
-                        if ($this->thumbnailGenerator->generate($imageName)) {
+                    }
+
+                    // An existing thumbnail may be a verbatim byte-for-byte
+                    // copy of the pre-strip original - see
+                    // PhotoThumbnailGenerator's orientation-1-and-narrow-
+                    // enough fast path - so it needs refreshing from the
+                    // now-clean original too, whenever one already exists.
+                    // Checked unconditionally (not just when this pass
+                    // changed the original) so a retry after a prior
+                    // thumbnail-only failure still fixes it: once the
+                    // original is already clean, stripping it again is a
+                    // no-op, and that alone gives no signal that the
+                    // thumbnail is still stale from before.
+                    //
+                    // generate() never throws - it swallows every failure
+                    // and returns false - so gpsStrippedAt is only set once
+                    // it (or the absence of a thumbnail to worry about)
+                    // confirms nothing GPS-bearing is left publicly
+                    // reachable. Setting it unconditionally here would
+                    // silently reopen this exact bug on a transient
+                    // thumbnail-storage failure: the photo would be marked
+                    // "checked" while a stale, GPS-bearing thumbnail stayed
+                    // live at its own URL, with no future run ever
+                    // retrying it.
+                    $thumbnailOk = true;
+                    if (null !== $photo->getThumbnailGeneratedAt()) {
+                        $thumbnailOk = $this->thumbnailGenerator->generate($imageName);
+                        if ($thumbnailOk) {
                             $photo->setThumbnailGeneratedAt(new \DateTimeImmutable());
                         }
                     }
-                    $photo->setGpsStrippedAt(new \DateTimeImmutable());
-                    ++$succeeded;
+
+                    if ($thumbnailOk) {
+                        $photo->setGpsStrippedAt(new \DateTimeImmutable());
+                        ++$succeeded;
+                    }
                 } catch (\Throwable) {
                     // Left with gpsStrippedAt still null - falls back into
                     // the next "missing" run, same as a thumbnail failure.
