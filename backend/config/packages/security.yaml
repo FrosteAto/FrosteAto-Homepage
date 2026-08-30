@@ -24,8 +24,18 @@ security:
         # default response to missing auth is a plain 401 rather than a
         # redirect. Must come before main below: firewalls are matched in
         # definition order, and this pattern is the more specific one.
+        #
+        # context: admin (shared with main below) ties both firewalls to
+        # the same session-stored token instead of each defaulting to a key
+        # derived from its own firewall name - deliberately named after
+        # neither firewall so renaming either one later doesn't silently
+        # change where the token is stored. One consequence worth knowing:
+        # this key rename means any session that was already logged in
+        # under the old (implicit, firewall-name-derived) key is logged out
+        # the moment this deploys - fails closed, just re-log in once.
         api:
             pattern: ^/api
+            lazy: true
             provider: app_user_provider
             context: admin
             stateless: false

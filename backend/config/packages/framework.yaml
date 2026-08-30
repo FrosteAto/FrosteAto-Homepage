@@ -17,7 +17,17 @@ framework:
     trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
 
     # Note that the session will be started ONLY if you read or write from it.
-    session: true
+    #
+    # cookie_samesite pinned explicitly (matches Symfony's own default -
+    # this changes no actual behavior) because it's now load-bearing: the
+    # api firewall (security.yaml) authenticates /api writes off this same
+    # session cookie with no CSRF check of its own, since a JSON API can't
+    # be driven by a cross-site HTML form anyway. samesite=lax is what
+    # actually stops the cookie being sent on a cross-site fetch/XHR POST -
+    # worth a reader seeing that decision made on purpose, not inheriting
+    # it silently from a framework default that could change.
+    session:
+        cookie_samesite: lax
 
     #esi: true
     #fragments: true
