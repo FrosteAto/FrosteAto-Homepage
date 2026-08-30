@@ -18,6 +18,7 @@ RUN { \
         echo 'max_file_uploads=100'; \
         echo 'memory_limit=1024M'; \
         echo 'max_execution_time=300'; \
+        echo 'expose_php=Off'; \
     } > /usr/local/etc/php/conf.d/uploads.ini
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
