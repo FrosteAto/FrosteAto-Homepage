@@ -119,9 +119,12 @@ class Photo
      * processed yet - either it predates this feature, or a backfill run
      * hasn't reached it. Means "checked", not "GPS was found": it's set
      * the same way whether or not the file actually had GPS data.
+     *
+     * Deliberately not in any serializer group - a null here on the public
+     * API would be a ready-made index of exactly the photos most likely to
+     * still be leaking location data. Admin-only bookkeeping.
      */
     #[ORM\Column(nullable: true)]
-    #[Groups(['photo:read'])]
     private ?\DateTimeImmutable $gpsStrippedAt = null;
 
     #[ORM\Column]

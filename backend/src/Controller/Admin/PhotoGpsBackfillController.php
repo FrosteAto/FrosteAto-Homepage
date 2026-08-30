@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Repository\PhotoRepository;
 use App\Service\PhotoGpsStripper;
+use App\Service\PhotoThumbnailGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,7 @@ class PhotoGpsBackfillController extends AbstractController
         private readonly EntityManagerInterface $entityManager,
         private readonly PhotoRepository $photoRepository,
         private readonly PhotoGpsStripper $gpsStripper,
+        private readonly PhotoThumbnailGenerator $thumbnailGenerator,
         #[Target('photos.storage')] private readonly FilesystemOperator $storage,
     ) {
     }
@@ -77,6 +79,16 @@ class PhotoGpsBackfillController extends AbstractController
                     $stripped = $this->gpsStripper->strip($original);
                     if ($stripped !== $original) {
                         $this->storage->write($imageName, $stripped);
+                        // The existing thumbnail (if any) may be a verbatim
+                        // byte-for-byte copy of the pre-strip original - see
+                        // PhotoThumbnailGenerator's orientation-1-and-narrow-
+                        // enough fast path - so it needs regenerating from
+                        // the now-clean original too. Without this, a photo
+                        // can be marked GPS-checked while an old GPS-bearing
+                        // copy stays publicly reachable at its own URL.
+                        if ($this->thumbnailGenerator->generate($imageName)) {
+                            $photo->setThumbnailGeneratedAt(new \DateTimeImmutable());
+                        }
                     }
                     $photo->setGpsStrippedAt(new \DateTimeImmutable());
                     ++$succeeded;
