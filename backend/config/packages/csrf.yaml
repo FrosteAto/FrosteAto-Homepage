@@ -12,3 +12,4 @@ framework:
             - album-photo-browser
             - thumbnail-backfill
             - settings-backfill
+            - gps-backfill
