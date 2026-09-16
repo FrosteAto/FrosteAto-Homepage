@@ -29,7 +29,7 @@ const quotesByPrefix: { prefix: string; quote: Quote }[] = [
     },
   },
   {
-    prefix: "/frostearch",
+    prefix: "/khione",
     quote: {
       text: "\"Things are only impossible until they're not!\"",
       attribution: "-Jean-Luc Picard, 1988",

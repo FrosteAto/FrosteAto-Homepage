@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import FrosteArchGlyph from "@/components/FrosteArchGlyph";
-import { accentBorder, accentText } from "@/lib/frostearchAccent";
-import type { Accent } from "@/lib/frostearchAccent";
+import KhioneGlyph from "@/components/KhioneGlyph";
+import { accentBorder, accentText } from "@/lib/khioneAccent";
+import type { Accent } from "@/lib/khioneAccent";
 
 export type { Accent };
 export { accentText };
@@ -32,10 +32,10 @@ export default function FetchCard({
       </p>
 
       <div className="flex gap-4">
-        <FrosteArchGlyph className={`mt-1 h-14 w-14 shrink-0 ${accentText[accent]}`} />
+        <KhioneGlyph className={`mt-1 h-14 w-14 shrink-0 ${accentText[accent]}`} />
 
         <dl className="flex-1 space-y-1.5">
-          {[{ label: "OS", value: `FrosteArch ${edition}` }, ...specs].map(
+          {[{ label: "OS", value: `Khione ${edition}` }, ...specs].map(
             (spec, i) => (
             <motion.div
               key={spec.label}

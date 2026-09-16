@@ -9,7 +9,7 @@ import ThemeToggle from "./ThemeToggle";
 const links = [
   { href: "/", label: "Home" },
   { href: "/software", label: "Software Development" },
-  { href: "/frostearch", label: "FrosteArch" },
+  { href: "/khione", label: "Khione" },
   { href: "/photography", label: "Photography" },
   { href: "/music", label: "Music" },
   { href: "/recipes", label: "Recipes" },

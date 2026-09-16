@@ -134,7 +134,7 @@ export default function SoftwarePage() {
 
         <div className="flex items-start gap-6">
           <div>
-            <p className="text-2xl font-black text-muted">FrosteArch</p>
+            <p className="text-2xl font-black text-muted">Khione</p>
             <p className="mt-2 max-w-2xl text-lg leading-relaxed">
               My own Arch Linux distribution - a set of install scripts and
               package selections that turn a bare Arch install into three
@@ -143,20 +143,20 @@ export default function SoftwarePage() {
               manual setup as possible.
             </p>
             <p className="mt-2">
-              <Link href="/frostearch" className="text-link">
+              <Link href="/khione" className="text-link">
                 See it in detail
               </Link>
               , and{" "}
-              <Link href="https://github.com/FrosteAto/FrosteArch" className="text-link">
+              <Link href="https://github.com/FrosteAto/Khione" className="text-link">
                 view the source on GitHub
               </Link>
               .
             </p>
           </div>
-          <div className="hidden h-[150px] w-[150px] shrink-0 items-center justify-center rounded-full bg-frostearch-purple/10 sm:flex">
+          <div className="hidden h-[150px] w-[150px] shrink-0 items-center justify-center rounded-full bg-khione-purple/10 sm:flex">
             <Image
-              src="/images/frostearch/logo2.png"
-              alt="FrosteArch"
+              src="/images/khione/logo2.png"
+              alt="Khione"
               width={96}
               height={96}
               className="h-24 w-24 object-contain"

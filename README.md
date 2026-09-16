@@ -1,6 +1,6 @@
 # 0brien.dev
 
-Personal site and portfolio: Home, Software Development, FrosteArch,
+Personal site and portfolio: Home, Software Development, Khione,
 Photography, Music, Recipes, and Blog. Live at [0brien.dev](https://0brien.dev).
 
 ## Project structure
@@ -97,7 +97,7 @@ hot-reloads immediately:
 
 - **Home** - `frontend/src/app/page.tsx`
 - **Software Development** - `frontend/src/app/software/page.tsx`
-- **FrosteArch** - `frontend/src/app/frostearch/page.tsx`
+- **Khione** - `frontend/src/app/khione/page.tsx`
 
 Shared UI lives in `frontend/src/components/`, site-wide styles in
 `frontend/src/app/globals.css`, and fonts in `frontend/src/fonts/`.

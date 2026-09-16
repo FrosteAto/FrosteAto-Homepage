@@ -2,21 +2,21 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import FlavourSection from "@/components/FlavourSection";
-import { accentBg, accentHoverBorder } from "@/lib/frostearchAccent";
-import type { Accent } from "@/lib/frostearchAccent";
+import { accentBg, accentHoverBorder } from "@/lib/khioneAccent";
+import type { Accent } from "@/lib/khioneAccent";
 import type { PackageGroup } from "@/components/PackageList";
 
 const packageCount = (groups: PackageGroup[]) =>
   groups.reduce((sum, g) => sum + g.items.length, 0);
 
 export const metadata: Metadata = {
-  title: "FrosteArch | FrosteAto",
+  title: "Khione | FrosteAto",
 };
 
 const overview: { id: string; name: string; image: string; accent: Accent }[] = [
-  { id: "desktop", name: "Desktop", image: "/images/frostearch/desktop.png", accent: "purple" },
-  { id: "server", name: "Server", image: "/images/frostearch/server.png", accent: "blue" },
-  { id: "node", name: "Node", image: "/images/frostearch/node.png", accent: "yellow" },
+  { id: "desktop", name: "Desktop", image: "/images/khione/desktop.png", accent: "purple" },
+  { id: "server", name: "Server", image: "/images/khione/server.png", accent: "blue" },
+  { id: "node", name: "Node", image: "/images/khione/node.png", accent: "yellow" },
 ];
 
 const desktopPackages: PackageGroup[] = [
@@ -152,13 +152,13 @@ const nodePackages: PackageGroup[] = [
   { category: "Networking & firewall", items: ["ufw", "avahi", "nss-mdns"] },
 ];
 
-export default function FrosteArchPage() {
+export default function KhionePage() {
   return (
     <main className="flex flex-1 flex-col">
       <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-5 px-4 py-16 text-center sm:px-6">
         <Image
-          src="/images/frostearch/logo.png"
-          alt="FrosteArch"
+          src="/images/khione/logo.png"
+          alt="Khione"
           width={420}
           height={108}
           priority
@@ -169,7 +169,7 @@ export default function FrosteArchPage() {
           setup for desktop, server, and kiosk use, focused on ease of setup.
         </p>
         <Link
-          href="https://github.com/FrosteAto/FrosteArch"
+          href="https://github.com/FrosteAto/Khione"
           className="text-link"
         >
           View the source and installation guide on GitHub
@@ -205,7 +205,7 @@ export default function FrosteArchPage() {
         <FlavourSection
           id="desktop"
           name="Desktop Edition"
-          host="frostearch-desktop"
+          host="khione-desktop"
           accent="purple"
           specs={[
             { label: "Role", value: "Gaming + dev + creative" },
@@ -245,7 +245,7 @@ export default function FrosteArchPage() {
         <FlavourSection
           id="server"
           name="Server Edition"
-          host="frostearch-server"
+          host="khione-server"
           accent="blue"
           specs={[
             { label: "Role", value: "Self-hosted services" },
@@ -284,7 +284,7 @@ export default function FrosteArchPage() {
         <FlavourSection
           id="node"
           name="Node Edition"
-          host="frostearch-node"
+          host="khione-node"
           accent="yellow"
           specs={[
             { label: "Role", value: "Always-on kiosk" },
@@ -300,7 +300,7 @@ export default function FrosteArchPage() {
           topics={[
             {
               title: "Boot Sequence",
-              body: "Boots into a KDE Plasma session and opens Firefox straight to the Glance dashboard hosted by FrosteArch Server - no manual steps.",
+              body: "Boots into a KDE Plasma session and opens Firefox straight to the Glance dashboard hosted by Khione Server - no manual steps.",
             },
             {
               title: "Always On",

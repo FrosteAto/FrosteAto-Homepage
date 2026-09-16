@@ -9,8 +9,8 @@ const sections = [
     description: "Employment history and personal projects.",
   },
   {
-    href: "/frostearch",
-    title: "FrosteArch",
+    href: "/khione",
+    title: "Khione",
     description: "My custom Linux ISO.",
   },
   {
@@ -77,7 +77,7 @@ export default function Home() {
         <p>
           Hi, I&apos;m FrosteAto! Welcome to my personal website. I am a software
           developer by trade, and you will find the personal projects im most proud of here.
-          This includes FrosteArch, a Linux distro I maintain myself, as well as this website
+          This includes Khione, a Linux distro I maintain myself, as well as this website
           and anything else I come up with.
         </p>
         <p>

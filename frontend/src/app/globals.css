@@ -6,9 +6,9 @@
   --color-ink: #283618;
   --color-cream: #fefae0;
 
-  --color-frostearch-purple: #5d4799;
-  --color-frostearch-blue: #40c4db;
-  --color-frostearch-yellow: #c9a23d;
+  --color-khione-purple: #5d4799;
+  --color-khione-blue: #40c4db;
+  --color-khione-yellow: #c9a23d;
 
   --color-bg: #fefae0;
   --color-fg: #283618;
@@ -36,9 +36,9 @@
 @theme inline {
   --color-ink: var(--color-ink);
   --color-cream: var(--color-cream);
-  --color-frostearch-purple: var(--color-frostearch-purple);
-  --color-frostearch-blue: var(--color-frostearch-blue);
-  --color-frostearch-yellow: var(--color-frostearch-yellow);
+  --color-khione-purple: var(--color-khione-purple);
+  --color-khione-blue: var(--color-khione-blue);
+  --color-khione-yellow: var(--color-khione-yellow);
   --color-bg: var(--color-bg);
   --color-fg: var(--color-fg);
   --color-card-bg: var(--color-card-bg);
