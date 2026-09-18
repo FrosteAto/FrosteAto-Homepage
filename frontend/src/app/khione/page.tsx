@@ -13,10 +13,17 @@ export const metadata: Metadata = {
   title: "Khione | FrosteAto",
 };
 
-const overview: { id: string; name: string; image: string; accent: Accent }[] = [
-  { id: "desktop", name: "Desktop", image: "/images/khione/desktop.png", accent: "purple" },
-  { id: "server", name: "Server", image: "/images/khione/server.png", accent: "blue" },
-  { id: "node", name: "Node", image: "/images/khione/node.png", accent: "yellow" },
+const overview: {
+  id: string;
+  name: string;
+  image: string;
+  accent: Accent;
+  width: number;
+  height: number;
+}[] = [
+  { id: "desktop", name: "Desktop", image: "/images/khione/desktop.png", accent: "purple", width: 3418, height: 1180 },
+  { id: "server", name: "Server", image: "/images/khione/server.png", accent: "blue", width: 3040, height: 1180 },
+  { id: "node", name: "Node", image: "/images/khione/node.png", accent: "yellow", width: 2747, height: 1180 },
 ];
 
 const desktopPackages: PackageGroup[] = [
@@ -159,8 +166,8 @@ export default function KhionePage() {
         <Image
           src="/images/khione/logo.png"
           alt="Khione"
-          width={420}
-          height={108}
+          width={4167}
+          height={4167}
           priority
           className="h-auto w-full max-w-sm"
         />
@@ -186,14 +193,14 @@ export default function KhionePage() {
               className={`group flex flex-col overflow-hidden rounded-md border border-fg/12 bg-card-bg transition-colors duration-300 ${accentHoverBorder[edition.accent]}`}
             >
               <span className={`h-1.5 w-full ${accentBg[edition.accent]}`} aria-hidden />
-              <span className="flex flex-1 items-center justify-center px-5 py-6 sm:px-6 sm:py-8">
+              <span className="flex flex-1 items-center justify-center px-5 py-8 sm:px-6 sm:py-10">
                 <Image
                   src={edition.image}
                   alt={`${edition.name} edition logo`}
-                  width={480}
-                  height={189}
+                  width={edition.width}
+                  height={edition.height}
                   sizes="(max-width: 640px) 80vw, 28vw"
-                  className="h-auto w-full max-w-[300px] transition-transform duration-300 group-hover:scale-105"
+                  className="h-auto w-full max-w-[260px] transition-transform duration-300 group-hover:scale-105"
                 />
               </span>
             </a>
