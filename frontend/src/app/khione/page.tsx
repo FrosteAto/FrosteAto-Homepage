@@ -24,6 +24,7 @@ const overview: {
   { id: "desktop", name: "Desktop", image: "/images/khione/desktop.png", accent: "purple", width: 3418, height: 1180 },
   { id: "server", name: "Server", image: "/images/khione/server.png", accent: "blue", width: 3040, height: 1180 },
   { id: "node", name: "Node", image: "/images/khione/node.png", accent: "yellow", width: 2747, height: 1180 },
+  { id: "ulw", name: "ULW", image: "/images/khione/ulw.png", accent: "green", width: 2683, height: 1180 },
 ];
 
 const desktopPackages: PackageGroup[] = [
@@ -159,6 +160,50 @@ const nodePackages: PackageGroup[] = [
   { category: "Networking & firewall", items: ["ufw", "avahi", "nss-mdns"] },
 ];
 
+const ulwPackages: PackageGroup[] = [
+  {
+    category: "Desktop environment & login",
+    items: [
+      "xorg", "xfce4", "greetd", "greetd-tuigreet", "gnome-keyring", "libsecret", "zenity",
+      "picom", "adw-gtk-theme",
+    ],
+  },
+  {
+    category: "File management",
+    items: ["thunar", "thunar-archive-plugin", "file-roller", "gvfs-smb", "smbclient", "gparted"],
+  },
+  {
+    category: "Development",
+    items: ["python", "python-markdown", "python-pip", "python-pipx", "git", "geany"],
+  },
+  {
+    category: "System utilities",
+    items: ["ufw", "nano", "btop", "flatpak", "kitty", "fastfetch", "firefox", "p7zip"],
+  },
+  {
+    category: "Audio & media",
+    items: ["playerctl", "pipewire-pulse", "wireplumber", "xfce4-pulseaudio-plugin"],
+  },
+  {
+    category: "Panel & polish",
+    items: [
+      "xfce4-docklike-plugin", "xfce4-weather-plugin", "xfce4-genmon-plugin",
+      "xfce4-screenshooter", "xfce4-taskmanager", "network-manager-applet",
+    ],
+  },
+  {
+    category: "Fonts & networking",
+    items: [
+      "noto-fonts", "noto-fonts-cjk", "noto-fonts-emoji", "ttf-dejavu", "ttf-jetbrains-mono",
+      "ttf-jetbrains-mono-nerd", "avahi", "nss-mdns",
+    ],
+  },
+  {
+    category: "Base system",
+    items: ["sof-firmware"],
+  },
+];
+
 export default function KhionePage() {
   return (
     <main className="flex flex-1 flex-col">
@@ -184,7 +229,7 @@ export default function KhionePage() {
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-10">
           {overview.map((edition) => (
             <a
               key={edition.id}
@@ -312,6 +357,37 @@ export default function KhionePage() {
             {
               title: "Always On",
               body: "Sleep, suspend, and hibernate are all disabled while plugged in, so it stays reachable as an always-on appliance.",
+            },
+          ]}
+        />
+        <FlavourSection
+          id="ulw"
+          name="ULW Edition"
+          host="khione-ulw"
+          accent="green"
+          specs={[
+            { label: "Role", value: "Ultra lightweight, build-it-yourself" },
+            { label: "DE", value: "Xfce" },
+            { label: "Terminal", value: "kitty" },
+            { label: "Est. Size", value: "TBD" },
+            { label: "Packages", value: `${packageCount(ulwPackages)} (pacman)` },
+          ]}
+          packages={ulwPackages}
+          intro="ULW means Ultra LightWeight. It swaps KDE Plasma for Xfce and comes as
+            a pretty much blank slate - just the bare essentials like a file manager
+            and a browser, ready to be built up however you like."
+          topics={[
+            {
+              title: "Featherweight",
+              body: `Xfce, picom, and a bare ${packageCount(ulwPackages)}-package base add up to a system that idles at under 1GB of RAM - plenty of headroom, or great for older systems.`,
+            },
+            {
+              title: "Still the Khione Treatment",
+              body: "ULW still has a colour-coded theme made to look as close to the KDE-based flavours as Xfce allows, keeping it both distinct and familiar.",
+            },
+            {
+              title: "Build-It-Yourself",
+              body: "Thunar and kitty sit on the panel and that's about it - the rest is left up to you, with yay on hand for pulling in whatever else you need from the AUR.",
             },
           ]}
         />

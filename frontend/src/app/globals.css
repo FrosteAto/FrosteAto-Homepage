@@ -9,6 +9,7 @@
   --color-khione-purple: #5d4799;
   --color-khione-blue: #40c4db;
   --color-khione-yellow: #c9a23d;
+  --color-khione-green: #8bb862;
 
   --color-bg: #fefae0;
   --color-fg: #283618;
@@ -39,6 +40,7 @@
   --color-khione-purple: var(--color-khione-purple);
   --color-khione-blue: var(--color-khione-blue);
   --color-khione-yellow: var(--color-khione-yellow);
+  --color-khione-green: var(--color-khione-green);
   --color-bg: var(--color-bg);
   --color-fg: var(--color-fg);
   --color-card-bg: var(--color-card-bg);
