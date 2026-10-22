@@ -1,4 +1,4 @@
-FROM php:8.4-fpm-alpine
+FROM php:8.4.27-fpm-alpine
 
 # Local dev only: same runtime as Dockerfile (nginx + php-fpm) but the app
 # code isn't baked in - docker-compose.yml bind-mounts the real backend/
