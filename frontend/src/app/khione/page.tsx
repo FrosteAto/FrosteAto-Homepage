@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
+import BootWindow from "@/components/BootWindow";
 import FlavourSection from "@/components/FlavourSection";
-import { accentText } from "@/lib/khioneAccent";
 import type { Accent } from "@/lib/khioneAccent";
 import type { PackageGroup } from "@/components/PackageList";
 
@@ -206,65 +204,12 @@ const ulwPackages: PackageGroup[] = [
 export default function KhionePage() {
   return (
     <main className="flex flex-1 flex-col">
-      <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-5 px-4 py-16 text-center sm:px-6">
-        <Image
-          src="/images/khione/logo.png"
-          alt="Khione"
-          width={4167}
-          height={4167}
-          priority
-          className="h-auto w-full max-w-sm"
+      <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-8 lg:px-12">
+        <BootWindow
+          tagline="A custom Arch Linux distro built around a practical, opinionated setup for desktop, server, and kiosk use, focused on ease of setup."
+          githubHref="https://github.com/FrosteAto/Khione"
+          editions={overview}
         />
-        <p className="max-w-xl text-lg leading-relaxed text-fg/80">
-          A custom Arch Linux distro built around a practical, opinionated
-          setup for desktop, server, and kiosk use, focused on ease of setup.
-        </p>
-        <Link
-          href="https://github.com/FrosteAto/Khione"
-          className="text-link"
-        >
-          View the source and installation guide on GitHub
-        </Link>
-      </div>
-
-      <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-8 lg:px-12">
-        <div className="overflow-hidden rounded-md border border-fg/12 bg-card-bg">
-          <p className="border-b border-fg/12 px-5 py-3 font-[family-name:var(--font-plex-mono)] text-xs text-fg/40">
-            frosteato@khione ~ $ ./boot-menu --list
-          </p>
-          <div className="flex flex-col divide-y divide-fg/10">
-            {overview.map((edition) => (
-              <a
-                key={edition.id}
-                href={`#${edition.id}`}
-                aria-label={`Jump to ${edition.name} edition`}
-                className="group flex items-center gap-4 px-4 py-4 transition-colors duration-200 hover:bg-fg/5 sm:gap-5 sm:px-6"
-              >
-                <span
-                  className={`w-3 shrink-0 font-[family-name:var(--font-jetbrains-mono)] text-lg opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${accentText[edition.accent]}`}
-                  aria-hidden
-                >
-                  &gt;
-                </span>
-                <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full sm:h-10 sm:w-10">
-                  <Image
-                    src={edition.image}
-                    alt=""
-                    fill
-                    sizes="200px"
-                    className="object-cover object-left"
-                  />
-                </div>
-                <span className="flex-1 font-[family-name:var(--font-jetbrains-mono)] text-lg sm:text-xl">
-                  Khione {edition.name}
-                </span>
-                <span className="hidden font-[family-name:var(--font-plex-mono)] text-xs text-fg/50 sm:block">
-                  {edition.role}
-                </span>
-              </a>
-            ))}
-          </div>
-        </div>
       </div>
 
       <div className="mt-6 flex flex-col divide-y divide-fg/10">
