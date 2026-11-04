@@ -153,15 +153,13 @@ export default function SoftwarePage() {
               .
             </p>
           </div>
-          <div className="hidden h-[150px] w-[150px] shrink-0 items-center justify-center rounded-full bg-khione-purple/10 sm:flex">
-            <Image
-              src="/images/khione/logo2.png"
-              alt="Khione"
-              width={96}
-              height={96}
-              className="h-24 w-24 object-contain"
-            />
-          </div>
+          <Image
+            src="/images/khione/logo2.png"
+            alt="Khione"
+            width={150}
+            height={150}
+            className="hidden shrink-0 sm:block"
+          />
         </div>
 
         {projects.map((p) => (

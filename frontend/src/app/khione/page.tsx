@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import FlavourSection from "@/components/FlavourSection";
-import { accentBg, accentHoverBorder } from "@/lib/khioneAccent";
+import { accentText } from "@/lib/khioneAccent";
 import type { Accent } from "@/lib/khioneAccent";
 import type { PackageGroup } from "@/components/PackageList";
 
@@ -18,13 +18,12 @@ const overview: {
   name: string;
   image: string;
   accent: Accent;
-  width: number;
-  height: number;
+  role: string;
 }[] = [
-  { id: "desktop", name: "Desktop", image: "/images/khione/desktop.png", accent: "purple", width: 3418, height: 1180 },
-  { id: "server", name: "Server", image: "/images/khione/server.png", accent: "blue", width: 3040, height: 1180 },
-  { id: "node", name: "Node", image: "/images/khione/node.png", accent: "yellow", width: 2747, height: 1180 },
-  { id: "ulw", name: "ULW", image: "/images/khione/ulw.png", accent: "green", width: 2683, height: 1180 },
+  { id: "desktop", name: "Desktop", image: "/images/khione/desktop.png", accent: "purple", role: "Gaming + dev + creative" },
+  { id: "server", name: "Server", image: "/images/khione/server.png", accent: "blue", role: "Self-hosted services" },
+  { id: "node", name: "Node", image: "/images/khione/node.png", accent: "yellow", role: "Always-on kiosk" },
+  { id: "ulw", name: "ULW", image: "/images/khione/ulw.png", accent: "green", role: "Ultra lightweight, build-it-yourself" },
 ];
 
 const desktopPackages: PackageGroup[] = [
@@ -229,27 +228,42 @@ export default function KhionePage() {
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-10">
-          {overview.map((edition) => (
-            <a
-              key={edition.id}
-              href={`#${edition.id}`}
-              aria-label={`Jump to ${edition.name} edition`}
-              className={`group flex flex-col overflow-hidden rounded-md border border-fg/12 bg-card-bg transition-colors duration-300 ${accentHoverBorder[edition.accent]}`}
-            >
-              <span className={`h-1.5 w-full ${accentBg[edition.accent]}`} aria-hidden />
-              <span className="flex flex-1 items-center justify-center px-5 py-8 sm:px-6 sm:py-10">
-                <Image
-                  src={edition.image}
-                  alt={`${edition.name} edition logo`}
-                  width={edition.width}
-                  height={edition.height}
-                  sizes="(max-width: 640px) 80vw, 28vw"
-                  className="h-auto w-full max-w-[260px] transition-transform duration-300 group-hover:scale-105"
-                />
-              </span>
-            </a>
-          ))}
+        <div className="overflow-hidden rounded-md border border-fg/12 bg-card-bg">
+          <p className="border-b border-fg/12 px-5 py-3 font-[family-name:var(--font-plex-mono)] text-xs text-fg/40">
+            frosteato@khione ~ $ ./boot-menu --list
+          </p>
+          <div className="flex flex-col divide-y divide-fg/10">
+            {overview.map((edition) => (
+              <a
+                key={edition.id}
+                href={`#${edition.id}`}
+                aria-label={`Jump to ${edition.name} edition`}
+                className="group flex items-center gap-4 px-4 py-4 transition-colors duration-200 hover:bg-fg/5 sm:gap-5 sm:px-6"
+              >
+                <span
+                  className={`w-3 shrink-0 font-[family-name:var(--font-jetbrains-mono)] text-lg opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${accentText[edition.accent]}`}
+                  aria-hidden
+                >
+                  &gt;
+                </span>
+                <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full sm:h-10 sm:w-10">
+                  <Image
+                    src={edition.image}
+                    alt=""
+                    fill
+                    sizes="200px"
+                    className="object-cover object-left"
+                  />
+                </div>
+                <span className="flex-1 font-[family-name:var(--font-jetbrains-mono)] text-lg sm:text-xl">
+                  Khione {edition.name}
+                </span>
+                <span className="hidden font-[family-name:var(--font-plex-mono)] text-xs text-fg/50 sm:block">
+                  {edition.role}
+                </span>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 

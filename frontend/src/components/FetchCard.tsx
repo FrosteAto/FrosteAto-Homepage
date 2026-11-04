@@ -28,7 +28,7 @@ export default function FetchCard({
       className={`rounded-t-md border border-fg/12 border-t-2 bg-card-bg px-5 pb-5 pt-4 font-[family-name:var(--font-plex-mono)] text-sm ${accentBorder[accent]}`}
     >
       <p className="mb-3 text-xs text-fg/40">
-        dan@{host} ~ $ fastfetch
+        frosteato@{host} ~ $ fastfetch
       </p>
 
       <div className="flex gap-4">
