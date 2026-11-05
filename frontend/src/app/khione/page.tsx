@@ -229,9 +229,8 @@ export default function KhionePage() {
             size: "~16.7 GB",
             packages: desktopPackages,
             intro: "Where it all began. After one too many rounds of distro-hopping and \
-              reinstalling everything from scratch, I scripted my way to a distro with \
-              EVERYTHING I need pre-installed - not a 'bloat is the enemy' minimal setup, \
-              though it's still light and efficient.",
+              reinstalling everything from scratch, I programmed my way to a distro with \
+              everything I need pre-installed and fully configured - this is MY desktop.",
             topics: [
               {
                 title: "Gaming",
