@@ -1,7 +1,7 @@
-# frosteato.dev
+# frosteato.com
 
 Personal site and portfolio: Home, Software Development, Khione,
-Photography, Music, Recipes, and Blog. Live at [0brien.dev](https://0brien.dev).
+Photography, Music, Recipes, and Blog. Live at [frosteato.com](https://frosteato.com).
 
 ## Project structure
 
