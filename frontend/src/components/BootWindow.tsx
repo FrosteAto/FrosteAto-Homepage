@@ -8,6 +8,7 @@ type Edition = {
   id: string;
   name: string;
   image: string;
+  blurDataURL: string;
   accent: Accent;
   role: string;
 };
@@ -73,8 +74,11 @@ export default function BootWindow({
                   src={edition.image}
                   alt=""
                   fill
-                  sizes="200px"
-                  className="object-cover object-left"
+                  sizes="80px"
+                  priority
+                  placeholder="blur"
+                  blurDataURL={edition.blurDataURL}
+                  style={{ objectFit: "cover" }}
                 />
               </div>
               <span className="flex-1 font-[family-name:var(--font-jetbrains-mono)] text-lg sm:text-xl">

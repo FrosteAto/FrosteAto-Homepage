@@ -7,6 +7,15 @@ import type { PackageGroup } from "@/components/PackageList";
 const packageCount = (groups: PackageGroup[]) =>
   groups.reduce((sum, g) => sum + g.items.length, 0);
 
+const desktopBlur =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADTElEQVR42n2TT2yTdRjHv8/v9657+291XVdWOgcrunSMhQMESGaYg0gGUQaJL46DziU4E9QQEy/qYXLRi8ZgIgcjIcQI0upUSLxoljQQXAYH2MYGOLaM0Ym0bl3bt9vb9v09HsjM5sHv7fk+3+Q5PN8PsEqGEZNYIyZmptVOLLY28++yv5/FyZOkug+eX5/OB49u2TS3x+cxN9y8G0JdrZXMZPWrg7/cvpCyPphkZiIiBgC5cvn06S2qq/O7494qZ3x7y3xX1nQ+27Z1OuhxU7DaY276az7c0dvX8kZjwyF54KWmRH9/v0gkEpCGEZPx+BH7+LFLH9fWBj5JJnPODetmy+++NsjprB/7dw7xlbFW9fZ77arzQKRyPiU7lrI7Gs+cO/GjYcSkHB+P83M7vjbeObHni1d7mkrPRP10c0TJbZHrYjb1FOULbtr5wmERbakXc1N5drm5NDZmbmtu6spd/MG4Rn19l1x/z5mj73+4t7G+zs2B9U5RtG1MTz6Cr6oEhyuMQMABpRh2kXHndoo/+3SIi1YpB71is1ZcLHcKURnJ503l0H3ChoLTqWFza/3qb4AIqNAFgmE3ORxQytZ9qmwdFTajnRXx6OhjdnklNE2AGVC2QtGyoRTDWlIQgkAE1IU8CD/tg2WVmIjahVIqJCVRMpmFwyWeBAEIKQDGk1kAA/EJpNMFAMDrx7ZSpS7JLqt1AoS8UsxV3koQEeyyAgi4dvUBTn0+hMk/5nElMYPh3x9i4lYamXQRGxursfv5jbyYWTY1Tcghi9G7qy0MZgYIyC2UIGyJhgYfAgEXampc2LsvgvSfy7DLCoVCiaenFkWFQw5rmsf5vcotfFTj94WIqCwEtPxiEZGIH7vaw2uKHQjpsMvK/vLUDRodebgciXjPEAAc2n/hxVDIf7n7lVa07Q6VpQ4oBSoVywQQWDFYMT9+ZPK334xrI7cWoOulN89dPPyVNIyYHPi5+261t2N44k5m+8z0UrBUEMKjO4XLKYmUIMsUVMhKMTNjil9/u5csWoW3zg+8fNYwYpJWWIjHj9g9PWf1B5PaweZoYF9ztCZaF3b7SUDkssVMcta8N3U/M3g/mfopkejNrMD3PyhjBTbtv+bq7D+9wHtyHvTyuQAAAABJRU5ErkJggg==";
+const serverBlur =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADG0lEQVR42mVTz2tcZRQ99/vm15sZ0yTWyY/a1JaKbRSLGBAUjVIQJfgLmlpxIUUiKl35BxhRqAuR7NxJ0EUrQ8Q2qBvDmGpaY0KomsZaq6TpzKSTlkxn8ubNvHnvfe+4aKa2enaHey8Hzj0HuBVZagBQLU4KSWlRDWCYN3ZauDkcJdX7ImHixEpvI9p3aE98aX+vKu/IOf3YlrCL18I7ZryLpeM48sBfIAUi/J8yviq83T61tr5//hzvOXWZR+fH+eLpHzl05gfGThm+vmTXd09ffRcARkepQAqGN493T60evXfeJSZLfOG7k/7K4mvB+MKYKfx6yDyZWwhOr3u+ZwzfWiExcekz3RLWAHDs0oFP1skrbuBNFBtmYDrP3xde5djPH/PY3AecWVslSU4VquHxyxtN60yTiW8K7wCA9EwWk2s0i58/0r2zO2jw4a1JpbXG2es2MpEGrEQX7rYAkqg0DXJX63zzgst607NVPOyP1KPhMxBrV81phG1tERWLaCS14Im72gC03bTJQNAR19jXaYlFO3SS6S3KdV5RoAyGovlTxWdfKoq4EhBAEBK2bxASuO4ZaAG0CO5LR7EnHYXnGwpkUBmwW4TyhxOgy4pCbz42ogSGgBIgpgQfXtxAwTUAgLH72yWtKD7DLqUAhwS3xhQIwCchAL680sDIbxXMVzx8sdrAyZKLyWIN56tNPLglhpe3p9hsho7SwKwAcqDHQisZyzUP5YaPvekItlsaz2YSmH08g8c642gaYiMI+YsditYyF+lRnKi6znt3ptt7FBAokUixHqA/rTGSSd2W9H0dCbhBaA6fs2WhaLu7UvIpBEDs6/xQ73SZHy03WKq5PknfkIHtGbPhBabs+qbkNIOZNcd/arZM5Gx2fJt/40Y/slkdvvToBXtoZG66JgNzzVim4CsVhFBWVEmdSvKekr8Drc6bqMquOkVUq0fs53eMI8tNz7NZLQcPmr7vlxMrTuq5bUl5eiAlex/qiHZGIarkhZUlh38u2l7uWr5+Aod3VkAqiIS3FCp7e5UBAMMaGIzgv8j+W+l/AF55oe+CpTOOAAAAAElFTkSuQmCC";
+const nodeBlur =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADEUlEQVR42m2T3YuUdRTHv+f8nmfmYWZ2ZnXfzFWcDbHaLgKxqJQUqS0S62oX8Q/oSgPB+1W7KCLoPgrLQmMQyjdkWYogrGzNrF1jVVZtt3Vwd9aZnZlnnrff73e6WHZronN3Dt8v54XzAf4VUoJqy4ehREb5n4qClIbbNLQmllEmOm4rpfX9KjEHVbawV1RqS9yoSsrLlMlG39cnF85sOo7bIiAQQIDQamcagamcSh9K57reyXXlOxO/BafQBR1EUAiBsAW9cSQMy1feL+z7ZVRGwTgGWRvp0fnt78l3O6TyRUaq54uJ/v11Hfz8htG/DZnqpWd0tHg9MXFNZPqILHyW+hzg1ZUZCx/xiJQ/Ee3PxcHsBVO9vEv0xAsSXHlJwh92SfzgsoiI1GdO2+adTyMZ65fFMz1HAYDKp/qyykkm1+38sOjHSrL9e1m5eeilCbDrAV4RKrMBsBo6fIhwflzMzROSRM0mcXrQcTPOax7igdD3rZsfYOUWQE4Gbt8etAUxlNcLr+9Fqk2lbc5r5puxPcgi2M2IxdZuiFt4EqTSAASwCWxUBcTChAsAMYhdOPltcArbYJJACNjNbO0GIYdMYwZurgiQAkQAciCiAWKwyqA19QFsUAYAZLe/S6I6CCbpZTA3SYxwunvFaBOAGPFfl+BfOwq9dB3R7FeIH4yhdfdLRJUJuJ2D8AZGxIRLLQa5PwFCqc1vrnwGgLh2E1FjBir/BDi7CamNL6NzaBxOz3MQE8ImTcHyr0RO+qqjbOasn/Cx7lzhMYA0sevoxj1wx+PIbt7fdkevdyesbpnw2mEK5n4M051PfwwAeHS6Y1/r4laJ/zghQe1WYsQkIqJNXDc6rJqktWii+n3tz48njW9fFf11TpbOFt8CAFUqQe04EN96+xX/KtdvPJv2J3pV6zZLUmF2HGKzTBxMkwom2U1mOZkbm19u6EM9B8onpQS1woKAiWDvndzidaf+3G9zW4ckN/iU2/P8emKXED2smeWpO9SY/mbx7v1zA0dQW/X8D8prgGIYUCW0I/5f7P8G7TuWdpFne6EAAAAASUVORK5CYII=";
+const ulwBlur =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADO0lEQVR42n2TXWhbZRjH/+/7npOTk7TJMrtmSdM5I6Z2VTs23IYfdaMUBirsK0LFKxHmlV4IG8gwBpw386qI4KVjoKS26y66tm422y60dXGVsXZNi9bapku6mTZfJ1/nvI8XFbeC+rv5w8Pz/G8efsCjEFg4BoH/gIEhHAuLzbO/iUTAo1FIAPCP7Gzbrzu7Q8Le8aNRVFWF32u0OSeGzibGMYpqhMCjbGN3oyACjihkz0CwmXsc53xC9KZVUz3S4MZE2UDQpmFkLYVnnJ3J9WLho/7uG7FwLCz63+i3RITArx+CfOFy65N6gyOeV/KHgqZNvOv0m83kkK9rHjmZXZVdLe/Rmec+2XZfLIVXXrnDxk/ciodjYQEi4jgH54c/vzO9UJuhsaXB6tF4NyUT++m7RBfFJ/fS1fmzREQ0Z1y2rt2/UH9topN6xkJvAYDCGJMdA673d/h27OKUru/xPW37yjuIXzLD8AkGoQXwuHsvLDLRpLbzNZGArarLkix9duTK8yNKJB6xjxa+fNsoGrLiMYQDOhptLrwc6N30AUkEtxKAz17mqqVais69Rq3Uy6fM4Xa7oj9xJ3Ob28jLG5UmEAgWmahYeVhkwrDWwRmBQ0Gr3o5Aw05UzAoJ4j28iqJf0zS+XFogIbdB4w0gkhBMAeMb6RAujKUGkDZWAAAnQ6eZgztZTdZaOExWlVLCxjWoXIBA4ExgpZTCp1NnMJebxo30FQwtfoOvmQu4V7uNp9wdOBw4Trl6tsI9omWmVC0VdjcfoO16gIgkClYGy/VJOFQNuqIj6Aqh78DXeMl3EDkzDVOatFxZYAx8CgDDnktbz3+R+piIqEpEtFhO0M38efp3albfbMTcN+w137zW9axABDwUaP7ht/X543l9ocmveaxWrVP6tU6qWhXUyKA6laUhs5Qq35V9yagYW7/IXdZjpy52/zQkcBBs8WSusOWoOji7djc0XbrVtqrMcmgPuF0BA6+zLJ/jq3yG/1Ff4qO/j2eK+cIH3x9Ofh6OQWxyAWAIfbvlxeDW7a/u8oR2tzn2eXXhVnL1B4Wlyvyvc7nk9VQ2eenmscKfD2/+0REc9NDO/+NR5f8C5qOXMHwTgDwAAAAASUVORK5CYII=";
+
 export const metadata: Metadata = {
   title: "Khione | FrosteAto",
 };
@@ -15,13 +24,14 @@ const overview: {
   id: string;
   name: string;
   image: string;
+  blurDataURL: string;
   accent: Accent;
   role: string;
 }[] = [
-  { id: "desktop", name: "Desktop", image: "/images/khione/desktop.png", accent: "purple", role: "Gaming + dev + creative" },
-  { id: "server", name: "Server", image: "/images/khione/server.png", accent: "blue", role: "Self-hosted services" },
-  { id: "node", name: "Node", image: "/images/khione/node.png", accent: "yellow", role: "Always-on kiosk" },
-  { id: "ulw", name: "Ultra Lightweight", image: "/images/khione/ulw.png", accent: "green", role: "Ultra lightweight, build-it-yourself" },
+  { id: "desktop", name: "Desktop", image: "/images/khione/desktop-badge.png", blurDataURL: desktopBlur, accent: "purple", role: "Gaming + dev + creative" },
+  { id: "server", name: "Server", image: "/images/khione/server-badge.png", blurDataURL: serverBlur, accent: "blue", role: "Self-hosted services" },
+  { id: "node", name: "Node", image: "/images/khione/node-badge.png", blurDataURL: nodeBlur, accent: "yellow", role: "Always-on kiosk" },
+  { id: "ulw", name: "Ultra Lightweight", image: "/images/khione/ulw-badge.png", blurDataURL: ulwBlur, accent: "green", role: "Ultra lightweight, build-it-yourself" },
 ];
 
 const desktopPackages: PackageGroup[] = [
@@ -221,7 +231,8 @@ export default function KhionePage() {
           edition={{
             id: "desktop",
             name: "Desktop",
-            image: "/images/khione/desktop.png",
+            image: "/images/khione/desktop-badge.png",
+            blurDataURL: desktopBlur,
             accent: "purple",
             role: "Gaming + dev + creative",
             de: "KDE Plasma",
@@ -229,9 +240,8 @@ export default function KhionePage() {
             size: "~16.7 GB",
             packages: desktopPackages,
             intro: "Where it all began. After one too many rounds of distro-hopping and \
-              reinstalling everything from scratch, I scripted my way to a distro with \
-              EVERYTHING I need pre-installed - not a 'bloat is the enemy' minimal setup, \
-              though it's still light and efficient.",
+              reinstalling everything from scratch, I programmed my way to a distro with \
+              everything I need pre-installed and fully configured - this is MY desktop.",
             topics: [
               {
                 title: "Gaming",
@@ -263,7 +273,8 @@ export default function KhionePage() {
           edition={{
             id: "server",
             name: "Server",
-            image: "/images/khione/server.png",
+            image: "/images/khione/server-badge.png",
+            blurDataURL: serverBlur,
             accent: "blue",
             role: "Self-hosted services",
             de: "KDE Plasma",
@@ -304,7 +315,8 @@ export default function KhionePage() {
           edition={{
             id: "node",
             name: "Node",
-            image: "/images/khione/node.png",
+            image: "/images/khione/node-badge.png",
+            blurDataURL: nodeBlur,
             accent: "yellow",
             role: "Always-on kiosk",
             de: "KDE Plasma",
@@ -333,7 +345,8 @@ export default function KhionePage() {
           edition={{
             id: "ulw",
             name: "Ultra Lightweight",
-            image: "/images/khione/ulw.png",
+            image: "/images/khione/ulw-badge.png",
+            blurDataURL: ulwBlur,
             accent: "green",
             role: "Ultra lightweight, build-it-yourself",
             de: "Xfce",

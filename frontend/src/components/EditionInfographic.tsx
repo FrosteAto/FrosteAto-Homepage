@@ -8,6 +8,7 @@ export type EditionData = {
   id: string;
   name: string;
   image: string;
+  blurDataURL: string;
   accent: Accent;
   role: string;
   de: string;
@@ -50,7 +51,15 @@ export default function EditionInfographic({ edition }: { edition: EditionData }
     <section id={edition.id} className="scroll-mt-24">
       <div className="flex flex-wrap items-center gap-5 border-b border-fg/10 pb-6">
         <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full sm:h-24 sm:w-24">
-          <Image src={edition.image} alt="" fill sizes="200px" className="object-cover object-left" />
+          <Image
+            src={edition.image}
+            alt=""
+            fill
+            sizes="200px"
+            placeholder="blur"
+            blurDataURL={edition.blurDataURL}
+            style={{ objectFit: "cover" }}
+          />
         </div>
         <div>
           <p className="font-[family-name:var(--font-jetbrains-mono)] text-2xl sm:text-3xl">
