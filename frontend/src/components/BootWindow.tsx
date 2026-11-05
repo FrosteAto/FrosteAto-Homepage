@@ -33,6 +33,7 @@ export default function BootWindow({
             alt=""
             width={1440}
             height={1981}
+            priority
             className="h-auto w-28 shrink-0 sm:w-32"
           />
           <div className="min-w-[240px] flex-1">
@@ -41,6 +42,7 @@ export default function BootWindow({
               alt="Khione"
               width={3019}
               height={777}
+              priority
               className="-mt-1 mb-3 h-auto w-52 sm:w-60"
             />
             <p className="max-w-xl text-fg/80">{tagline}</p>
