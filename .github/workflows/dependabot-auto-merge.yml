@@ -12,17 +12,11 @@ jobs:
     if: github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v2
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-
-      # Patch-only: a version bump that changes behaviour (minor) or breaks
-      # compatibility (major) still gets a PR, but waits for a human instead
-      # of merging itself.
-      - name: Approve and enable auto-merge for patch updates
-        if: steps.metadata.outputs.update-type == 'version-update:semver-patch'
+      # No semver gating - patch, minor, or major, all auto-merge as soon as
+      # the required "checks / frontend" and "checks / backend" status checks
+      # pass. That branch protection rule is what actually gates this; this
+      # step just approves and queues the merge.
+      - name: Approve and enable auto-merge
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
