@@ -8,11 +8,18 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGeneratorInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
+    public function __construct(
+        #[Autowire('%app.site_domain%')]
+        private readonly string $siteDomain,
+    ) {
+    }
+
     public function index(): Response
     {
         $adminUrlGenerator = $this->container->get(AdminUrlGeneratorInterface::class);
@@ -23,7 +30,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('frosteato.com admin')
+            ->setTitle("{$this->siteDomain} admin")
             // Without this, EasyAdmin's own JS auto-applies its dark scheme
             // when the browser/OS prefers dark - and its dark-scheme CSS
             // re-points tokens like --body-bg at the *other end* of the
