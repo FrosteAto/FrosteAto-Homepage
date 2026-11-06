@@ -1,5 +1,10 @@
 import type { NextConfig } from "next";
 
+// Same public domain as SITE_URL in src/lib/api.ts - duplicated here rather
+// than imported because next.config.ts is read before the app's module
+// graph exists. Falls back to localhost for local dev, same as api.ts.
+const publicApiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 const nextConfig: NextConfig = {
   // Standalone output for Docker: traces only the files each page actually
   // needs into .next/standalone, so the runtime image doesn't need
@@ -8,16 +13,16 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       new URL("http://localhost:8000/media/photos/**"),
-      new URL("https://frosteato.com/media/photos/**"),
+      new URL(`${publicApiUrl}/media/photos/**`),
       // Backend's Docker-internal hostname (see NEXT_PUBLIC_INTERNAL_API_URL
       // in src/lib/api.ts) - the image optimizer fetches originals from here
       // directly instead of looping out through the public domain.
       new URL("http://backend:8000/media/photos/**"),
       new URL("http://localhost:8000/media/music-covers/**"),
-      new URL("https://frosteato.com/media/music-covers/**"),
+      new URL(`${publicApiUrl}/media/music-covers/**`),
       new URL("http://backend:8000/media/music-covers/**"),
       new URL("http://localhost:8000/media/recipes/**"),
-      new URL("https://frosteato.com/media/recipes/**"),
+      new URL(`${publicApiUrl}/media/recipes/**`),
       new URL("http://backend:8000/media/recipes/**"),
     ],
     // The dev API runs on localhost, and the internal backend hostname above

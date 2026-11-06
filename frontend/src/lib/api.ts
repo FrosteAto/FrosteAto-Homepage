@@ -28,6 +28,12 @@ const INTERNAL_API_URL = process.env.INTERNAL_API_URL ?? API_URL;
 const NEXT_PUBLIC_INTERNAL_API_URL =
   process.env.NEXT_PUBLIC_INTERNAL_API_URL ?? NEXT_PUBLIC_API_URL;
 
+// The site's own public URL - same origin as NEXT_PUBLIC_API_URL today since
+// frontend and backend are served from one domain behind Caddy. Exported so
+// anything needing the public site URL (RSS feed, credit links) has one
+// place to read it from instead of hardcoding the domain again.
+export const SITE_URL = NEXT_PUBLIC_API_URL;
+
 type HydraCollection<T> = {
   member: T[];
   totalItems: number;
