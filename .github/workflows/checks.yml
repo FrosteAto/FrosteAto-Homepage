@@ -1,0 +1,54 @@
+name: Checks
+
+on:
+  workflow_call:
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npx eslint .
+      - run: npm run build
+
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      APP_ENV: test
+      APP_SECRET: ci-placeholder-secret
+      DATABASE_URL: "postgresql://ci:ci@127.0.0.1:5432/ci?serverVersion=16&charset=utf8"
+      DEFAULT_URI: "https://frosteato.com"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          extensions: pdo_pgsql, pgsql, intl, gd, zip, exif, opcache
+          coverage: none
+
+      - run: composer install --no-interaction --prefer-dist
+      # No name/description in composer.json - this isn't a publishable package,
+      # just skip the publish-readiness checks rather than add metadata nobody needs.
+      - run: composer validate --no-check-publish
+      - run: php bin/console lint:yaml config
+      - run: php bin/console lint:twig templates
+      # Boots the real DI container and checks every service's injected types
+      # match - the closest thing to a smoke test this project has, since there's
+      # no unit/integration test suite.
+      - run: php bin/console lint:container
