@@ -72,7 +72,7 @@ const projects: Project[] = [
       "Drop By Drop is an assignment-turned-passion-project by me and 4 friends. It's a roguelite dungeon crawler where the user fights a variety of enemies with different attacks and behaviours in randomly generated dungeons. I was responsible for enemy behaviour, numerous smaller details, and the music & sound.",
     team: [
       { name: "Morgan Rose Godden", role: "Lead Programmer", href: "https://godden.dev" },
-      { name: "FrosteAto", role: "Programmer & Lead Composer", href: "https://0brien.dev" },
+      { name: "FrosteAto", role: "Programmer & Lead Composer", href: "https://frosteato.com" },
       { name: "Natalie Stoker", role: "Lead Artist", href: "mailto:nataliecstoker@gmail.com" },
       { name: "Dylan Oates", role: "Business & Administration", href: "mailto:ddoates@outlook.com" },
       { name: "Nat Gough", role: "Writer & Designer", href: "mailto:goughnathan01@gmail.com" },

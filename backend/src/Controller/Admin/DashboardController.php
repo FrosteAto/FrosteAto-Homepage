@@ -23,7 +23,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('0brien.dev admin')
+            ->setTitle('frosteato.com admin')
             // Without this, EasyAdmin's own JS auto-applies its dark scheme
             // when the browser/OS prefers dark - and its dark-scheme CSS
             // re-points tokens like --body-bg at the *other end* of the

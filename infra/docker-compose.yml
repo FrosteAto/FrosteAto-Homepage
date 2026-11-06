@@ -34,7 +34,7 @@ services:
     image: ghcr.io/frosteato/0brien-frontend:latest
     restart: unless-stopped
     environment:
-      API_URL: https://0brien.dev
+      API_URL: https://frosteato.com
       INTERNAL_API_URL: http://backend:8000
     depends_on:
       - backend

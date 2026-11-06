@@ -1,4 +1,4 @@
-0brien.dev, www.0brien.dev {
+frosteato.com, www.frosteato.com {
 	encode gzip zstd
 
 	header {

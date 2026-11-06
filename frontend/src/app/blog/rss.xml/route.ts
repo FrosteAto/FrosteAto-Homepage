@@ -1,7 +1,7 @@
 import { getPosts } from "@/lib/api";
 import { stripMarkdown } from "@/lib/markdown";
 
-const SITE_URL = "https://0brien.dev";
+const SITE_URL = "https://frosteato.com";
 
 function escapeXml(value: string): string {
   return value
