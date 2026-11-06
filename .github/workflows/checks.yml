@@ -32,7 +32,7 @@ jobs:
       APP_ENV: test
       APP_SECRET: ci-placeholder-secret
       DATABASE_URL: "postgresql://ci:ci@127.0.0.1:5432/ci?serverVersion=16&charset=utf8"
-      DEFAULT_URI: "https://frosteato.com"
+      DEFAULT_URI: "https://${{ vars.SITE_DOMAIN }}"
     steps:
       - uses: actions/checkout@v4
 

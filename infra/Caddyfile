@@ -1,4 +1,4 @@
-frosteato.com, www.frosteato.com {
+{$SITE_DOMAIN}, www.{$SITE_DOMAIN} {
 	encode gzip zstd
 
 	header {
