@@ -24,7 +24,7 @@ export default async function PhotographyPage() {
   );
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-4 py-10 sm:px-6">
+    <main className="mx-auto flex w-full max-w-page flex-1 flex-col gap-8 px-4 py-10 sm:px-6">
       <h1 className="font-[family-name:var(--font-heading)] text-4xl">
         Photography
       </h1>

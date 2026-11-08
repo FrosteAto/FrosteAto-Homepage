@@ -41,7 +41,7 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {photos.map((photo, i) => {
           const { src, preGenerated } = photoThumbnail(photo);
           return (
@@ -60,7 +60,7 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
                   alt={photo.title ?? "Photo"}
                   fill
                   unoptimized={preGenerated}
-                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               )}

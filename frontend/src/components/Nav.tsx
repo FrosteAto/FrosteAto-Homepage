@@ -22,7 +22,7 @@ export default function Nav() {
 
   return (
     <header className="relative z-20 w-full bg-header-footer-bg">
-      <div className="relative mx-auto flex max-w-5xl items-center justify-center px-4 py-4 sm:px-6">
+      <div className="relative mx-auto flex max-w-page items-center justify-center px-4 py-4 sm:px-6">
         <div className="absolute right-4 top-1/2 -translate-y-1/2 sm:right-6">
           <ThemeToggle />
         </div>

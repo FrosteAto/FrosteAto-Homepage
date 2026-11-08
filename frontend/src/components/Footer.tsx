@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import SocialIcon from "@/components/SocialIcon";
 
-const socials = [
-  { href: "https://github.com/FrosteAto", icon: "fa-brands fa-github" },
-  { href: "https://www.linkedin.com/in/djob/", icon: "fa-brands fa-linkedin" },
-  { href: "mailto:FrosteAto.exparrot@protonmail.com", icon: "fa-solid fa-envelope" },
+const socials: { href: string; icon: "github" | "linkedin" | "email"; label: string }[] = [
+  { href: "https://github.com/FrosteAto", icon: "github", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/djob/", icon: "linkedin", label: "LinkedIn" },
+  { href: "mailto:FrosteAto.exparrot@protonmail.com", icon: "email", label: "Email" },
 ];
 
 type Quote = { text: string; attribution: string };
@@ -87,14 +88,15 @@ export default function Footer({ year }: FooterProps) {
       </p>
       <p className="text-sm text-header-footer-fg/70">{quote.attribution}</p>
 
-      <div className="flex gap-4 text-xl">
+      <div className="flex gap-4">
         {socials.map((s) => (
           <Link
             key={s.href}
             href={s.href}
             className="text-header-footer-accent transition-colors hover:text-header-footer-fg"
+            aria-label={s.label}
           >
-            <i className={s.icon} aria-hidden />
+            <SocialIcon name={s.icon} />
           </Link>
         ))}
       </div>

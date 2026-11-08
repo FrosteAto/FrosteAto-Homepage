@@ -36,7 +36,7 @@ function CategorySection({
         </h2>
         <span className="text-sm text-muted">{recipes.length}</span>
       </summary>
-      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {recipes.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}

@@ -56,6 +56,13 @@
   --font-accent: var(--font-accent);
   --font-plex-mono: var(--font-plex-mono);
   --font-jetbrains-mono: var(--font-jetbrains-mono);
+
+  /* Standard page container width - every page's outer <main> should use
+     max-w-page, not its own max-w-* value, so the site doesn't feel
+     cramped on wide monitors. Long-form prose (blog posts, recipe body
+     text) should nest a narrower max-w-3xl/2xl div inside it instead of
+     narrowing the page itself. */
+  --max-width-page: 90rem;
 }
 
 body {

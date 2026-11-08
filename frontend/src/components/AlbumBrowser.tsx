@@ -30,7 +30,7 @@ export default function AlbumBrowser({
       </div>
 
       {!grouped && (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {sortedAlbums.map((album) => (
             <AlbumCard key={album.id} album={album} />
           ))}
@@ -47,7 +47,7 @@ export default function AlbumBrowser({
               <summary className="cursor-pointer font-[family-name:var(--font-heading)] text-lg">
                 {camera.name} ({albums.length})
               </summary>
-              <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+              <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {albums.map((album) => (
                   <AlbumCard key={album.id} album={album} />
                 ))}
@@ -60,7 +60,7 @@ export default function AlbumBrowser({
               <summary className="cursor-pointer font-[family-name:var(--font-heading)] text-lg">
                 Unknown camera ({unknownAlbums.length})
               </summary>
-              <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+              <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {unknownAlbums.map((album) => (
                   <AlbumCard key={album.id} album={album} />
                 ))}

@@ -53,7 +53,7 @@ export default async function AlbumPage({
   const meta = [date, photoCount, gear].filter(Boolean).join(" · ");
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-10 sm:px-6">
+    <main className="mx-auto flex w-full max-w-page flex-1 flex-col gap-6 px-4 py-10 sm:px-6">
       <div>
         <Link href="/photography" className="text-sm text-link">
           &larr; All albums

@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SITE_URL } from "@/lib/api";
+import SkillIcon, { type SkillName } from "@/components/SkillIcon";
 
 export const metadata: Metadata = {
   title: "Software Development | FrosteAto",
 };
 
 type CompetencyIcon =
-  | { kind: "fa"; icon: string; color: string }
+  | { kind: "skill"; name: SkillName; color: string }
   | { kind: "img"; src: string };
 
 type CompetencyItem = { label: string; icon: CompetencyIcon };
@@ -17,7 +18,7 @@ const competencies: { label: string; items: CompetencyItem[] }[] = [
   {
     label: "Game Dev",
     items: [
-      { label: "Unity", icon: { kind: "fa", icon: "fa-brands fa-unity", color: "#1f1f1f" } },
+      { label: "Unity", icon: { kind: "skill", name: "unity", color: "#1f1f1f" } },
       { label: "Ren'py", icon: { kind: "img", src: "/images/rp.png" } },
       { label: "C#", icon: { kind: "img", src: "/images/cs.png" } },
       { label: "Godot", icon: { kind: "img", src: "/images/godot.svg" } },
@@ -26,28 +27,28 @@ const competencies: { label: string; items: CompetencyItem[] }[] = [
   {
     label: "Front-End",
     items: [
-      { label: "HTML", icon: { kind: "fa", icon: "fa-solid fa-code", color: "#24b953" } },
-      { label: "CSS", icon: { kind: "fa", icon: "fa-brands fa-css3", color: "#243ab9" } },
-      { label: "SASS", icon: { kind: "fa", icon: "fa-brands fa-sass", color: "#b92480" } },
-      { label: "Javascript", icon: { kind: "fa", icon: "fa-brands fa-js", color: "#cf631a" } },
-      { label: "React", icon: { kind: "fa", icon: "fa-brands fa-react", color: "#24d4d4" } },
+      { label: "HTML", icon: { kind: "skill", name: "html", color: "#24b953" } },
+      { label: "CSS", icon: { kind: "skill", name: "css", color: "#243ab9" } },
+      { label: "SASS", icon: { kind: "skill", name: "sass", color: "#b92480" } },
+      { label: "Javascript", icon: { kind: "skill", name: "javascript", color: "#cf631a" } },
+      { label: "React", icon: { kind: "skill", name: "react", color: "#24d4d4" } },
       { label: "Tailwind", icon: { kind: "img", src: "/images/tailwind.svg" } },
     ],
   },
   {
     label: "Back-End",
     items: [
-      { label: "PHP", icon: { kind: "fa", icon: "fa-brands fa-php", color: "#9c9fbd" } },
+      { label: "PHP", icon: { kind: "skill", name: "php", color: "#9c9fbd" } },
       { label: "Symfony", icon: { kind: "img", src: "/images/symfony.svg" } },
       { label: "Doctrine", icon: { kind: "img", src: "/images/doctrine.svg" } },
-      { label: "SQL", icon: { kind: "fa", icon: "fa-solid fa-server", color: "#6e93d8" } },
-      { label: "Python", icon: { kind: "fa", icon: "fa-brands fa-python", color: "#918700" } },
+      { label: "SQL", icon: { kind: "skill", name: "sql", color: "#6e93d8" } },
+      { label: "Python", icon: { kind: "skill", name: "python", color: "#918700" } },
     ],
   },
   {
     label: "Other",
     items: [
-      { label: "Figma", icon: { kind: "fa", icon: "fa-brands fa-figma", color: "#7c1cb4" } },
+      { label: "Figma", icon: { kind: "skill", name: "figma", color: "#7c1cb4" } },
       { label: "Photoshop", icon: { kind: "img", src: "/images/cc.png" } },
       { label: "Clip Studio Paint", icon: { kind: "img", src: "/images/csp.png" } },
       { label: "GIMP", icon: { kind: "img", src: "/images/gimp.svg" } },
@@ -83,7 +84,7 @@ const projects: Project[] = [
 
 export default function SoftwarePage() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-12 px-4 py-10 sm:px-6">
+    <main className="mx-auto flex w-full max-w-page flex-1 flex-col gap-12 px-4 py-10 sm:px-6">
       <div>
         <h1 className="font-[family-name:var(--font-heading)] text-4xl">
           Software Development
@@ -105,11 +106,11 @@ export default function SoftwarePage() {
               {c.items.map((item, i) => (
                 <span key={item.label}>
                   {i > 0 && ", "}
-                  {item.icon.kind === "fa" ? (
-                    <i
-                      className={`${item.icon.icon} align-middle`}
-                      style={{ color: item.icon.color }}
-                      aria-hidden
+                  {item.icon.kind === "skill" ? (
+                    <SkillIcon
+                      name={item.icon.name}
+                      color={item.icon.color}
+                      className="inline-block h-[18px] w-[18px] align-middle"
                     />
                   ) : (
                     <Image
@@ -134,9 +135,9 @@ export default function SoftwarePage() {
         <h2 className="text-2xl font-black text-muted">Projects</h2>
 
         <div className="flex items-start gap-6">
-          <div>
+          <div className="min-w-0 flex-1">
             <p className="text-2xl font-black text-muted">Khione</p>
-            <p className="mt-2 max-w-2xl text-lg leading-relaxed">
+            <p className="mt-2 text-lg leading-relaxed">
               My own Arch Linux distribution - a set of install scripts and
               package selections that turn a bare Arch install into three
               ready-to-go editions (Desktop, Server, and Node), built around
@@ -165,9 +166,9 @@ export default function SoftwarePage() {
 
         {projects.map((p) => (
           <div key={p.title} className="flex items-start gap-6">
-            <div>
+            <div className="min-w-0 flex-1">
               <p className="text-2xl font-black text-muted">{p.title}</p>
-              <p className="mt-2 max-w-2xl text-lg leading-relaxed">
+              <p className="mt-2 text-lg leading-relaxed">
                 {p.description}
               </p>
               {p.team && (
@@ -211,7 +212,7 @@ export default function SoftwarePage() {
 
         <div>
           <p className="text-2xl font-black text-muted">Other Projects</p>
-          <p className="mt-2 max-w-2xl text-lg leading-relaxed">
+          <p className="mt-2 text-lg leading-relaxed">
             Hackathon entries, one-off scripts, and other smaller things live
             on my{" "}
             <Link href="https://github.com/FrosteAto" className="text-link">

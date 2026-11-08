@@ -44,7 +44,7 @@ export default async function RecipePage({
     : [];
 
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 px-4 py-10 sm:gap-10 sm:px-6">
+    <main className="mx-auto flex w-full max-w-page flex-1 flex-col gap-8 px-4 py-10 sm:gap-10 sm:px-6">
       <div>
         <Link href="/recipes" className="text-sm text-link">
           &larr; All recipes
@@ -122,7 +122,7 @@ export default async function RecipePage({
             alt={recipe.title}
             fill
             priority
-            sizes="(max-width: 896px) 100vw, 896px"
+            sizes="(max-width: 1440px) 100vw, 1440px"
             className="object-cover"
           />
         </div>

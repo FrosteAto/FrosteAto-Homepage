@@ -218,7 +218,7 @@ const ulwPackages: PackageGroup[] = [
 export default function KhionePage() {
   return (
     <main className="flex flex-1 flex-col">
-      <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-8 lg:px-12">
+      <div className="mx-auto w-full max-w-page px-4 py-10 sm:px-8 lg:px-12">
         <BootWindow
           tagline="A custom Arch Linux distro built around a practical, opinionated setup for desktop, server, and kiosk use, focused on ease of setup."
           githubHref="https://github.com/FrosteAto/Khione"
@@ -226,7 +226,7 @@ export default function KhionePage() {
         />
       </div>
 
-      <div className="mx-auto w-full max-w-[90rem] px-4 py-10 sm:px-8 lg:px-12">
+      <div className="mx-auto w-full max-w-page px-4 py-10 sm:px-8 lg:px-12">
         <EditionInfographic
           edition={{
             id: "desktop",

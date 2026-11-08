@@ -18,7 +18,7 @@ export default async function MusicPage() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-4 py-10 sm:px-6">
+    <main className="mx-auto flex w-full max-w-page flex-1 flex-col gap-8 px-4 py-10 sm:px-6">
       <div>
         <h1 className="font-[family-name:var(--font-heading)] text-4xl">
           Music
@@ -44,7 +44,7 @@ export default async function MusicPage() {
       )}
 
       {!unavailable && albums.length > 0 && (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {albums.map((album) => {
             const isPlaceholder = !album.bandcampUrl;
             const coverSrc = imageOptimizerUrl(album.coverImageUrl);
@@ -57,7 +57,7 @@ export default async function MusicPage() {
                       src={coverSrc}
                       alt={album.title}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (

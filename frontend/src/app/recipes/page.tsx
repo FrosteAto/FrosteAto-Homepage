@@ -21,7 +21,7 @@ export default async function RecipesPage() {
   const { categoryGroups, uncategorized } = groupRecipesByCategory(recipes, categories);
 
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 px-4 py-10 sm:px-6">
+    <main className="mx-auto flex w-full max-w-page flex-1 flex-col gap-8 px-4 py-10 sm:px-6">
       <div>
         <h1 className="font-[family-name:var(--font-heading)] text-4xl">
           Recipes
