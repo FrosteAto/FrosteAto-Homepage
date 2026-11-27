@@ -4,7 +4,7 @@ import SocialIcon from "@/components/SocialIcon";
 
 const sections = [
   { href: "/software", description: "Employment history and personal projects." },
-  { href: "/khione", description: "My custom Linux ISO." },
+  { href: "/khione", description: "My Arch-based Linux distribution." },
   { href: "/photography", description: "A collection of the pictures I take." },
   { href: "/music", description: "Albums I've released, linked to Bandcamp." },
   { href: "/recipes", description: "Recipes I actually cook." },
@@ -59,7 +59,7 @@ export default function Home() {
           <p>
             <span className="text-accent-soft">#</span> Hi, I&apos;m FrosteAto! Welcome to my personal website. I am a software
             developer by trade, and you will find the personal projects im most proud of here.
-            This includes Khione, a Linux distro I maintain myself, as well as this website
+            This includes Khione, an Arch-based Linux distribution I maintain myself, as well as this website
             and anything else I come up with.
           </p>
           <p>

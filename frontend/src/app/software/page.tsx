@@ -138,7 +138,7 @@ export default function SoftwarePage() {
           <div className="min-w-0 flex-1">
             <p className="text-2xl font-black text-muted">Khione</p>
             <p className="mt-2 text-lg leading-relaxed">
-              My own Arch Linux distribution - a set of install scripts and
+              My own Arch-based Linux distribution - a set of install scripts and
               package selections that turn a bare Arch install into three
               ready-to-go editions (Desktop, Server, and Node), built around
               getting a fully configured machine running with as little
