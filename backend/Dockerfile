@@ -10,7 +10,10 @@ RUN apk add --no-cache \
         libwebp-dev \
         libzip-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j"$(nproc)" pdo_pgsql pgsql intl gd zip exif opcache
+    && docker-php-ext-install -j"$(nproc)" pdo_pgsql pgsql intl gd zip exif
+    # shortcut: opcache dropped — PHP 8.5+ bundles it built-in already, and its
+    # config.m4 no longer supports building it as a standalone shared module
+    # (docker-php-ext-install opcache fails with "modules/*: No such file")
 
 RUN { \
         echo 'upload_max_filesize=40M'; \
