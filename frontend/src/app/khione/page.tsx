@@ -31,7 +31,7 @@ const overview: {
   { id: "desktop", name: "Desktop", image: "/images/khione/desktop-badge.png", blurDataURL: desktopBlur, accent: "purple", role: "Gaming + dev + creative" },
   { id: "server", name: "Server", image: "/images/khione/server-badge.png", blurDataURL: serverBlur, accent: "blue", role: "Self-hosted services" },
   { id: "node", name: "Node", image: "/images/khione/node-badge.png", blurDataURL: nodeBlur, accent: "yellow", role: "Always-on kiosk" },
-  { id: "ulw", name: "Ultra Lightweight", image: "/images/khione/ulw-badge.png", blurDataURL: ulwBlur, accent: "green", role: "Ultra lightweight, build-it-yourself" },
+  { id: "ulw", name: "Ultra-Lightweight", image: "/images/khione/ulw-badge.png", blurDataURL: ulwBlur, accent: "green", role: "Ultra-Lightweight, build-it-yourself" },
 ];
 
 const desktopPackages: PackageGroup[] = [
@@ -344,11 +344,11 @@ export default function KhionePage() {
         <EditionInfographic
           edition={{
             id: "ulw",
-            name: "Ultra Lightweight",
+            name: "Ultra-Lightweight",
             image: "/images/khione/ulw-badge.png",
             blurDataURL: ulwBlur,
             accent: "green",
-            role: "Ultra lightweight, build-it-yourself",
+            role: "Ultra-Lightweight, build-it-yourself",
             de: "Xfce",
             terminal: "kitty",
             size: "~3.7 GB",
@@ -363,7 +363,7 @@ export default function KhionePage() {
               },
               {
                 title: "Still the Khione Treatment",
-                body: "Ultra Lightweight still has a colour-coded theme made to look as close to the KDE-based flavours as Xfce allows, keeping it both distinct and familiar.",
+                body: "Ultra-Lightweight still has a colour-coded theme made to look as close to the KDE-based flavours as Xfce allows, keeping it both distinct and familiar.",
               },
               {
                 title: "Build-It-Yourself",
